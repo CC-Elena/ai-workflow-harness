@@ -1,0 +1,190 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "schemaDescription": "Skills usage statistics for tracking effectiveness",
+    "totalInvocations": 2,
+    "lastUpdated": "2026-01-27T09:54:01.594Z",
+    "weeklyStats": {
+      "2026-W05": {
+        "total": 1,
+        "bySkill": {
+          "code-review": 1
+        }
+      }
+    }
+  },
+  "frontend-dev": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "code-review": {
+    "count": 3,
+    "lastUsed": "2026-01-27T09:54:01.594Z",
+    "history": [
+      "2026-01-27",
+      "2026-01-27",
+      "2026-01-27"
+    ],
+    "stats": {
+      "successCount": 1,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 1,
+      "avgDuration": 20,
+      "avgToolCalls": 1.7
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": [
+      {
+        "timestamp": "2026-01-27T09:54:01.594Z",
+        "duration": 60,
+        "toolCalls": 5,
+        "status": "completed"
+      }
+    ]
+  },
+  "feature-dev": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "component-reuse": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "ui-fidelity": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "screenshot-based-dev": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "test": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+  "skeleton": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  },
+
+  "project": {
+    "count": 0,
+    "lastUsed": null,
+    "history": [],
+    "stats": {
+      "successCount": 0,
+      "failCount": 0,
+      "abortCount": 0,
+      "successRate": 0,
+      "avgDuration": 0,
+      "avgToolCalls": 0
+    },
+    "feedback": {
+      "positive": 0,
+      "negative": 0
+    },
+    "recentUsages": []
+  }
+}
