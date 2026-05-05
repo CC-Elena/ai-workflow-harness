@@ -7,7 +7,7 @@
 - 中英混合，英文统一小写、单数优先，建议 4–8 个关键词
 - 先应用配置 synonyms，再应用附录"推荐同义词扩展"
 - 补充常见缩写/俗称（如 "小菊花"→ loading/spin）
-- 鼓励加入场景词（如 "无文字""inline""cooper""dk/knowledge"）
+- 鼓励加入场景词（如 "无文字""inline"）
 - 常见纠错：confirm（而非 comfirm）等
 
 ## 匹配度评分算法
@@ -47,7 +47,7 @@ score = 0.50*intent + 0.30*category + 0.20*synergy − penalty
 import Loading from '@/components/Loading';
 <Loading size="small" tip={null} inline />
 ```
-5. **注意**：遵循 i18n；环境适配 cooper/knowledge/shimo/shimo2
+5. **注意**：遵循 i18n；
 
 ### 示例 B：复用 useLoadMore（分页加载）
 

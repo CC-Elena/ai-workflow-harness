@@ -10,10 +10,9 @@ argument-hint: [PRD 链接] | [PRD 内容]
 
 ## 输入
 
-- **Cooper 链接**：使用 `mcp_cooper_get_page_content` 获取
-- **其他来源**：直接粘贴内容
+- **链接**：访问链接中的内容 
+- **其他内容**： 直接粘贴内容
 
-> ⚠️ Cooper 返回 JSON 富文本格式，需解析提取纯文本
 
 ## 产出
 

@@ -36,7 +36,7 @@ dependencies: [frontend-dev]
 3. 创建 `[pageName]ForImport.js` - Suspense 入口
 4. 创建 `[pageName]ForIndex.js` - HTML 注入入口
 5. 注册到 `Preview.js`
-6. 集成到 `route-cooper.js`
+6. 集成到 `route.js`
 7. 实现 Stage 3（GlobalData 状态）
 8. 注册到 `totalSkeleton.js`
 9. 配置 `public/index.html` 路由映射
@@ -45,7 +45,7 @@ dependencies: [frontend-dev]
 
 ## 阶段二：生成骨架屏代码
 
-1. **抓取实际 DOM**：启动 `pnpm run qa:cooper`，访问目标页面
+1. **抓取实际 DOM**：启动 `pnpm run qa`，访问目标页面
 2. **分析对比**：DOM 结构 + 设计稿 + 已有骨架屏代码
 3. **生成代码**：复用公共组件（SharedHeader、FileTableSkeleton）
 4. **添加样式**：更新 `commonCss.js`

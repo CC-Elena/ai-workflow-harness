@@ -80,7 +80,6 @@ export default MyPageContentSkeleton;
 ## 路由配置示例
 
 ```javascript
-// src/routes/route-cooper.js
 import MyPageForImport from '@/components/SkeletonPage/MyPage/myPageForImport';
 
 {

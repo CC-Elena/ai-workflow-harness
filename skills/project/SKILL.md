@@ -56,7 +56,6 @@ version: 0.1.0
 
 - **框架**：React 17.0.2（函数组件 + Hooks）
 - **构建**：Rsbuild + Rspack
-- **环境**：cooper / knowledge / shimo / shimo2
 - **状态管理**：Rematch (@rematch/core 2.x) + immer/loading/select
 - **UI 库**：Ant Design 4.21.7
 - **样式**：Less 3.12.2 + CSS Modules (`*.module.less`)
@@ -68,28 +67,6 @@ version: 0.1.0
 
 ## 目录结构
 
-```
-src/
-├── cooper.js / knowledge.js    # 环境入口
-├── cooperApp.js / knowledgeApp.js # 应用根组件
-├── assets/                     # 图标、全局样式
-├── components/                 # 业务组件
-├── componentsUI/               # 基础 UI 组件（Antd 封装）
-├── baseComponents/             # 可复用业务组件
-├── pages/                      # 页面组件
-├── routes/                     # 路由配置
-├── model/                      # Rematch store
-├── shared/                     # 跨环境共享组件
-├── service/                    # API 模块
-├── hooks/                      # 自定义 hooks
-├── utils/                      # 工具函数
-└── language/                   # 多语言资源
-shimo/                          # shimo项目
-shimo2/                         # shimo2项目
-skills/                         # ai coding工具使用的skill合集
-```
-
----
 
 ## 核心规范
 
@@ -127,8 +104,7 @@ intl.t('保存')  // 所有文案必须国际化
 ## 常用命令
 
 ```bash
-pnpm run start:cooper   # 开发 cooper (端口 4001)
-pnpm run start:dk       # 开发 knowledge (端口 4002)
+pnpm run start
 pnpm run qa             # 编译检查
 ```
 

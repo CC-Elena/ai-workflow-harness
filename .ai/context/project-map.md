@@ -14,34 +14,6 @@
 | 国际化 | di18n-react |
 | 包管理 | pnpm |
 
-## 2. 主要目录
-
-| 目录 | 作用 |
-|------|------|
-| `src/components/` | 业务组件 |
-| `src/componentsUI/` | 基础 UI 组件，通常是 Ant Design 封装 |
-| `src/baseComponents/` | 可复用业务组件 |
-| `src/pages/` | 页面组件 |
-| `src/routes/` | 路由配置 |
-| `src/model/` | Rematch 状态管理 |
-| `src/service/` | API 模块 |
-| `src/hooks/` | 自定义 Hooks |
-| `src/utils/` | 工具函数 |
-| `src/language/` | 国际化资源 |
-| `shimo/` | shimo 环境 |
-| `shimo2/` | shimo2 环境 |
-| `skills/` | AI Coding Skills |
-
-## 3. 多环境入口
-
-修改 `src/` 下共享代码时，需要考虑多环境影响。
-
-| 环境 | 入口 |
-|------|------|
-| cooper | `src/cooper.js` |
-| knowledge | `src/knowledge.js` |
-| shimo | `shimo/app/index.js` |
-| shimo2 | `shimo2/app/index.js` |
 
 ## 4. 核心模块保护
 
@@ -50,13 +22,12 @@
 1. `src/model/index.js`
 2. `src/routes/route-*.js`
 3. `src/utils/request/`
-4. `src/assets/style/variable-global.less`
+
 
 ## 5. 常用命令
 
 ```bash
-pnpm run start:cooper
-pnpm run start:dk
+pnpm run start
 pnpm run qa
 ```
 

@@ -34,7 +34,7 @@ dependencies: [frontend-dev]
 ## 阶段二：代码调研
 
 - 定位参考实现
-- 识别可复用组件（FoldTree、CooperTabs、Tips 等）
+- 识别可复用组件
 - 确认路由/Aside 接入模式
 - 确认样式变量策略
 

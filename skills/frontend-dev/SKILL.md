@@ -25,14 +25,6 @@ version: 0.1.0
 - `src/utils/request/` - 网络请求封装
 - `src/assets/style/variable-global.less` - 全局样式变量
 
-### 多环境隔离
-
-本项目有 4 个独立构建环境，修改 `src/` 下文件时必须考虑对所有环境的影响：
-
-- **cooper**：入口 `src/cooper.js`
-- **knowledge**：入口 `src/knowledge.js`
-- **shimo**：入口 `shimo/app/index.js`
-- **shimo2**：入口 `shimo2/app/index.js`
 
 ### 修改范围声明
 
