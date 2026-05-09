@@ -194,6 +194,24 @@ AI Workflow Harness 不是：
 
 它更像是一套“仓库原生的 AI 研发操作手册 + 证据系统 + 交付门禁”：让已有 Coding Agent 有规则可读、有流程可走、有证据可查。
 
+## 接入你的项目 (如何迁移)
+
+我们把“迁移”本身封装成了一个 AI Skill。如果你想把这套规范应用到你的全新代码库（例如 `my-new-app`），你只需要让你的 AI 跑一次“迁移安装”。
+
+**步骤：**
+1. 告诉 AI 这句话，让它去读取迁移脚本：
+
+```text
+请读取 https://raw.githubusercontent.com/CC-Elena/ai-workflow-harness/main/skills/harness-migration/SKILL.md ，执行 harness 迁移初始化任务。
+```
+
+收到指令后，AI 会在你项目里自动完成三件事：
+1. 自动将远程仓库 clone 到临时目录并创建 `.ai/` 规范目录结构。
+2. 自动从临时目录拷贝通用的工作流协议（`workflows`）、模板（`templates`）和提示词（`prompts`），随后清理临时文件。
+3. **最关键的一步**：它会扫描你新项目的代码特征，为你生成专属的“项目宪法”（`skills/project/SKILL.md`），确保后续 AI 在你项目里的行为合规。
+
+更多迁移细节，可阅读完整 [迁移指南](docs/migration-guide.md)。
+
 ## 当前状态
 
 当前项目处于轻量 MVP 阶段，重点是把工作流资产、真实试点、验证协议和可视化入口跑通。后续可以继续增强：
