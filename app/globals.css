@@ -629,11 +629,37 @@ button {
   box-shadow: 0 4px 16px rgba(23, 111, 93, 0.1);
 }
 
+.pinned-card.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
 .pinned-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+}
+
+.pinned-card-select {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pinned-card-select span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pinned-card-icon {
@@ -750,6 +776,204 @@ button {
 }
 
 /* ============================================
+   Files Page — Tree Browser
+   ============================================ */
+
+.files-browser {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.file-tree-panel,
+.file-preview {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.file-tree-panel {
+  max-height: 780px;
+  overflow: auto;
+  padding: 12px;
+}
+
+.file-tree,
+.tree-children {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tree-children {
+  margin-left: 16px;
+  padding-left: 10px;
+  border-left: 1px solid var(--line);
+}
+
+.tree-folder summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 8px;
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tree-folder summary:hover {
+  background: var(--surface-muted);
+}
+
+.tree-folder summary::marker,
+.tree-folder summary::-webkit-details-marker {
+  display: none;
+}
+
+.tree-folder-icon {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.tree-file {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+  gap: 4px;
+  align-items: center;
+  border-radius: 6px;
+}
+
+.tree-file.selected {
+  background: var(--accent-soft);
+}
+
+.tree-file > button:first-child {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tree-file > button:first-child span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tree-file > button:first-child:hover {
+  color: var(--accent-strong);
+}
+
+.tree-pin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.tree-pin:hover,
+.tree-pin.pinned {
+  color: var(--accent);
+  background: rgba(23, 111, 93, 0.08);
+}
+
+.file-preview {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.file-preview.empty {
+  min-height: 260px;
+  place-items: center;
+  color: var(--muted);
+}
+
+.file-preview-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.file-preview-header h2 {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.file-preview-header p:not(.eyebrow) {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.file-preview-path {
+  display: block;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  border-radius: 6px;
+  background: var(--surface-muted);
+  color: #22312b;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.file-preview-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.file-preview-state {
+  margin: 0;
+  padding: 32px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.file-preview-state.error {
+  color: #b42318;
+}
+
+.file-content {
+  max-height: 620px;
+  margin: 0;
+  padding: 16px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111a17;
+  color: #e8f1ed;
+  font-size: 12px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+/* ============================================
    Files Page — Pin Button
    ============================================ */
 
@@ -811,6 +1035,14 @@ button {
   .file-row {
     grid-template-columns: minmax(0, 1fr) 80px minmax(140px, 1fr) 48px;
   }
+
+  .files-browser {
+    grid-template-columns: 1fr;
+  }
+
+  .file-tree-panel {
+    max-height: 420px;
+  }
 }
 
 @media (max-width: 680px) {
@@ -848,6 +1080,19 @@ button {
   }
 
   .file-row-path {
+    font-size: 11px;
+  }
+
+  .file-preview {
+    padding: 14px;
+  }
+
+  .file-preview-header {
+    flex-direction: column;
+  }
+
+  .file-content {
+    max-height: 520px;
     font-size: 11px;
   }
 }

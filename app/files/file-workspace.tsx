@@ -2,11 +2,17 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { fileItems, type AssetCategory, type FileItem } from './file-data';
+import { buildFileTree, fileItems, type AssetCategory, type FileItem, type FileTreeNode } from './file-data';
 
 const STORAGE_KEY = 'ai-workflow-pinned-files';
 
 const categories = ['All', 'Workflow', 'Template', 'Context', 'Spec', 'Evaluation', 'Skill'] as const;
+
+type FileContentState =
+  | { status: 'idle'; content: ''; size: 0; error: '' }
+  | { status: 'loading'; content: ''; size: 0; error: '' }
+  | { status: 'success'; content: string; size: number; error: '' }
+  | { status: 'error'; content: ''; size: 0; error: string };
 
 function loadPinned(): string[] {
   if (typeof window === 'undefined') return [];
@@ -21,11 +27,24 @@ function loadPinned(): string[] {
   }
 }
 
-function PinnedCard({ file, onUnpin }: { file: FileItem; onUnpin: () => void }) {
+function PinnedCard({
+  file,
+  isSelected,
+  onSelect,
+  onUnpin
+}: {
+  file: FileItem;
+  isSelected: boolean;
+  onSelect: () => void;
+  onUnpin: () => void;
+}) {
   return (
-    <article className="pinned-card">
+    <article className={`pinned-card ${isSelected ? 'selected' : ''}`}>
       <div className="pinned-card-header">
-        <span className="pinned-card-icon">{file.icon}</span>
+        <button type="button" className="pinned-card-select" onClick={onSelect}>
+          <span className="pinned-card-icon">{file.icon}</span>
+          <span>{file.title}</span>
+        </button>
         <button
           type="button"
           className="pin-button pinned"
@@ -36,43 +55,107 @@ function PinnedCard({ file, onUnpin }: { file: FileItem; onUnpin: () => void }) 
           ★
         </button>
       </div>
-      <h3 className="pinned-card-title">{file.title}</h3>
       <span className="category-badge">{file.category}</span>
       <p className="pinned-card-path">{file.path}</p>
     </article>
   );
 }
 
-function FileRow({
-  file,
-  isPinned,
+function TreeNode({
+  node,
+  selectedPath,
+  pinnedPaths,
+  onSelectFile,
   onTogglePin
 }: {
-  file: FileItem;
-  isPinned: boolean;
-  onTogglePin: () => void;
+  node: FileTreeNode;
+  selectedPath: string;
+  pinnedPaths: string[];
+  onSelectFile: (file: FileItem) => void;
+  onTogglePin: (path: string) => void;
 }) {
+  if (node.type === 'folder') {
+    return (
+      <li>
+        <details open className="tree-folder">
+          <summary>
+            <span className="tree-folder-icon">▾</span>
+            <span>{node.name}</span>
+          </summary>
+          <ul className="tree-children">
+            {node.children.map((child) => (
+              <TreeNode
+                key={child.id}
+                node={child}
+                selectedPath={selectedPath}
+                pinnedPaths={pinnedPaths}
+                onSelectFile={onSelectFile}
+                onTogglePin={onTogglePin}
+              />
+            ))}
+          </ul>
+        </details>
+      </li>
+    );
+  }
+
+  if (!node.file) return null;
+
+  const isSelected = selectedPath === node.file.path;
+  const isPinned = pinnedPaths.includes(node.file.path);
+
   return (
-    <div className="file-row">
-      <div className="file-row-name">
-        <span className="file-row-icon">{file.icon}</span>
+    <li>
+      <div className={`tree-file ${isSelected ? 'selected' : ''}`}>
+        <button type="button" onClick={() => onSelectFile(node.file as FileItem)}>
+          <span>{node.file.icon}</span>
+          <span>{node.name}</span>
+        </button>
+        <button
+          type="button"
+          className={`tree-pin ${isPinned ? 'pinned' : ''}`}
+          onClick={() => onTogglePin(node.file?.path ?? '')}
+          aria-label={isPinned ? `取消置顶 ${node.file.title}` : `置顶 ${node.file.title}`}
+          title={isPinned ? '取消置顶' : '置顶'}
+        >
+          {isPinned ? '★' : '☆'}
+        </button>
+      </div>
+    </li>
+  );
+}
+
+function ContentPreview({ file, state }: { file?: FileItem; state: FileContentState }) {
+  if (!file) {
+    return (
+      <section className="file-preview empty" aria-label="文件内容">
+        <p>没有匹配的文件。</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className="file-preview" aria-label="文件内容">
+      <div className="file-preview-header">
         <div>
-          <h3>{file.title}</h3>
+          <p className="eyebrow">Preview</p>
+          <h2>{file.title}</h2>
           <p>{file.description}</p>
         </div>
+        <span className="category-badge">{file.category}</span>
       </div>
-      <span className="category-badge">{file.category}</span>
-      <code className="file-row-path">{file.path}</code>
-      <button
-        type="button"
-        className={`pin-button ${isPinned ? 'pinned' : ''}`}
-        onClick={onTogglePin}
-        aria-label={isPinned ? `取消置顶 ${file.title}` : `置顶 ${file.title}`}
-        title={isPinned ? '取消置顶' : '置顶'}
-      >
-        {isPinned ? '★' : '☆'}
-      </button>
-    </div>
+      <code className="file-preview-path">{file.path}</code>
+      {state.status === 'loading' && <p className="file-preview-state">正在读取文件内容...</p>}
+      {state.status === 'error' && <p className="file-preview-state error">{state.error}</p>}
+      {state.status === 'success' && (
+        <>
+          <div className="file-preview-meta">{state.size.toLocaleString()} bytes</div>
+          <pre className="file-content">
+            <code>{state.content}</code>
+          </pre>
+        </>
+      )}
+    </section>
   );
 }
 
@@ -80,6 +163,13 @@ export default function FileWorkspace() {
   const [pinnedPaths, setPinnedPaths] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<AssetCategory | 'All'>('All');
+  const [selectedPath, setSelectedPath] = useState(fileItems[0]?.path ?? '');
+  const [contentState, setContentState] = useState<FileContentState>({
+    status: 'idle',
+    content: '',
+    size: 0,
+    error: ''
+  });
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -88,17 +178,13 @@ export default function FileWorkspace() {
   }, []);
 
   const togglePin = useCallback((path: string) => {
+    if (!path) return;
     setPinnedPaths((prev) => {
       const next = prev.includes(path) ? prev.filter((p) => p !== path) : [...prev, path];
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
   }, []);
-
-  const pinnedFiles = useMemo(
-    () => fileItems.filter((file) => pinnedPaths.includes(file.path)),
-    [pinnedPaths]
-  );
 
   const filteredFiles = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -115,15 +201,74 @@ export default function FileWorkspace() {
     });
   }, [query, selectedCategory]);
 
+  const tree = useMemo(() => buildFileTree(filteredFiles), [filteredFiles]);
+
+  const pinnedFiles = useMemo(
+    () => fileItems.filter((file) => pinnedPaths.includes(file.path)),
+    [pinnedPaths]
+  );
+
+  const selectedFile = useMemo(
+    () => fileItems.find((file) => file.path === selectedPath),
+    [selectedPath]
+  );
+
+  useEffect(() => {
+    if (filteredFiles.length === 0) {
+      setSelectedPath('');
+      return;
+    }
+
+    if (!filteredFiles.some((file) => file.path === selectedPath)) {
+      setSelectedPath(filteredFiles[0].path);
+    }
+  }, [filteredFiles, selectedPath]);
+
+  useEffect(() => {
+    if (!selectedPath) {
+      setContentState({ status: 'idle', content: '', size: 0, error: '' });
+      return;
+    }
+
+    const controller = new AbortController();
+    setContentState({ status: 'loading', content: '', size: 0, error: '' });
+
+    fetch(`/api/files/content?path=${encodeURIComponent(selectedPath)}`, {
+      signal: controller.signal
+    })
+      .then(async (response) => {
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.error ?? '读取文件失败');
+        }
+        setContentState({
+          status: 'success',
+          content: payload.content,
+          size: payload.size,
+          error: ''
+        });
+      })
+      .catch((error: Error) => {
+        if (controller.signal.aborted) return;
+        setContentState({
+          status: 'error',
+          content: '',
+          size: 0,
+          error: error.message
+        });
+      });
+
+    return () => controller.abort();
+  }, [selectedPath]);
+
   return (
     <main className="page-shell">
-      {/* 页面标题 */}
       <section className="files-hero">
         <div>
           <p className="eyebrow">Files</p>
-          <h1>文件列表</h1>
+          <h1>文件浏览器</h1>
           <p className="files-hero-sub">
-            纵览代码库中的所有工作流资产文件，支持置顶高频使用的文件。
+            按目录结构浏览工作流资产文件，并在右侧查看当前文件内容。
           </p>
         </div>
         <div className="files-hero-stats">
@@ -138,7 +283,6 @@ export default function FileWorkspace() {
         </div>
       </section>
 
-      {/* 置顶卡片区 */}
       {hydrated && pinnedFiles.length > 0 && (
         <section className="section-block pinned-section" aria-labelledby="pinned-title">
           <div className="section-heading">
@@ -150,23 +294,27 @@ export default function FileWorkspace() {
           </div>
           <div className="pinned-grid">
             {pinnedFiles.map((file) => (
-              <PinnedCard key={file.path} file={file} onUnpin={() => togglePin(file.path)} />
+              <PinnedCard
+                key={file.path}
+                file={file}
+                isSelected={selectedPath === file.path}
+                onSelect={() => setSelectedPath(file.path)}
+                onUnpin={() => togglePin(file.path)}
+              />
             ))}
           </div>
         </section>
       )}
 
-      {/* 文件列表区 */}
       <section className="section-block" aria-labelledby="all-files-title">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">All Files</p>
-            <h2 id="all-files-title">所有文件</h2>
+            <p className="eyebrow">Repository Tree</p>
+            <h2 id="all-files-title">文件目录</h2>
           </div>
           <span className="section-count">{filteredFiles.length} files</span>
         </div>
 
-        {/* 工具栏 */}
         <div className="toolbar">
           <label className="search-box">
             <span>Search</span>
@@ -190,27 +338,26 @@ export default function FileWorkspace() {
           </div>
         </div>
 
-        {/* 表头 */}
-        <div className="file-table-header">
-          <span className="file-col-name">名称</span>
-          <span className="file-col-category">分类</span>
-          <span className="file-col-path">路径</span>
-          <span className="file-col-pin">置顶</span>
-        </div>
-
-        {/* 文件行 */}
-        <div className="file-list">
-          {filteredFiles.map((file) => (
-            <FileRow
-              key={file.path}
-              file={file}
-              isPinned={pinnedPaths.includes(file.path)}
-              onTogglePin={() => togglePin(file.path)}
-            />
-          ))}
-          {filteredFiles.length === 0 && (
-            <p className="file-empty">没有匹配的文件。</p>
-          )}
+        <div className="files-browser">
+          <aside className="file-tree-panel" aria-label="文件目录树">
+            {tree.length > 0 ? (
+              <ul className="file-tree">
+                {tree.map((node) => (
+                  <TreeNode
+                    key={node.id}
+                    node={node}
+                    selectedPath={selectedPath}
+                    pinnedPaths={pinnedPaths}
+                    onSelectFile={(file) => setSelectedPath(file.path)}
+                    onTogglePin={togglePin}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <p className="file-empty">没有匹配的文件。</p>
+            )}
+          </aside>
+          <ContentPreview file={selectedFile} state={contentState} />
         </div>
       </section>
     </main>

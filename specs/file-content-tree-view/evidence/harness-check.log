@@ -1,0 +1,8 @@
+Command: npm run harness:check -- specs/file-content-tree-view
+Date: 2026-05-09
+Result: Success
+
+> ai-workflow-harness@0.1.0 harness:check
+> node scripts/check-harness-run.mjs specs/file-content-tree-view
+
+Harness check passed for specs/file-content-tree-view
