@@ -479,3 +479,375 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================
+   Navigation Bar
+   ============================================ */
+
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 max(calc((100% - 1180px) / 2 + 16px), 24px);
+  height: 52px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-bar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-right: 12px;
+  background: var(--accent);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.nav-bar a {
+  padding: 6px 14px;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-bar a:hover {
+  color: var(--text);
+  background: var(--surface-muted);
+}
+
+.nav-bar a.nav-active {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+/* ============================================
+   Files Page — Hero
+   ============================================ */
+
+.files-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 48px;
+  margin-bottom: 24px;
+  background:
+    linear-gradient(135deg, rgba(23, 111, 93, 0.92), rgba(30, 68, 89, 0.88)),
+    url("data:image/svg+xml,%3Csvg width='800' height='400' viewBox='0 0 800 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.18)' stroke-width='1.5'%3E%3Crect x='80' y='60' width='160' height='100' rx='8'/%3E%3Crect x='300' y='120' width='160' height='100' rx='8'/%3E%3Crect x='520' y='80' width='160' height='100' rx='8'/%3E%3Crect x='180' y='220' width='160' height='100' rx='8'/%3E%3Crect x='420' y='240' width='160' height='100' rx='8'/%3E%3C/g%3E%3Cg fill='rgba(255,255,255,0.5)'%3E%3Ccircle cx='160' cy='110' r='4'/%3E%3Ccircle cx='380' cy='170' r='4'/%3E%3Ccircle cx='600' cy='130' r='4'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.files-hero h1 {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1;
+}
+
+.files-hero .eyebrow {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.files-hero-sub {
+  max-width: 520px;
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.files-hero-stats {
+  display: flex;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.files-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+}
+
+.files-stat strong {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.files-stat span {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+
+/* ============================================
+   Files Page — Pinned Section
+   ============================================ */
+
+.pinned-section {
+  margin-bottom: 24px;
+}
+
+.pinned-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pinned-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.pinned-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 16px rgba(23, 111, 93, 0.1);
+}
+
+.pinned-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pinned-card-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.pinned-card-title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.pinned-card-path {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/* ============================================
+   Files Page — Category Badge
+   ============================================ */
+
+.category-badge {
+  display: inline-flex;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================
+   Files Page — File Table
+   ============================================ */
+
+.file-table-header {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 100px minmax(200px, 1fr) 56px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--line);
+}
+
+.file-list {
+  display: grid;
+  gap: 4px;
+}
+
+.file-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 100px minmax(200px, 1fr) 56px;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.file-row:hover {
+  border-color: var(--line);
+  background: var(--surface-muted);
+}
+
+.file-row-name {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.file-row-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.file-row-name h3 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.file-row-name p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.file-row-path {
+  padding: 6px 10px;
+  overflow-wrap: anywhere;
+  color: #22312b;
+  background: var(--surface-muted);
+  border-radius: 6px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* ============================================
+   Files Page — Pin Button
+   ============================================ */
+
+.pin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.pin-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.pin-button.pinned {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ============================================
+   Files Page — Empty State
+   ============================================ */
+
+.file-empty {
+  padding: 40px 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ============================================
+   Files Page — Responsive
+   ============================================ */
+
+@media (max-width: 980px) {
+  .files-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px;
+  }
+
+  .pinned-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .file-table-header,
+  .file-row {
+    grid-template-columns: minmax(0, 1fr) 80px minmax(140px, 1fr) 48px;
+  }
+}
+
+@media (max-width: 680px) {
+  .files-hero {
+    padding: 20px;
+  }
+
+  .files-hero h1 {
+    font-size: 28px;
+  }
+
+  .files-hero-stats {
+    gap: 12px;
+  }
+
+  .files-stat {
+    padding: 12px 16px;
+  }
+
+  .files-stat strong {
+    font-size: 24px;
+  }
+
+  .pinned-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-table-header {
+    display: none;
+  }
+
+  .file-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .file-row-path {
+    font-size: 11px;
+  }
+}

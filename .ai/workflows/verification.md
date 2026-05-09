@@ -45,6 +45,16 @@ pnpm run qa
 
 涉及较大改动时，使用 `skills/code-review/SKILL.md` 做自查。
 
+### 2.5 Harness 交付门禁
+
+涉及真实需求交付或代码变更时，交付前运行：
+
+```bash
+npm run harness:check -- specs/{feature}
+```
+
+该命令失败时，不得将 Run Record 状态写为 `Success`。业务功能验收仍由需求自己的验收标准、测试或浏览器验证负责；`harness:check` 只检查流程、证据和范围控制。
+
 ## 3. 验证记录格式
 
 记录到 `specs/{feature}/run-record.md`：
@@ -57,6 +67,7 @@ pnpm run qa
 | Build | `npm run build` | Pass / Fail / Skipped | |
 | Screenshot | | | |
 | Review | | | |
+| Harness Check | `npm run harness:check -- specs/{feature}` | Pass / Fail / Skipped | |
 
 如果某次验证需要独立归档，可使用 `.ai/templates/verification-record-template.md` 保存为：
 
