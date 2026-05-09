@@ -201,6 +201,15 @@ export default function FileWorkspace() {
     });
   }, [query, selectedCategory]);
 
+  const categoryCounts = useMemo(
+    () =>
+      categories.map((category) => ({
+        category,
+        count: category === 'All' ? fileItems.length : fileItems.filter((file) => file.category === category).length
+      })),
+    []
+  );
+
   const tree = useMemo(() => buildFileTree(filteredFiles), [filteredFiles]);
 
   const pinnedFiles = useMemo(
@@ -336,6 +345,20 @@ export default function FileWorkspace() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div className="category-overview" aria-label="文件分类概览">
+          {categoryCounts.map((item) => (
+            <button
+              type="button"
+              key={item.category}
+              className={selectedCategory === item.category ? 'selected' : ''}
+              onClick={() => setSelectedCategory(item.category)}
+            >
+              <span>{item.category}</span>
+              <strong>{item.count}</strong>
+            </button>
+          ))}
         </div>
 
         <div className="files-browser">

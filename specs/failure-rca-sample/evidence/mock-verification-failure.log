@@ -1,0 +1,12 @@
+Mock verification failure sample.
+
+Command:
+npm run harness:check -- specs/example-missing-evidence
+
+Result:
+Failed intentionally.
+
+Reason:
+The hypothetical Run Record marked a verification row as Pass without a command or evidence file.
+
+This file is a controlled sample for RCA workflow validation. It does not represent the current repository CI state.

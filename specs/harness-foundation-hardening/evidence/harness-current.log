@@ -1,0 +1,5 @@
+
+> ai-workflow-harness@0.1.0 harness:check
+> node scripts/check-harness-run.mjs specs/harness-foundation-hardening
+
+Harness check passed for specs/harness-foundation-hardening

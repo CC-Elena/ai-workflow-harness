@@ -775,6 +775,46 @@ button {
   line-height: 1.4;
 }
 
+.category-overview {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.category-overview button {
+  display: grid;
+  gap: 8px;
+  min-height: 82px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+}
+
+.category-overview button:hover {
+  border-color: var(--accent);
+}
+
+.category-overview button.selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.category-overview span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.category-overview strong {
+  font-size: 28px;
+  line-height: 1;
+}
+
 /* ============================================
    Files Page — Tree Browser
    ============================================ */
@@ -1040,6 +1080,10 @@ button {
     grid-template-columns: 1fr;
   }
 
+  .category-overview {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .file-tree-panel {
     max-height: 420px;
   }
@@ -1081,6 +1125,10 @@ button {
 
   .file-row-path {
     font-size: 11px;
+  }
+
+  .category-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .file-preview {

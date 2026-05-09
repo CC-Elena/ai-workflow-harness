@@ -94,6 +94,18 @@ export const assets: Asset[] = [
     description: '定义代码修改后的验证顺序和记录方式。'
   },
   {
+    title: '快速接入指南',
+    path: 'docs/quick-start.md',
+    category: 'Workflow',
+    description: '新项目从安装资产到跑通首个低风险需求的最短路径。'
+  },
+  {
+    title: '迁移验收清单',
+    path: 'docs/adoption-checklist.md',
+    category: 'Workflow',
+    description: '判断目标项目是否具备使用 Harness 的最低条件。'
+  },
+  {
     title: '评估指标体系',
     path: '.ai/workflows/evaluation-metrics.md',
     category: 'Evaluation',
@@ -212,6 +224,12 @@ export const assets: Asset[] = [
     path: 'specs/evaluation-framework/run-record.md',
     category: 'Evaluation',
     description: '基于 OpenAI 和 Anthropic 公开评估原则补齐工作流评估层。'
+  },
+  {
+    title: '失败路径 RCA 样本',
+    path: 'specs/failure-rca-sample/run-record.md',
+    category: 'Evaluation',
+    description: '受控失败样本，验证 Failed 状态、失败证据和 RCA 反哺闭环。'
   }
 ];
 
@@ -255,11 +273,17 @@ export const planTasks: PlanTask[] = [
   { id: 'T12-1', title: '定义 AI 工作流评估指标体系和投产门槛', status: 'Done' },
   { id: 'T12-2', title: '补齐评估 Rubric 与 grader 输出格式', status: 'Done' },
   { id: 'T12-3', title: '新增 Evaluation Summary、Gate Check 和 Rubric 模板', status: 'Done' },
-  { id: 'T12-4', title: '将评估层接入工作流入口、记录模板和首页索引', status: 'Done' }
+  { id: 'T12-4', title: '将评估层接入工作流入口、记录模板和首页索引', status: 'Done' },
+  { id: 'T13-1', title: '新增 GitHub Actions CI 门禁', status: 'Done' },
+  { id: 'T13-2', title: '增强 harness check 结构校验', status: 'Done' },
+  { id: 'T13-3', title: '补齐失败路径与 RCA 样本', status: 'Done' },
+  { id: 'T13-4', title: '补齐 Quick Start 和迁移验收清单', status: 'Done' },
+  { id: 'T13-5', title: '增强文件工作台分类浏览体验', status: 'Done' }
 ];
 
 export const pilots: Pilot[] = [
   { id: 'P1', title: '仓库资产检索支持 Evaluation 和 Skill 分类', status: 'Done' },
   { id: 'P2', title: 'Run Record 草稿增加验证摘要字段', status: 'Done' },
-  { id: 'P3', title: '首页展示 MVP 任务完成概览', status: 'Done' }
+  { id: 'P3', title: '首页展示 MVP 任务完成概览', status: 'Done' },
+  { id: 'P4', title: '失败路径 RCA 闭环样本', status: 'Done' }
 ];
