@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { buildFileTree, fileItems, type AssetCategory, type FileItem, type FileTreeNode } from './file-data';
+import { buildFileTree, fileItems, type AssetCategory, type FileItem, type FileTreeNode } from '../../lib/data/file-data';
 
 const STORAGE_KEY = 'ai-workflow-pinned-files';
 
@@ -159,6 +159,14 @@ function ContentPreview({ file, state }: { file?: FileItem; state: FileContentSt
   );
 }
 
+/**
+ * 文件资源管理主组件 (FileWorkspace)
+ * 
+ * 负责展示资产文件的层级目录树（支持展开/折叠和搜索），并提供 Markdown 渲染预览功能。
+ * 它通过内部调用 `/api/files/content` 获取真实的物理文件内容。
+ * 
+ * @returns {JSX.Element} 文件浏览与 Markdown 预览界面
+ */
 export default function FileWorkspace() {
   const [pinnedPaths, setPinnedPaths] = useState<string[]>([]);
   const [query, setQuery] = useState('');

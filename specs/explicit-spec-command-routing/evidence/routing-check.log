@@ -1,0 +1,46 @@
+.ai/workflows/command-routing.md:7:1. 普通自然语言请求不进入 Spec 流程。
+.ai/workflows/command-routing.md:8:2. 只有用户显式使用 `/spec`、`/mini-spec` 或等价触发词时，才生成对应 Spec 产物。
+.ai/workflows/command-routing.md:9:3. Agent 可以建议使用 `/spec` 或 `/mini-spec`，但不能擅自进入。
+.ai/workflows/command-routing.md:10:4. 高风险任务应暂停并建议 `/spec`，等待用户确认。
+.ai/workflows/command-routing.md:11:5. 不设置 `/maintenance`；Harness 文档、模板、规则维护默认走轻量流程。
+.ai/workflows/command-routing.md:18:| `/mini-spec` | Mini Spec Flow | 中等复杂前端需求、轻量交互、多文件但边界清楚 | `mini-spec.md`、必要任务、验证记录 |
+.ai/workflows/command-routing.md:19:| `/spec` | Full Spec Flow | 复杂前端需求、需求边界不清、高风险或用户明确要求 SDD | `spec.md`、`tasks.md`、验证记录、Run Record、必要时 Evaluation / RCA |
+.ai/workflows/command-routing.md:25:以下输入视为 `/spec`：
+.ai/workflows/command-routing.md:27:1. `/spec`
+.ai/workflows/command-routing.md:37:以下输入视为 `/mini-spec`：
+.ai/workflows/command-routing.md:39:1. `/mini-spec`
+.ai/workflows/command-routing.md:66:`/mini-spec` 适用于中等复杂但边界清楚的前端需求：
+.ai/workflows/command-routing.md:86:`/spec` 适用于复杂、高风险或用户希望严格审计的需求：
+.ai/workflows/command-routing.md:112:Agent 可以在以下场景建议 `/spec`：
+.ai/workflows/command-routing.md:122:这个需求涉及较高风险或边界不清，我建议使用 /spec 先明确范围和验收。是否按 /spec 模式处理？
+.ai/templates/mini-spec-template.md:6:- 触发方式：`/mini-spec`
+.ai/workflows/rule-loading-policy.md:18:| Small | 单文件、小文档、低风险样式或静态文案 | 最多 3-5 个文件，1 个主 Skill | 不需要，除非用户 `/mini-spec` 或 `/spec` | 不需要，除非用户要求 |
+.ai/workflows/rule-loading-policy.md:19:| Medium | 多文件、UI 行为、需要截图或测试 | 最多 6-10 个文件，1 主 + 1 辅 Skill | 建议 `/mini-spec`，但必须用户确认 | 可选 |
+.ai/workflows/rule-loading-policy.md:20:| Large | 跨模块、影响用户流程、复杂状态或接口 | 按 Context Pack 分批读取 | 建议 `/spec`，但必须用户确认 | 用户确认 `/spec` 后必须 |
+.ai/workflows/rule-loading-policy.md:21:| Risky | 权限、数据写入、核心链路、生产相关 | 先人工确认，再分阶段读取 | 强烈建议 `/spec`，用户确认后进入 | 用户确认 `/spec` 后必须 |
+.ai/workflows/rule-loading-policy.md:58:3. 用户显式 `/mini-spec` 时读取 `.ai/templates/mini-spec-template.md`
+.ai/workflows/rule-loading-policy.md:59:4. 用户显式 `/spec` 时读取 `.ai/templates/spec-template.md` 和 `.ai/templates/task-template.md`
+.ai/workflows/rule-loading-policy.md:74:1. 先建议用户使用 `/spec`，等待确认。
+.ai/workflows/rule-loading-policy.md:75:2. 用户确认 `/spec` 后必须拆 Tasks。
+.ai/workflows/rule-loading-policy.md:76:3. 用户确认 `/spec` 后必须填写 Context Pack。
+.ai/workflows/rule-loading-policy.md:77:4. 用户确认 `/spec` 后必须生成 Verification Record。
+.ai/workflows/rule-loading-policy.md:78:5. 用户确认 `/spec` 后必须生成 Evaluation Summary。
+.ai/workflows/rule-loading-policy.md:106:| 用户输入 `/mini-spec` | 进入 Mini Spec Flow |
+.ai/workflows/rule-loading-policy.md:107:| 用户输入 `/spec` | 进入 Full Spec Flow |
+.ai/workflows/rule-loading-policy.md:128:6. 不在用户未触发 `/spec` 或 `/mini-spec` 时自动生成 Spec。
+.ai/workflows/README.md:8:2. 默认不进入 Spec 流程；只有用户显式使用 `/spec` 或 `/mini-spec`，才生成对应 Spec 产物。
+.ai/workflows/README.md:10:4. `/spec` 或 `/mini-spec` 任务先规划，再执行；每个任务必须有影响范围、执行动作和验收标准。
+.ai/workflows/README.md:12:6. 只有 `/spec`、高风险任务、投产判断或用户要求时，才按 `.ai/workflows/evaluation-metrics.md` 生成评估摘要。
+.ai/workflows/README.md:22:| 普通自然语言请求 | Lightweight Flow | 目标理解、修改范围、验证结果、最终总结 |
+.ai/workflows/README.md:23:| `/mini-spec {需求}` | Mini Spec Flow | `mini-spec.md`、必要任务、验证记录 |
+.ai/workflows/README.md:24:| `/spec {需求}` | Full Spec Flow | `spec.md`、`tasks.md`、验证记录、Run Record，必要时 Evaluation / RCA |
+.ai/workflows/README.md:30:| Full Spec | `/spec`、`走 spec`、`进入 spec`、`按 spec 流程`、`生成 spec`、`用 SDD`、`走完整需求流程` |
+.ai/workflows/README.md:31:| Mini Spec | `/mini-spec`、`走 mini spec`、`轻量 spec`、`简单 spec` |
+.ai/workflows/README.md:33:Agent 可以建议用户使用 `/spec` 或 `/mini-spec`，但不能在用户未确认时擅自进入 Spec 流程。核心模块、高风险或需求明显不清时，应暂停并建议使用 `/spec`。
+.ai/workflows/README.md:55:当用户显式触发 `/spec` 或 `/mini-spec` 时，读取：
+.ai/workflows/README.md:109:## `/mini-spec` 流程
+.ai/workflows/README.md:125:## `/spec` 完整流程
+.ai/workflows/README.md:153:| `.ai/templates/spec-template.md` | 需求 Spec 模板 |
+.ai/workflows/README.md:154:| `.ai/templates/mini-spec-template.md` | 轻量 Spec 模板 |
+.ai/workflows/README.md:162:| `.ai/workflows/command-routing.md` | `/spec`、`/mini-spec` 和默认轻量流程路由 |
+.ai/workflows/README.md:183:只有 `/spec` 或 `/mini-spec` 任务建议使用独立目录：

@@ -51,8 +51,8 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| 页面 | `app/workflow-workspace.tsx` | 扩展 Asset 分类和静态资产数据 |
-| 样式 | `app/globals.css` | 必要时保证新增分类按钮在移动端不溢出 |
+| 页面 | `src/components/views/workflow-workspace.tsx` | 扩展 Asset 分类和静态资产数据 |
+| 样式 | `src/app/globals.css` | 必要时保证新增分类按钮在移动端不溢出 |
 
 ## 7. 数据与接口
 

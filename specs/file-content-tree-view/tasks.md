@@ -10,10 +10,10 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 新增受限文件内容 API | `app/api/files/content/route.ts` [NEW] | 无 | Done |
-| T2 | 扩展文件数据为目录树 | `app/files/file-data.ts` | T1 | Done |
-| T3 | 重构文件页交互 | `app/files/file-workspace.tsx` | T2 | Done |
-| T4 | 增加目录树和预览样式 | `app/globals.css` | T3 | Done |
+| T1 | 新增受限文件内容 API | `src/app/api/files/content/route.ts` [NEW] | 无 | Done |
+| T2 | 扩展文件数据为目录树 | `src/lib/data/file-data.ts` | T1 | Done |
+| T3 | 重构文件页交互 | `src/components/views/file-workspace.tsx` | T2 | Done |
+| T4 | 增加目录树和预览样式 | `src/app/globals.css` | T3 | Done |
 | T5 | 验证并记录执行结果 | `specs/file-content-tree-view/*` | T1-T4 | Done |
 
 ## 3. Context Pack
@@ -21,10 +21,10 @@
 | 等级 | 文件或资产 | 使用原因 | 阶段 | 是否已读取 |
 |------|------------|----------|------|------------|
 | P0 | `specs/file-content-tree-view/spec.md` | 需求可信源 | Plan / Execute | Yes |
-| P1 | `app/files/file-workspace.tsx` | 修改目标组件 | Execute | Yes |
-| P1 | `app/files/file-data.ts` | 数据构建入口 | Execute | Yes |
-| P1 | `app/workflow-data.ts` | 资产白名单来源 | Execute | Yes |
-| P1 | `app/globals.css` | 页面样式 | Execute | Yes |
+| P1 | `src/components/views/file-workspace.tsx` | 修改目标组件 | Execute | Yes |
+| P1 | `src/lib/data/file-data.ts` | 数据构建入口 | Execute | Yes |
+| P1 | `src/lib/data/workflow-data.ts` | 资产白名单来源 | Execute | Yes |
+| P1 | `src/app/globals.css` | 页面样式 | Execute | Yes |
 | P2 | `.ai/workflows/verification.md` | 验证协议 | Verify | Yes |
 
 ## 4. 任务详情

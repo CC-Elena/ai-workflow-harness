@@ -6,9 +6,9 @@
 
 | ID | 需求 | 影响范围 | 风险 | 状态 |
 |----|------|----------|------|------|
-| P1 | 仓库资产检索支持 Evaluation 和 Skill 分类 | `app/workflow-workspace.tsx` | 低 | Done |
-| P2 | Run Record 草稿增加验证摘要字段 | `app/workflow-workspace.tsx` | 低 | Done |
-| P3 | 首页展示 MVP 任务完成概览 | `app/workflow-workspace.tsx`、`app/globals.css` | 中 | Done |
+| P1 | 仓库资产检索支持 Evaluation 和 Skill 分类 | `src/components/views/workflow-workspace.tsx` | 低 | Done |
+| P2 | Run Record 草稿增加验证摘要字段 | `src/components/views/workflow-workspace.tsx` | 低 | Done |
+| P3 | 首页展示 MVP 任务完成概览 | `src/components/views/workflow-workspace.tsx`、`src/app/globals.css` | 中 | Done |
 
 ## 2. 选择理由
 

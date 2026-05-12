@@ -3,7 +3,7 @@
 ## 1. 基本信息
 
 - 需求名称：AI 工作流评估框架
-- Spec 文件：`specs/evaluation-framework/spec.md`
+- Spec 文件：N/A（Harness 评估框架维护，已按轻量流程移除非必要 Spec）
 - Task 文件：`specs/evaluation-framework/tasks.md`
 - 执行日期：2026-05-04
 - 执行工具：Codex
@@ -13,7 +13,7 @@
 ## 2. 输入
 
 1. 用户需求：按照当前方案，参考 OpenAI 和 Anthropic 公开评估规则，补齐有说服力的 AI 工作流评估方案。
-2. 使用的 Spec：`specs/evaluation-framework/spec.md`
+2. 使用的 Spec：N/A（用户未显式 `/spec`）
 3. 使用的上下文索引：`.ai/workflows/README.md`、`.ai/workflows/verification.md`、`.ai/context/skill-routing.md`
 4. 使用的 Skills：仓库内 workflow-assets 维护规则
 
@@ -29,7 +29,7 @@
 | T12-2 | Done | `.ai/workflows/eval-rubric.md` | Pass | 定义 1-5 分 Rubric |
 | T12-3 | Done | `.ai/templates/evaluation-summary-template.md`、`.ai/templates/gate-check-template.md`、`.ai/templates/rubric-template.md` | Pass | 模板可复制使用 |
 | T12-4 | Done | `.ai/workflows/README.md`、`.ai/templates/run-record-template.md` | Pass | 标准流程已接入评估 |
-| T12-5 | Done | `app/workflow-data.ts` | Pass | 首页资产和任务状态同步 |
+| T12-5 | Done | `src/lib/data/workflow-data.ts` | Pass | 首页资产和任务状态同步 |
 | T12-6 | Done | `specs/evaluation-framework/*` | Pass | 记录本次试点 |
 
 ## 5. 修改文件
@@ -43,7 +43,7 @@
 | `.ai/templates/rubric-template.md` | 新增评分模板 |
 | `.ai/workflows/README.md` | 接入评估读取顺序和标准流程 |
 | `.ai/templates/run-record-template.md` | 增加评估相关字段 |
-| `app/workflow-data.ts` | 登记评估资产和 T12 任务 |
+| `src/lib/data/workflow-data.ts` | 登记评估资产和 T12 任务 |
 | `specs/evaluation-framework/*` | 新增本次试点 PRD、Spec、Tasks、Run Record、Evaluation Summary |
 
 ## 6. 验证记录

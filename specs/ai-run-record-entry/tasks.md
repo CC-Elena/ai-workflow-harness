@@ -2,7 +2,7 @@
 
 ## 1. Spec 来源
 
-- Spec 文件：`specs/ai-run-record-entry/spec.md`
+- Spec 文件：N/A（模拟流程记录，已按轻量流程移除非必要 Spec）
 - 规划日期：2026-05-02
 - Planner：Codex
 
@@ -11,7 +11,7 @@
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
 | T1 | 创建模拟 PRD | `specs/ai-run-record-entry/prd.md` | 无 | Done |
-| T2 | 生成结构化 Spec | `specs/ai-run-record-entry/spec.md` | T1 | Done |
+| T2 | 记录模拟需求边界 | `specs/ai-run-record-entry/run-record.md` | T1 | Done |
 | T3 | 拆解任务列表 | `specs/ai-run-record-entry/tasks.md` | T2 | Done |
 | T4 | 补强执行记录入口说明 | `.ai/evals/README.md` | T2 | Done |
 | T5 | 生成本次 Run Record | `specs/ai-run-record-entry/run-record.md` | T1-T4 | Done |
@@ -73,7 +73,6 @@
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `specs/ai-run-record-entry/spec.md` | 新增结构化 Spec |
 
 #### 执行动作
 
@@ -103,7 +102,7 @@
 
 #### 输入
 
-1. Spec 相关段落：`specs/ai-run-record-entry/spec.md`
+1. 记录相关段落：`specs/ai-run-record-entry/run-record.md`
 2. 必读上下文：`.ai/templates/task-template.md`、`.ai/workflows/planner-executor.md`
 3. 必读 Skills：无强制 Skill，参考 `.ai/prompts/planner.md`
 

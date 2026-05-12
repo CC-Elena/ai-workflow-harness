@@ -62,7 +62,7 @@ Executor 只处理单个任务，严格按 Planner 输出执行。
 2. 读取对应上下文索引和 Skill。
 3. 使用 `rg` 或文件读取确认真实代码结构。
 4. 执行最小必要修改。
-5. 按 `.ai/workflows/verification.md` 执行验证。
+5. 按 `.ai/workflows/.md` 执行验证。
 6. 记录结果到 `specs/{feature}/run-record.md`。
 7. 失败时按 `.ai/prompts/fix-verification-failure.md` 处理。
 8. 若仍失败，生成 RCA 或标记人工介入。

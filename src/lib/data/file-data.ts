@@ -1,4 +1,4 @@
-import { assets, type Asset, type AssetCategory } from '../workflow-data';
+import { assets, type Asset, type AssetCategory } from './workflow-data';
 
 export type { AssetCategory };
 
@@ -24,6 +24,9 @@ const categoryIcons: Record<AssetCategory, string> = {
   Skill: '🧩'
 };
 
+/**
+ * 文件资源集合，基于 workflow-data 注入图标信息
+ */
 export const fileItems: FileItem[] = assets.map((asset) => ({
   ...asset,
   icon: categoryIcons[asset.category]
@@ -41,6 +44,12 @@ function sortTree(nodes: FileTreeNode[]): FileTreeNode[] {
     });
 }
 
+/**
+ * 将平铺的文件资产列表转换成层级结构的目录树
+ * 
+ * @param {FileItem[]} files - 平铺的文件资产集合
+ * @returns {FileTreeNode[]} 生成的目录树节点
+ */
 export function buildFileTree(files: FileItem[]): FileTreeNode[] {
   const root: FileTreeNode[] = [];
 

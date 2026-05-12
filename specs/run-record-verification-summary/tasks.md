@@ -10,8 +10,8 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 扩展 RunDraft 数据结构和旧草稿兼容 | `app/workflow-workspace.tsx` | 无 | Done |
-| T2 | 增加验证摘要表单字段 | `app/workflow-workspace.tsx` | T1 | Done |
+| T1 | 扩展 RunDraft 数据结构和旧草稿兼容 | `src/components/views/workflow-workspace.tsx` | 无 | Done |
+| T2 | 增加验证摘要表单字段 | `src/components/views/workflow-workspace.tsx` | T1 | Done |
 | T3 | 验证并记录执行结果 | `specs/run-record-verification-summary/run-record.md` | T1-T2 | Done |
 
 ## 3. 任务详情
@@ -25,14 +25,14 @@
 #### 输入
 
 1. Spec 相关段落：F1、F3。
-2. 必读上下文：`app/workflow-workspace.tsx`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 修改类型、默认值和读取逻辑 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 修改类型、默认值和读取逻辑 |
 
 #### 执行动作
 
@@ -63,14 +63,14 @@
 #### 输入
 
 1. Spec 相关段落：F2。
-2. 必读上下文：`app/workflow-workspace.tsx`、`app/globals.css`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`、`src/app/globals.css`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 新增 textarea |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 新增 textarea |
 
 #### 执行动作
 

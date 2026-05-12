@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-import { assets, pilots, planTasks, stages, type AssetCategory, type StageStatus } from './workflow-data';
+import { assets, pilots, planTasks, stages, type AssetCategory, type StageStatus } from '../../lib/data/workflow-data';
 
 type RunDraft = {
   featureName: string;
@@ -59,6 +59,14 @@ const statusLabel: Record<StageStatus, string> = {
   pending: 'Pending'
 };
 
+/**
+ * 工作流数据看板主组件 (WorkflowWorkspace)
+ * 
+ * 负责在首页展示 AI Agent 的所有工作流数据、资产分类、Pilot 清单和 MVP 完成概览。
+ * 该组件在前端基于预定义的数据进行统计和渲染，是项目的核心入口大盘。
+ * 
+ * @returns {JSX.Element} 数据大盘可视化页面
+ */
 export default function WorkflowWorkspace() {
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<AssetCategory | 'All'>('All');

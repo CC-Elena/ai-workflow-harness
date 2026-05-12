@@ -87,12 +87,12 @@ Executor 修改代码
 1. `/`：工作流阶段概览、MVP 状态、资产检索、Run Record 草稿。
 2. `/files`：资产文件浏览器，按目录树展示文件，并在右侧预览文件内容。
 
-`/files` 不是全仓库扫描，它只展示 `app/workflow-data.ts` 中 `assets` 数组登记的文件。这样做是为了保持内容读取范围可控，避免网页任意读取 `.env`、依赖目录或其他敏感文件。
+`/files` 不是全仓库扫描，它只展示 `src/lib/data/workflow-data.ts` 中 `assets` 数组登记的文件。这样做是为了保持内容读取范围可控，避免网页任意读取 `.env`、依赖目录或其他敏感文件。
 
 如果新增文件后想让它出现在文件浏览器中，请把它登记到：
 
 ```text
-app/workflow-data.ts
+src/lib/data/workflow-data.ts
 ```
 
 示例：

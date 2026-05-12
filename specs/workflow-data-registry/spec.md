@@ -16,7 +16,7 @@
 
 ### 3.1 本次包含
 
-1. 新增 `app/workflow-data.ts`。
+1. 新增 `src/lib/data/workflow-data.ts`。
 2. 将 stages、assets、planTasks、pilots 从页面组件迁移到数据模块。
 3. 首页从数据模块导入数据。
 4. MVP 指标由数据数组计算。
@@ -38,7 +38,7 @@
 
 | 编号 | 功能点 | 说明 | 优先级 |
 |------|--------|------|--------|
-| F1 | 数据模块 | 新增 `app/workflow-data.ts` | P0 |
+| F1 | 数据模块 | 新增 `src/lib/data/workflow-data.ts` | P0 |
 | F2 | 指标计算 | 由 `planTasks`、`pilots` 计算指标 | P0 |
 | F3 | 页面导入 | `workflow-workspace.tsx` 不再重复维护资产数组 | P0 |
 
@@ -46,8 +46,8 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| 页面 | `app/workflow-workspace.tsx` | 改为导入数据和计算指标 |
-| 数据 | `app/workflow-data.ts` | 新增首页工作流数据源 |
+| 页面 | `src/components/views/workflow-workspace.tsx` | 改为导入数据和计算指标 |
+| 数据 | `src/lib/data/workflow-data.ts` | 新增首页工作流数据源 |
 
 ## 7. 验收标准
 

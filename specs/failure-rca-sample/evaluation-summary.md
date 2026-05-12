@@ -3,7 +3,7 @@
 ## 1. 基本信息
 
 - 需求名称：失败路径与 RCA 样本
-- 关联 Spec：`specs/failure-rca-sample/spec.md`
+- 关联 Spec：N/A（失败/RCA 样本维护，已按轻量流程移除非必要 Spec）
 - 关联 Tasks：`specs/failure-rca-sample/tasks.md`
 - 关联 Run Record：`specs/failure-rca-sample/run-record.md`
 - 评估日期：2026-05-09
@@ -14,7 +14,7 @@
 
 | 阻断项 | 是否触发 | 证据 | 处理 |
 |--------|----------|------|------|
-| 没有 Spec 就进入 Executor | No | `specs/failure-rca-sample/spec.md` | N/A |
+| 没有 Spec 就进入 Executor | No | 本任务不属于前端需求开发，未触发 `/spec` | N/A |
 | 验证未运行却记录为 Pass | No | `specs/failure-rca-sample/evidence/mock-verification-failure.log` | 保留 Failed |
 | 修改超出任务影响范围 | No | `specs/failure-rca-sample/tasks.md` | N/A |
 | 高风险模块缺少人工确认 | No | 不涉及高风险模块 | N/A |
@@ -27,7 +27,7 @@
 
 | 维度 | 权重 | 得分 | 加权分 | 证据 |
 |------|------|------|--------|------|
-| Spec 质量 | 15 | 14 | 14 | `specs/failure-rca-sample/spec.md` |
+| 样本边界质量 | 15 | 14 | 14 | `specs/failure-rca-sample/prd.md` |
 | 任务拆解质量 | 15 | 14 | 14 | `specs/failure-rca-sample/tasks.md` |
 | 上下文与 Skill 使用 | 15 | 12 | 12 | 样本为文档型失败闭环 |
 | 执行质量 | 20 | 16 | 16 | 不修改代码，保持失败状态 |

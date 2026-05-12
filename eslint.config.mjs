@@ -10,9 +10,32 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts', 'skills/**/scripts/**']
+    ignores: ['.next/**', 'node_modules/**', 'next-env.d.ts', 'skills/**/scripts/**', 'scripts/**']
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript')
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  {
+    plugins: {
+      jsdoc: (await import('eslint-plugin-jsdoc')).default,
+    },
+    rules: {
+      'jsdoc/require-jsdoc': ['error', {
+        require: {
+          FunctionDeclaration: true,
+          ArrowFunctionExpression: true,
+        },
+        publicOnly: true
+      }],
+      'jsdoc/require-param': 'off',
+      'jsdoc/require-returns': 'off',
+      'jsdoc/require-description': 'warn'
+    }
+  },
+  {
+    files: ['src/app/**/page.tsx', 'src/app/**/layout.tsx'],
+    rules: {
+      'jsdoc/require-jsdoc': 'off'
+    }
+  }
 ];
 
 export default eslintConfig;

@@ -1,12 +1,13 @@
 # API 索引
 
-本文件是轻量 API 索引入口。真实接口以 `src/service/` 和调用方为准。
+本文件是轻量 API 索引入口。真实接口以 `src/lib/services/` 和调用方为准。
 
 ## 1. 搜索位置
 
-1. `src/service/`
-2. `src/utils/request/`
-3. 页面或 Hook 中的接口调用方。
+1. `api-catalog.json`
+2. `src/lib/services/`
+3. `src/app/api/`
+4. 页面或 Hook 中的接口调用方。
 4. 历史同类需求实现。
 
 ## 2. 使用原则

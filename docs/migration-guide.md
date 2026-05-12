@@ -79,4 +79,4 @@ mkdir -p specs
 如果你希望新项目也有 `http://localhost:3000/files` 这样的可视化面板：
 1.  需要新项目支持 Next.js App Router 或你将其改写为新项目支持的路由（如 Vue Router / React Router）。
 2.  迁移 `app/` 目录和 `globals.css`。
-3.  清除 `app/workflow-data.ts` 中的旧数据，并编写脚本自动扫描新项目的 `.ai` 目录，或者手动维护资产列表。
+3.  清除 `src/lib/data/workflow-data.ts` 中的旧数据，并编写脚本自动扫描新项目的 `.ai` 目录，或者手动维护资产列表。

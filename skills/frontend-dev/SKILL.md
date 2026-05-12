@@ -52,7 +52,7 @@ version: 0.1.0
 
 创建新组件前，**必须**先查询：
 1. `components-catalog.json` 和 `hooks-catalog.json`
-2. `src/baseComponents/`、`src/componentsUI/`、`src/shared/components/`
+2. `src/components/layouts/`、`src/components/views/`
 
 新增组件后运行 `pnpm run cmate` 更新索引。
 

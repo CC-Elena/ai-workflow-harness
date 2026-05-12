@@ -14,7 +14,7 @@
 
 1. 用户需求或 PRD：`specs/file-content-tree-view/prd.md`
 2. 使用的 Spec：`specs/file-content-tree-view/spec.md`
-3. 使用的上下文索引：`app/workflow-data.ts`, `app/files/*`, `.ai/workflows/verification.md`
+3. 使用的上下文索引：`src/lib/data/workflow-data.ts`, `app/files/*`, `.ai/workflows/verification.md`
 4. 使用的 Skills：`frontend-dev`, `project`
 
 ## 3. Context Pack
@@ -29,10 +29,10 @@
 | 等级 | 文件或资产 | 使用原因 | 阶段 | 是否已读取 |
 |------|------------|----------|------|------------|
 | P0 | `specs/file-content-tree-view/spec.md` | 需求可信源 | Plan / Execute | Yes |
-| P1 | `app/files/file-workspace.tsx` | 修改目标组件 | Execute | Yes |
-| P1 | `app/files/file-data.ts` | 数据和目录树 | Execute | Yes |
-| P1 | `app/workflow-data.ts` | 白名单数据源 | Execute | Yes |
-| P1 | `app/globals.css` | 样式修改 | Execute | Yes |
+| P1 | `src/components/views/file-workspace.tsx` | 修改目标组件 | Execute | Yes |
+| P1 | `src/lib/data/file-data.ts` | 数据和目录树 | Execute | Yes |
+| P1 | `src/lib/data/workflow-data.ts` | 白名单数据源 | Execute | Yes |
+| P1 | `src/app/globals.css` | 样式修改 | Execute | Yes |
 | P2 | `.ai/workflows/verification.md` | 验证协议 | Verify | Yes |
 
 ## 4. 执行摘要
@@ -43,20 +43,20 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Success | `app/api/files/content/route.ts` | API Pass | 只允许读取资产清单路径 |
-| T2 | Success | `app/files/file-data.ts` | Typecheck Pass | 新增目录树类型和构建函数 |
-| T3 | Success | `app/files/file-workspace.tsx` | Browser Pass | 左树右预览 |
-| T4 | Success | `app/globals.css` | Screenshot Pass | 响应式布局 |
+| T1 | Success | `src/app/api/files/content/route.ts` | API Pass | 只允许读取资产清单路径 |
+| T2 | Success | `src/lib/data/file-data.ts` | Typecheck Pass | 新增目录树类型和构建函数 |
+| T3 | Success | `src/components/views/file-workspace.tsx` | Browser Pass | 左树右预览 |
+| T4 | Success | `src/app/globals.css` | Screenshot Pass | 响应式布局 |
 | T5 | Success | `specs/file-content-tree-view/*` | Harness Check Pass | 记录和证据 |
 
 ## 6. 修改文件
 
 | 文件 | 变更说明 |
 |------|----------|
-| `app/api/files/content/route.ts` | [NEW] 受限读取资产文件内容 |
-| `app/files/file-data.ts` | [MODIFY] 增加目录树类型和构建函数 |
-| `app/files/file-workspace.tsx` | [MODIFY] 目录树、文件内容预览和加载状态 |
-| `app/globals.css` | [MODIFY] 文件浏览器和预览样式 |
+| `src/app/api/files/content/route.ts` | [NEW] 受限读取资产文件内容 |
+| `src/lib/data/file-data.ts` | [MODIFY] 增加目录树类型和构建函数 |
+| `src/components/views/file-workspace.tsx` | [MODIFY] 目录树、文件内容预览和加载状态 |
+| `src/app/globals.css` | [MODIFY] 文件浏览器和预览样式 |
 | `specs/file-content-tree-view/*` | [NEW] PRD、Spec、Tasks、Run Record、Evaluation 和证据 |
 
 ## 7. 验证记录
@@ -99,10 +99,10 @@
 
 | 文件 | 范围 | 确认原因 |
 |------|------|----------|
-| `app/api/files/content/route.ts` | 范围内 | Spec 影响范围 |
-| `app/files/file-data.ts` | 范围内 | Spec 影响范围 |
-| `app/files/file-workspace.tsx` | 范围内 | Spec 影响范围 |
-| `app/globals.css` | 范围内 | Spec 影响范围 |
+| `src/app/api/files/content/route.ts` | 范围内 | Spec 影响范围 |
+| `src/lib/data/file-data.ts` | 范围内 | Spec 影响范围 |
+| `src/components/views/file-workspace.tsx` | 范围内 | Spec 影响范围 |
+| `src/app/globals.css` | 范围内 | Spec 影响范围 |
 | `specs/file-content-tree-view/evaluation-summary.md` | 范围内 | Medium 需求必需评估产物 |
 | `specs/file-content-tree-view/evidence/api.md` | 范围内 | 验证证据 |
 | `specs/file-content-tree-view/evidence/build.log` | 范围内 | 验证证据 |

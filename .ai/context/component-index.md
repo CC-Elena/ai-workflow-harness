@@ -7,10 +7,8 @@
 创建新组件前，按以下顺序搜索：
 
 1. `components-catalog.json`
-2. `src/baseComponents/`
-3. `src/componentsUI/`
-4. `src/shared/components/`
-5. `src/components/`
+2. `src/components/layouts/`
+3. `src/components/views/`
 
 ## 2. 复用判断
 

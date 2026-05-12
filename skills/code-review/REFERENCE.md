@@ -53,21 +53,9 @@ pnpm run qa
 
 ---
 
-### 声明影响环境范围
-
-**环境列表**：
-- **cooper**：入口 `src/cooper.js`
-- **knowledge**：入口 `src/knowledge.js`
-- **shimo**：入口 `shimo/app/index.js`
-- **shimo2**：入口 `shimo2/app/index.js`
-
 **PR 描述模板**：
 ```markdown
-## 影响范围
-- [ ] cooper
-- [ ] knowledge
-- [ ] shimo
-- [ ] shimo2
+
 ```
 
 ---
@@ -106,7 +94,7 @@ import DOMPurify from 'dompurify';
 **查询命令**：
 ```bash
 # 搜索组件
-grep -r "ComponentName" src/components/ src/baseComponents/ src/componentsUI/
+grep -r "ComponentName" src/components/layouts/ src/components/views/
 
 # 查看索引
 cat components-catalog.json | jq '.[] | select(.name | contains("Loading"))'

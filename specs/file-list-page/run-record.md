@@ -30,10 +30,10 @@
 |------|------------|----------|------|------------|
 | P0 | `specs/file-list-page/spec.md` | 需求可信源 | Plan / Execute | Yes |
 | P0 | `specs/file-list-page/prd.md` | 需求背景 | Plan | Yes |
-| P1 | `app/workflow-data.ts` | 复用数据源和类型 | Execute | Yes |
-| P1 | `app/workflow-workspace.tsx` | 参考组件实现模式 | Execute | Yes |
-| P1 | `app/globals.css` | 参考样式和复用变量 | Execute | Yes |
-| P1 | `app/layout.tsx` | 修改全局布局 | Execute | Yes |
+| P1 | `src/lib/data/workflow-data.ts` | 复用数据源和类型 | Execute | Yes |
+| P1 | `src/components/views/workflow-workspace.tsx` | 参考组件实现模式 | Execute | Yes |
+| P1 | `src/app/globals.css` | 参考样式和复用变量 | Execute | Yes |
+| P1 | `src/app/layout.tsx` | 修改全局布局 | Execute | Yes |
 | P2 | `.ai/workflows/verification.md` | 新增交付门禁 | Repair / Prevent | Yes |
 | P2 | `.ai/templates/run-record-template.md` | 新增 diff 和证据表 | Repair / Prevent | Yes |
 
@@ -45,23 +45,23 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Success | `app/files/file-data.ts` | Typecheck Pass | 扩展 `assets` 为 `fileItems` |
-| T2 | Success | `app/files/file-workspace.tsx` | Build & Browser Pass | 页面核心组件 |
-| T3 | Success | `app/globals.css` | Build & Screenshot Pass | 样式补充 |
-| T4 | Success | `app/files/page.tsx` | Build Pass | 路由入口 |
-| T5 | Success | `app/nav-bar.tsx`, `app/layout.tsx` | Browser Pass | 全局导航栏 |
+| T1 | Success | `src/lib/data/file-data.ts` | Typecheck Pass | 扩展 `assets` 为 `fileItems` |
+| T2 | Success | `src/components/views/file-workspace.tsx` | Build & Browser Pass | 页面核心组件 |
+| T3 | Success | `src/app/globals.css` | Build & Screenshot Pass | 样式补充 |
+| T4 | Success | `src/app/files/page.tsx` | Build Pass | 路由入口 |
+| T5 | Success | `src/components/layouts/nav-bar.tsx`, `src/app/layout.tsx` | Browser Pass | 全局导航栏 |
 | T6 | Success | `specs/file-list-page/run-record.md`, `specs/file-list-page/evidence/*` | Harness Check Pass | 交付记录和证据 |
 
 ## 6. 修改文件
 
 | 文件 | 变更说明 |
 |------|----------|
-| `app/files/file-data.ts` | [NEW] 文件列表页数据源，复用并扩展 `assets` |
-| `app/files/file-workspace.tsx` | [NEW] 文件列表页主体组件，实现置顶、搜索、筛选等交互 |
-| `app/files/page.tsx` | [NEW] Next.js 页面路由入口 |
-| `app/nav-bar.tsx` | [NEW] 顶部导航栏组件 |
-| `app/layout.tsx` | [MODIFY] 引入顶部导航栏组件 |
-| `app/globals.css` | [MODIFY] 追加文件列表页和导航栏样式 |
+| `src/lib/data/file-data.ts` | [NEW] 文件列表页数据源，复用并扩展 `assets` |
+| `src/components/views/file-workspace.tsx` | [NEW] 文件列表页主体组件，实现置顶、搜索、筛选等交互 |
+| `src/app/files/page.tsx` | [NEW] Next.js 页面路由入口 |
+| `src/components/layouts/nav-bar.tsx` | [NEW] 顶部导航栏组件 |
+| `src/app/layout.tsx` | [MODIFY] 引入顶部导航栏组件 |
+| `src/app/globals.css` | [MODIFY] 追加文件列表页和导航栏样式 |
 | `specs/file-list-page/tasks.md` | [MODIFY] 修正任务状态和验证方式 |
 | `specs/file-list-page/evaluation-summary.md` | [NEW] Medium 需求评估摘要 |
 | `specs/file-list-page/evidence/*` | [NEW] 命令、截图和交互验证证据 |
@@ -112,12 +112,12 @@
 |------|------|----------|
 | `.ai/templates/run-record-template.md` | 范围外 | 用户要求本轮新增通用防错机制 |
 | `.ai/workflows/verification.md` | 范围外 | 用户要求本轮新增通用防错机制 |
-| `app/files/file-data.ts` | 范围内 | Spec 影响范围 |
-| `app/files/file-workspace.tsx` | 范围内 | Spec 影响范围 |
-| `app/files/page.tsx` | 范围内 | Spec 影响范围 |
-| `app/globals.css` | 范围内 | Spec 影响范围 |
-| `app/layout.tsx` | 范围内 | Spec 影响范围 |
-| `app/nav-bar.tsx` | 范围内 | Spec 影响范围 |
+| `src/lib/data/file-data.ts` | 范围内 | Spec 影响范围 |
+| `src/components/views/file-workspace.tsx` | 范围内 | Spec 影响范围 |
+| `src/app/files/page.tsx` | 范围内 | Spec 影响范围 |
+| `src/app/globals.css` | 范围内 | Spec 影响范围 |
+| `src/app/layout.tsx` | 范围内 | Spec 影响范围 |
+| `src/components/layouts/nav-bar.tsx` | 范围内 | Spec 影响范围 |
 | `package.json` | 范围外 | 用户要求新增 `npm run harness:check` 命令 |
 | `scripts/check-harness-run.mjs` | 范围外 | 用户要求新增通用防错机制 |
 | `specs/file-list-page/evaluation-summary.md` | 范围内 | Medium 需求必需评估产物 |

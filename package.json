@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "harness:check": "node scripts/check-harness-run.mjs"
+    "harness:check": "node scripts/check-harness-run.mjs",
+    "sync": "node scripts/sync-catalogs.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "^15.0.0",
@@ -22,6 +24,8 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.0.0",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "husky": "^9.1.7",
     "typescript": "^5.0.0"
   }
 }

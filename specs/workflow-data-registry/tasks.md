@@ -10,8 +10,8 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 新增工作流数据模块 | `app/workflow-data.ts` | 无 | Done |
-| T2 | 首页改为导入数据并计算指标 | `app/workflow-workspace.tsx` | T1 | Done |
+| T1 | 新增工作流数据模块 | `src/lib/data/workflow-data.ts` | 无 | Done |
+| T2 | 首页改为导入数据并计算指标 | `src/components/views/workflow-workspace.tsx` | T1 | Done |
 | T3 | 验证并记录结果 | `specs/workflow-data-registry/run-record.md` | T1-T2 | Done |
 
 ## 3. 任务详情
@@ -25,14 +25,14 @@
 #### 输入
 
 1. Spec 相关段落：F1。
-2. 必读上下文：`app/workflow-workspace.tsx`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-data.ts` | 新增数据模块 |
+| 文件 | `src/lib/data/workflow-data.ts` | 新增数据模块 |
 
 #### 执行动作
 
@@ -63,14 +63,14 @@
 #### 输入
 
 1. Spec 相关段落：F2、F3。
-2. 必读上下文：`app/workflow-workspace.tsx`、`app/workflow-data.ts`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`、`src/lib/data/workflow-data.ts`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 删除重复数据，导入并计算指标 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 删除重复数据，导入并计算指标 |
 
 #### 执行动作
 

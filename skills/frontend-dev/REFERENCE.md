@@ -9,21 +9,19 @@
 ### 组件层级与依赖方向
 
 ```
-componentsUI (基础 UI)  →  components (业务组件)  →  containers (页面容器)
+components/layouts (基础布局)  →  components/views (页面容器)
      ↓                           ↓
-  无业务逻辑                  包含业务逻辑
-  基于 AntD 封装              组合基础组件
+  无业务逻辑                  组合基础组件、包含业务逻辑
 ```
 
 **依赖规则**
-- `componentsUI/` → 仅依赖 antd、hooks、utils
-- `components/` → 可依赖 componentsUI、hooks、services、utils
-- **禁止** `componentsUI/` 引用 `components/`（单向依赖）
+- `components/layouts/` → 仅依赖基础 UI、hooks、utils
+- `components/views/` → 可依赖 layouts、hooks、services、utils
+- **禁止** `components/layouts/` 引用 `components/views/`（单向依赖）
 
 **索引文件**
-- `src/componentsUI/README.md` - 基础组件索引
-- `src/components/README.md` - 业务组件索引
-- 新增组件时同步更新对应 README
+- `components-catalog.json` - 基础组件索引
+- 新增组件时同步更新对应的 json 文件
 
 ---
 

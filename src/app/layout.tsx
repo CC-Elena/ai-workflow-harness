@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import NavBar from './nav-bar';
+import NavBar from '../components/layouts/nav-bar';
 
 export const metadata: Metadata = {
   title: 'AI Workflow Harness',

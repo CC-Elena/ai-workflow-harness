@@ -46,8 +46,8 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| 页面 | `app/workflow-workspace.tsx` | 增加概览数据和区块 |
-| 样式 | `app/globals.css` | 增加响应式概览样式 |
+| 页面 | `src/components/views/workflow-workspace.tsx` | 增加概览数据和区块 |
+| 样式 | `src/app/globals.css` | 增加响应式概览样式 |
 
 ## 7. 数据与接口
 
