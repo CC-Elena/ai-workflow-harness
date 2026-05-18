@@ -3,7 +3,7 @@
 ## 1. 基本信息
 
 - 需求名称：失败路径与 RCA 样本
-- Spec 文件：N/A（失败/RCA 样本维护，已按轻量流程移除非必要 Spec）
+- Spec 文件：`specs/failure-rca-sample/spec.md`
 - Task 文件：`specs/failure-rca-sample/tasks.md`
 - 执行日期：2026-05-09
 - 执行工具：Codex
@@ -13,7 +13,7 @@
 ## 2. 输入
 
 1. 用户需求或 PRD：补齐失败路径和 RCA 样本。
-2. 使用的 Spec：N/A（用户未显式 `/spec`）
+2. 使用的 Spec：`specs/failure-rca-sample/spec.md`
 3. 使用的上下文索引：`.ai/workflows/evaluation-metrics.md`、`.ai/templates/rca-template.md`
 4. 使用的 Skills：workflow-assets
 
@@ -86,6 +86,7 @@
 | 文件 | 范围 | 确认原因 |
 |------|------|----------|
 | `specs/failure-rca-sample/prd.md` | 范围内 | 失败样本输入 |
+| `specs/failure-rca-sample/spec.md` | 范围内 | 失败样本结构说明 |
 | `specs/failure-rca-sample/tasks.md` | 范围内 | 失败样本任务 |
 | `specs/failure-rca-sample/run-record.md` | 范围内 | 失败样本记录 |
 | `specs/failure-rca-sample/evaluation-summary.md` | 范围内 | 失败样本评估 |

@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const repoRoot = process.cwd();
-const featureArg = process.argv[2];
+const args = process.argv.slice(2);
 const failures = [];
 
 function fail(message) {
@@ -20,24 +20,63 @@ function exists(filePath) {
   return fs.existsSync(path.join(repoRoot, filePath));
 }
 
-function listChangedFiles() {
-  const tracked = execFileSync('git', ['-c', 'core.quotePath=false', 'diff', '--name-only'], {
+function usage() {
+  console.error(`Usage:
+  npm run harness:check -- specs/{feature}
+  npm run harness:check -- --changed --base <baseRef> --head <headRef>`);
+}
+
+function parseArgs(argv) {
+  if (argv.includes('--changed')) {
+    const baseIndex = argv.indexOf('--base');
+    const headIndex = argv.indexOf('--head');
+    const base = baseIndex >= 0 ? argv[baseIndex + 1] : '';
+    const head = headIndex >= 0 ? argv[headIndex + 1] : '';
+
+    if (!base || !head) {
+      usage();
+      process.exit(2);
+    }
+
+    return { mode: 'changed', base, head };
+  }
+
+  const featureArg = argv[0];
+  if (!featureArg) {
+    usage();
+    process.exit(2);
+  }
+
+  return { mode: 'feature', featureDir: featureArg.replace(/\/$/, '') };
+}
+
+function runGit(argsForGit) {
+  return execFileSync('git', ['-c', 'core.quotePath=false', ...argsForGit], {
     cwd: repoRoot,
     encoding: 'utf8'
-  })
+  });
+}
+
+function splitFileList(output) {
+  return output
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean);
+}
 
-  const untracked = execFileSync('git', ['-c', 'core.quotePath=false', 'ls-files', '--others', '--exclude-standard'], {
-    cwd: repoRoot,
-    encoding: 'utf8'
-  })
-    .split('\n')
-    .map((line) => line.trim())
-    .filter(Boolean);
+function uniqueSorted(files) {
+  return Array.from(new Set(files)).sort();
+}
 
-  return Array.from(new Set([...tracked, ...untracked])).sort();
+function listWorkingTreeChangedFiles() {
+  const tracked = splitFileList(runGit(['diff', '--name-only']));
+  const untracked = splitFileList(runGit(['ls-files', '--others', '--exclude-standard']));
+
+  return uniqueSorted([...tracked, ...untracked]);
+}
+
+function listRefChangedFiles(base, head) {
+  return uniqueSorted(splitFileList(runGit(['diff', '--name-only', `${base}...${head}`])));
 }
 
 function getMetadata(markdown, label) {
@@ -124,7 +163,10 @@ function evidencePathExists(reference, featureDir) {
     reference.startsWith(featureDir) ||
     reference.startsWith('.ai/') ||
     reference.startsWith('app/') ||
-    reference.startsWith('scripts/')
+    reference.startsWith('scripts/') ||
+    reference.startsWith('src/') ||
+    reference.startsWith('docs/') ||
+    reference.startsWith('.github/')
   ) {
     candidates.push(reference);
   } else {
@@ -136,148 +178,19 @@ function evidencePathExists(reference, featureDir) {
   return candidates.some(exists);
 }
 
-if (!featureArg) {
-  console.error('Usage: npm run harness:check -- specs/{feature}');
-  process.exit(2);
+function featureDirFromChangedFile(filePath) {
+  const match = filePath.match(/^specs\/([^/]+)\//);
+  return match ? `specs/${match[1]}` : '';
 }
 
-const featureDir = featureArg.replace(/\/$/, '');
-const specPath = path.join(featureDir, 'spec.md');
-const tasksPath = path.join(featureDir, 'tasks.md');
-const runRecordPath = path.join(featureDir, 'run-record.md');
-const evaluationPath = path.join(featureDir, 'evaluation-summary.md');
-const verificationRecordPath = path.join(featureDir, 'verification-record.md');
-
-if (!exists(specPath)) fail(`Missing required file: ${specPath}`);
-if (!exists(runRecordPath)) fail(`Missing required file: ${runRecordPath}`);
-
-let runRecord = '';
-let spec = '';
-let tasks = '';
-let evaluation = '';
-
-if (exists(specPath)) {
-  spec = readText(specPath);
-  requireHeadings(spec, specPath, [
-    '1. 基本信息',
-    '2. 背景与目标',
-    '3. 范围',
-    '11. 验收标准',
-    '12. 风险与待确认问题'
-  ]);
+function findChangedFeatureDirs(changedFiles) {
+  return uniqueSorted(changedFiles.map(featureDirFromChangedFile).filter(Boolean));
 }
 
-if (exists(runRecordPath)) {
-  runRecord = readText(runRecordPath);
-  requireHeadings(runRecord, runRecordPath, [
-    '1. 基本信息',
-    '2. 输入',
-    '4. 执行摘要',
-    '5. 任务结果'
-  ]);
-  requireOneHeading(runRecord, runRecordPath, ['6. 验证记录', '7. 验证记录'], '验证记录');
-}
-
-const complexity = getMetadata(runRecord, '任务复杂度');
-const status = getMetadata(runRecord, '状态');
-const diffCoverageMode = getMetadata(runRecord, 'Diff 覆盖模式');
-const needsExtendedArtifacts = /^(Medium|Large|Risky|Failure)$/i.test(complexity);
-const needsRca = /^(Partial|Failed)$/i.test(status) || /^Failure$/i.test(complexity) || /是否需要 RCA[：:]\s*是/.test(runRecord);
-
-if (needsExtendedArtifacts) {
-  if (!exists(tasksPath)) fail(`Medium/Large/Risky run requires tasks file: ${tasksPath}`);
-  if (!exists(evaluationPath)) {
-    fail(`Medium/Large/Risky run requires evaluation summary: ${evaluationPath}`);
-  }
-  if (/^(Medium|Large|Risky)$/i.test(complexity) && !exists(verificationRecordPath)) {
-    fail(`Medium/Large/Risky run requires verification record: ${verificationRecordPath}`);
-  }
-}
-
-if (exists(tasksPath)) {
-  tasks = readText(tasksPath);
-  if (!hasHeading(tasks, '1. 任务列表') && !/\|\s*ID\s*\|\s*任务\s*\|/.test(tasks)) {
-    fail(`${tasksPath} is missing a task table or section: ## 1. 任务列表`);
-  }
-  if (/\|\s*Pending\s*\|/.test(tasks) && /^Success$/i.test(status)) {
-    fail('tasks.md still contains Pending rows while run-record status is Success.');
-  }
-}
-
-if (exists(evaluationPath)) {
-  evaluation = readText(evaluationPath);
-  requireHeadings(evaluation, evaluationPath, ['1. 基本信息', '2. 阻断项检查']);
-  requireOneHeading(evaluation, evaluationPath, ['4. 总分', '4. 结论', '6. 结论'], '结论或总分');
-
-  const hasScoreSection = hasHeading(evaluation, '3. 总分') || hasHeading(evaluation, '3. 分项评分');
-  if (!hasScoreSection) {
-    fail(`${evaluationPath} is missing required score section: ## 3. 总分 or ## 3. 分项评分`);
-  }
-
-  const blockerRows = parseTableRows(getSection(evaluation, '2. 阻断项检查'));
-  if (blockerRows.length === 0) {
-    fail(`${evaluationPath} has no blocker check rows.`);
-  }
-}
-
-if (needsRca) {
-  const rcaReferences = extractBacktickPaths(runRecord).filter((ref) => /(^|\/)rca\.md$/i.test(ref));
-  if (rcaReferences.length === 0) {
-    fail('Failed/Partial/Failure run requires an RCA file reference in run-record.md.');
-  }
-  rcaReferences.forEach((ref) => {
-    if (!evidencePathExists(ref, featureDir)) {
-      fail(`RCA reference does not exist: ${ref}`);
-    }
-  });
-}
-
-if (runRecord) {
-  const verificationSection = getSection(runRecord, '7. 验证记录') || getSection(runRecord, '6. 验证记录');
-  const verificationRows = parseTableRows(verificationSection);
-  verificationRows.forEach((cells) => {
-    const [item, command, result, evidence, skippedReason] = cells;
-    const isSuccess = /\b(Pass|Success)\b/i.test(result || '');
-    const isSkipped = /\bSkipped\b/i.test(result || '');
-
-    if (isSuccess) {
-      const hasCommand = command && !/^(n\/a|none|无|-)?$/i.test(command);
-      const refs = extractBacktickPaths(evidence || '');
-      const hasEvidence = refs.length > 0 && refs.every((ref) => evidencePathExists(ref, featureDir));
-
-      if (!hasCommand && !hasEvidence) {
-        fail(`Verification row "${item}" is ${result} but has no command or existing evidence file.`);
-      }
-
-      if (refs.some((ref) => !evidencePathExists(ref, featureDir))) {
-        fail(`Verification row "${item}" references missing evidence: ${refs.join(', ')}`);
-      }
-    }
-
-    if (isSkipped && (!skippedReason || /^(n\/a|none|无|-)?$/i.test(skippedReason))) {
-      fail(`Verification row "${item}" is Skipped without a skip reason or risk.`);
-    }
-  });
-
-  const summarySection = getSection(runRecord, '4. 执行摘要');
-  if (!summarySection.trim()) {
-    fail('run-record.md has an empty execution summary.');
-  }
-
-  const evidenceRows = parseTableRows(getSection(runRecord, '11. 证据文件表'));
-  evidenceRows.forEach((cells) => {
-    const evidenceRef = extractBacktickPaths(cells.join(' '))[0];
-    if (evidenceRef && !evidencePathExists(evidenceRef, featureDir)) {
-      fail(`Evidence table references missing file: ${evidenceRef}`);
-    }
-  });
-
-  const changedFiles = listChangedFiles().filter((filePath) => {
-    if (!/^Feature scope$/i.test(diffCoverageMode)) return true;
-    return filePath.startsWith(`${featureDir}/`);
-  });
+function getCoveredFiles(runRecord) {
   const diffRows = parseTableRows(getSection(runRecord, '10. 实际 Diff 覆盖表'));
   const coveredFiles = new Map();
+
   diffRows.forEach((cells) => {
     const filePath = extractBacktickPaths(cells[0] || '')[0];
     if (filePath) {
@@ -285,6 +198,10 @@ if (runRecord) {
     }
   });
 
+  return coveredFiles;
+}
+
+function checkCoveredChangedFiles(changedFiles, coveredFiles) {
   changedFiles.forEach((filePath) => {
     const row = coveredFiles.get(filePath);
     if (!row) {
@@ -298,10 +215,201 @@ if (runRecord) {
       fail(`Out-of-scope file lacks confirmation reason: ${filePath}`);
     }
   });
+}
 
-  if (/^Success$/i.test(status) && exists(evaluationPath) && !hasExistingPathReference(runRecord, featureDir)) {
-    fail('Successful run should reference at least one existing evidence or linked artifact.');
+function validateFeatureRun(featureDir, options = {}) {
+  const specPath = path.join(featureDir, 'spec.md');
+  const tasksPath = path.join(featureDir, 'tasks.md');
+  const runRecordPath = path.join(featureDir, 'run-record.md');
+  const evaluationPath = path.join(featureDir, 'evaluation-summary.md');
+  const verificationRecordPath = path.join(featureDir, 'verification-record.md');
+
+  if (!exists(specPath)) fail(`Missing required file: ${specPath}`);
+  if (!exists(runRecordPath)) fail(`Missing required file: ${runRecordPath}`);
+
+  let runRecord = '';
+  let spec = '';
+  let tasks = '';
+  let evaluation = '';
+
+  if (exists(specPath)) {
+    spec = readText(specPath);
+    requireHeadings(spec, specPath, [
+      '1. 基本信息',
+      '2. 背景与目标',
+      '3. 范围',
+      '11. 验收标准',
+      '12. 风险与待确认问题'
+    ]);
   }
+
+  if (exists(runRecordPath)) {
+    runRecord = readText(runRecordPath);
+    requireHeadings(runRecord, runRecordPath, [
+      '1. 基本信息',
+      '2. 输入',
+      '4. 执行摘要',
+      '5. 任务结果'
+    ]);
+    requireOneHeading(runRecord, runRecordPath, ['6. 验证记录', '7. 验证记录'], '验证记录');
+  }
+
+  const complexity = getMetadata(runRecord, '任务复杂度');
+  const status = getMetadata(runRecord, '状态');
+  const diffCoverageMode = getMetadata(runRecord, 'Diff 覆盖模式');
+  const needsExtendedArtifacts = /^(Medium|Large|Risky|Failure)$/i.test(complexity);
+  const needsRca =
+    /^(Partial|Failed)$/i.test(status) || /^Failure$/i.test(complexity) || /是否需要 RCA[：:]\s*是/.test(runRecord);
+
+  if (needsExtendedArtifacts) {
+    if (!exists(tasksPath)) fail(`Medium/Large/Risky run requires tasks file: ${tasksPath}`);
+    if (!exists(evaluationPath)) {
+      fail(`Medium/Large/Risky run requires evaluation summary: ${evaluationPath}`);
+    }
+    if (/^(Medium|Large|Risky)$/i.test(complexity) && !exists(verificationRecordPath)) {
+      fail(`Medium/Large/Risky run requires verification record: ${verificationRecordPath}`);
+    }
+  }
+
+  if (exists(tasksPath)) {
+    tasks = readText(tasksPath);
+    if (!hasHeading(tasks, '1. 任务列表') && !/\|\s*ID\s*\|\s*任务\s*\|/.test(tasks)) {
+      fail(`${tasksPath} is missing a task table or section: ## 1. 任务列表`);
+    }
+    if (/\|\s*Pending\s*\|/.test(tasks) && /^Success$/i.test(status)) {
+      fail('tasks.md still contains Pending rows while run-record status is Success.');
+    }
+  }
+
+  if (exists(evaluationPath)) {
+    evaluation = readText(evaluationPath);
+    requireHeadings(evaluation, evaluationPath, ['1. 基本信息', '2. 阻断项检查']);
+    requireOneHeading(evaluation, evaluationPath, ['4. 总分', '4. 结论', '6. 结论'], '结论或总分');
+
+    const hasScoreSection = hasHeading(evaluation, '3. 总分') || hasHeading(evaluation, '3. 分项评分');
+    if (!hasScoreSection) {
+      fail(`${evaluationPath} is missing required score section: ## 3. 总分 or ## 3. 分项评分`);
+    }
+
+    const blockerRows = parseTableRows(getSection(evaluation, '2. 阻断项检查'));
+    if (blockerRows.length === 0) {
+      fail(`${evaluationPath} has no blocker check rows.`);
+    }
+  }
+
+  if (needsRca) {
+    const rcaReferences = extractBacktickPaths(runRecord).filter((ref) => /(^|\/)rca\.md$/i.test(ref));
+    if (rcaReferences.length === 0) {
+      fail('Failed/Partial/Failure run requires an RCA file reference in run-record.md.');
+    }
+    rcaReferences.forEach((ref) => {
+      if (!evidencePathExists(ref, featureDir)) {
+        fail(`RCA reference does not exist: ${ref}`);
+      }
+    });
+  }
+
+  const coveredFiles = runRecord ? getCoveredFiles(runRecord) : new Map();
+
+  if (runRecord) {
+    const verificationSection = getSection(runRecord, '7. 验证记录') || getSection(runRecord, '6. 验证记录');
+    const verificationRows = parseTableRows(verificationSection);
+    verificationRows.forEach((cells) => {
+      const [item, command, result, evidence, skippedReason] = cells;
+      const isSuccess = /\b(Pass|Success)\b/i.test(result || '');
+      const isSkipped = /\bSkipped\b/i.test(result || '');
+
+      if (isSuccess) {
+        const hasCommand = command && !/^(n\/a|none|无|-)?$/i.test(command);
+        const refs = extractBacktickPaths(evidence || '');
+        const hasEvidence = refs.length > 0 && refs.every((ref) => evidencePathExists(ref, featureDir));
+
+        if (!hasCommand && !hasEvidence) {
+          fail(`Verification row "${item}" is ${result} but has no command or existing evidence file.`);
+        }
+
+        if (refs.some((ref) => !evidencePathExists(ref, featureDir))) {
+          fail(`Verification row "${item}" references missing evidence: ${refs.join(', ')}`);
+        }
+      }
+
+      if (isSkipped && (!skippedReason || /^(n\/a|none|无|-)?$/i.test(skippedReason))) {
+        fail(`Verification row "${item}" is Skipped without a skip reason or risk.`);
+      }
+    });
+
+    const summarySection = getSection(runRecord, '4. 执行摘要');
+    if (!summarySection.trim()) {
+      fail('run-record.md has an empty execution summary.');
+    }
+
+    const evidenceRows = parseTableRows(getSection(runRecord, '11. 证据文件表'));
+    evidenceRows.forEach((cells) => {
+      const evidenceRef = extractBacktickPaths(cells.join(' '))[0];
+      if (evidenceRef && !evidencePathExists(evidenceRef, featureDir)) {
+        fail(`Evidence table references missing file: ${evidenceRef}`);
+      }
+    });
+
+    const changedFiles = options.changedFiles || listWorkingTreeChangedFiles();
+    const scopedChangedFiles =
+      options.mode === 'changed' || !/^Feature scope$/i.test(diffCoverageMode)
+        ? changedFiles
+        : changedFiles.filter((filePath) => filePath.startsWith(`${featureDir}/`));
+
+    if (options.checkDiffCoverage !== false) {
+      checkCoveredChangedFiles(scopedChangedFiles, coveredFiles);
+    }
+
+    if (/^Success$/i.test(status) && exists(evaluationPath) && !hasExistingPathReference(runRecord, featureDir)) {
+      fail('Successful run should reference at least one existing evidence or linked artifact.');
+    }
+  }
+
+  return { featureDir, coveredFiles };
+}
+
+function validateChangedRun(base, head) {
+  const changedFiles = listRefChangedFiles(base, head);
+  if (changedFiles.length === 0) {
+    console.log(`Harness changed-file check passed for ${base}...${head}: no changed files`);
+    return false;
+  }
+
+  const featureDirs = findChangedFeatureDirs(changedFiles);
+  if (featureDirs.length === 0) {
+    fail(
+      'Changed-file mode requires at least one specs/{feature}/run-record.md change so PR files can be mapped to a Run Record.'
+    );
+    changedFiles.forEach((filePath) => fail(`Changed file has no candidate Run Record: ${filePath}`));
+    return;
+  }
+
+  const aggregateCoverage = new Map();
+  featureDirs.forEach((featureDir) => {
+    const result = validateFeatureRun(featureDir, {
+      changedFiles,
+      checkDiffCoverage: false,
+      mode: 'changed'
+    });
+
+    result.coveredFiles.forEach((row, filePath) => {
+      if (!aggregateCoverage.has(filePath)) {
+        aggregateCoverage.set(filePath, row);
+      }
+    });
+  });
+
+  checkCoveredChangedFiles(changedFiles, aggregateCoverage);
+  return true;
+}
+
+const parsedArgs = parseArgs(args);
+let checkedChangedFiles = false;
+if (parsedArgs.mode === 'changed') {
+  checkedChangedFiles = validateChangedRun(parsedArgs.base, parsedArgs.head);
+} else {
+  validateFeatureRun(parsedArgs.featureDir);
 }
 
 if (failures.length > 0) {
@@ -310,4 +418,10 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log(`Harness check passed for ${featureDir}`);
+if (parsedArgs.mode === 'changed') {
+  if (checkedChangedFiles) {
+    console.log(`Harness changed-file check passed for ${parsedArgs.base}...${parsedArgs.head}`);
+  }
+} else {
+  console.log(`Harness check passed for ${parsedArgs.featureDir}`);
+}

@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "harness:check": "node scripts/check-harness-run.mjs",
+    "harness:test": "node --test scripts/check-harness-run.test.mjs",
     "sync": "node scripts/sync-catalogs.mjs",
     "prepare": "husky"
   },

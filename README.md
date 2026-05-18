@@ -45,7 +45,7 @@ AI Workflow Harness 把这些东西放回仓库中：Spec、Tasks、Run Record�
    每次真实需求可以在 `specs/{feature}/run-record.md` 中记录输入、上下文、修改文件、验证证据、人工介入和效果评估。
 
 7. **Harness Check 门禁**  
-   `npm run harness:check -- specs/{feature}` 会检查流程不变量，例如任务是否还停留在 Pending、验证证据是否存在、实际 diff 是否被 Run Record 覆盖。
+   `npm run harness:check -- specs/{feature}` 会检查流程不变量，例如任务是否还停留在 Pending、验证证据是否存在、实际 diff 是否被 Run Record 覆盖。CI 的 PR 模式使用 `npm run harness:check -- --changed --base <baseRef> --head <headRef>`，按真实 PR diff 自动定位并检查对应 Run Record。
 
 8. **可视化工作台**  
    Next.js 应用提供首页工作流概览、Run Record 草稿、资产检索、文件目录树和资产文件内容预览。
