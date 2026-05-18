@@ -140,6 +140,6 @@ version: 1.0.0            # 必需：语义化版本号
 ## 命令
 
 ```bash
-pnpm lint:skills   # 校验格式
-pnpm sync:skills   # 同步索引
+npm run lint   # 校验格式
+npm run sync   # 同步索引
 ```

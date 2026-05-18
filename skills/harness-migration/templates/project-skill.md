@@ -12,17 +12,17 @@ version: 0.1.0
 
 - **框架/语言**：[由 AI 自动生成，例如：React 19 / Vue 3 / Spring Boot]
 - **构建工具**：[由 AI 自动生成，例如：Vite / Webpack / Maven]
-- **包管理器**：[由 AI 自动生成，例如：pnpm / npm / yarn / gradle]
+- **包管理器**：[由 AI 自动生成，例如：npm / npm / yarn / gradle]
 
 ## 2. 环境操作指令
 
 绝对禁止盲目猜测命令。对于本项目，仅允许使用以下命令进行环境交互：
 
-- **安装依赖**：`[命令，例如 pnpm install]`
-- **本地开发**：`[命令，例如 pnpm run dev]`
-- **构建生产包**：`[命令，例如 pnpm run build]`
-- **运行测试**：`[命令，例如 pnpm run test]`
-- **静态检查**：`[命令，例如 pnpm run lint]`
+- **安装依赖**：`[命令，例如 npm install]`
+- **本地开发**：`[命令，例如 npm run dev]`
+- **构建生产包**：`[命令，例如 npm run build]`
+- **运行测试**：`[命令，例如 npm run test]`
+- **静态检查**：`[命令，例如 npm run lint]`
 
 *(如果上述某项在本仓库不适用，请将其标记为 N/A)*
 

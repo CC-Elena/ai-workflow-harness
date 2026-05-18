@@ -60,7 +60,7 @@ const DocTab = ({ variant = 'line', size = 'default', ...props }) => {
 - 禁止在页面层覆盖组件状态样式
 
 **Tokens 统一**
-- 颜色、间距、字号使用 `variable-global.less` 语义变量
+- 颜色、间距、字号使用 `globals.css` 语义变量
 - 禁止硬编码颜色值（如 `#333`）
 
 **作用域隔离**
@@ -78,7 +78,7 @@ const DocTab = ({ variant = 'line', size = 'default', ...props }) => {
 ### 核心原则
 - 遵循 **单一职责原则**，一个文件只对应一个组件
 - 优先使用 **Functional Components + Hooks**
-- 避免直接修改 Props，复杂状态逻辑使用 `useReducer` 或 Rematch
+- 避免直接修改 Props，复杂状态逻辑使用 `useReducer` 或 React Context
 - 避免在组件外直接操作 DOM，使用 `useRef`
 
 ### 副作用处理
@@ -87,7 +87,7 @@ const DocTab = ({ variant = 'line', size = 'default', ...props }) => {
 
 ---
 
-## 状态管理规范 (Rematch)
+## 状态管理规范
 
 - 遵循 **单向数据流**
 - **Models** 位于 `src/model/`
@@ -107,8 +107,8 @@ const DocTab = ({ variant = 'line', size = 'default', ...props }) => {
 
 ## 样式规范
 
-- 使用 **Less + CSS Modules** (`*.module.less`)
-- 已引入基础变量，可直接使用样式变量：`@import '~@/assets/style/variable-global.less';`
+- 使用 **CSS Modules** (`*.module.css`)
+- 已引入基础变量，可直接使用样式变量：`@import '~@/assets/style/globals.css';`
 - 避免全局样式污染，使用 `:global` 需谨慎
 - 遵循设计系统的色系 (@blueGray-1 等)
 
@@ -141,7 +141,7 @@ const cx = classBind.bind(styles);
 
 ## 样式模板
 
-```less
+```css
 
 .container {
   // 样式
@@ -160,13 +160,13 @@ const cx = classBind.bind(styles);
 ### 基本用法
 
 ```javascript
-import { intl } from 'di18n-react';
+// import { useTranslations } from "next-intl"; // Next.js i18n example
 
 // 简单文案
-intl.t('保存')
+t('保存')
 
 // 带参数
-intl.t('已删除 {count} 条记录', { count: 5 })
+t('已删除 {count} 条记录', { count: 5 })
 ```
 
 ### Key 命名规范
@@ -181,7 +181,7 @@ intl.t('已删除 {count} 条记录', { count: 5 })
 ### 流程
 1. 在 `zh-CN.json` 添加中文
 2. 在 `en-US.json` 添加英文
-3. 代码中使用 `intl.t()`
+3. 代码中使用 `t()`
 
 ---
 
@@ -202,7 +202,7 @@ intl.t('已删除 {count} 条记录', { count: 5 })
 
 ### 依赖安全
 
-- 升级前运行 `pnpm outdated` 和 `pnpm audit`
+- 升级前运行 `npm outdated` 和 `npm audit`
 - 关注体积变化和兼容性
 
 ### XSS 防护

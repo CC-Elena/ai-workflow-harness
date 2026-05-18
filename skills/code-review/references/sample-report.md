@@ -16,7 +16,7 @@
 
 ```diff
 -<span>保存成功</span>
-+<span>{intl.t('保存成功')}</span>
++<span>{t('保存成功')}</span>
 ```
 
 ### 2. 未声明环境影响范围
@@ -45,7 +45,7 @@
 +try {
 +  const data = await fetchUser();
 +} catch (error) {
-+  message.error(intl.t('获取用户信息失败'));
++  message.error(t('获取用户信息失败'));
 +}
 ```
 

@@ -61,7 +61,7 @@ export default MyPageForImport;
 import React from 'react';
 import { Skeleton } from 'antd';
 import SharedHeader from '../common/SharedHeader';
-import styles from './style.module.less';
+import styles from './style.module.css';
 
 const MyPageContentSkeleton = () => (
   <div className={styles.container}>

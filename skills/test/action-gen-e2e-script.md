@@ -82,8 +82,8 @@ test.describe('{Component} 功能测试', () => {
 
 | 场景 | 命令 |
 |------|------|
-| 运行所有测试 | `pnpm test:e2e` |
-| 可视化调试 | `pnpm test:e2e:ui` |
-| 查看报告 | `pnpm test:e2e:report` |
-| 只测某组件 | `pnpm test:e2e:{component}` |
+| 运行所有测试 | `npm run test:e2e` |
+| 可视化调试 | `npm run test:e2e:ui` |
+| 查看报告 | `npm run test:e2e:report` |
+| 只测某组件 | `npm run test:e2e:{component}` |
 

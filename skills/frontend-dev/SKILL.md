@@ -23,7 +23,7 @@ version: 0.1.0
 - `src/model/index.js` - 状态管理入口
 - `src/routes/route-*.js` - 路由配置
 - `src/utils/request/` - 网络请求封装
-- `src/assets/style/variable-global.less` - 全局样式变量
+- `src/assets/style/globals.css` - 全局样式变量
 
 
 ### 修改范围声明
@@ -36,13 +36,13 @@ version: 0.1.0
 
 ### 国际化强制
 
-- 所有用户可见文案必须使用 `intl.t('key')`
+- 所有用户可见文案必须使用 `t('key')`
 - 禁止硬编码中英文字符串
 - 新增文案需同时更新 `zh-CN.json` 和 `en-US.json`
 
 ### 编译验证
 
-每次修改后必须运行：`pnpm run qa`进行检查
+每次修改后必须运行：`npm run lint`进行检查
 
 ---
 
@@ -54,7 +54,7 @@ version: 0.1.0
 1. `components-catalog.json` 和 `hooks-catalog.json`
 2. `src/components/layouts/`、`src/components/views/`
 
-新增组件后运行 `pnpm run cmate` 更新索引。
+新增组件后运行 `npm run sync` 更新索引。
 
 ---
 
@@ -71,16 +71,16 @@ version: 0.1.0
 ```
 ComponentName/
 ├── index.js
-└── style.module.less
+└── style.module.css
 ```
 
 ### 代码模板
 
 ```javascript
 import React, { useState } from 'react';
-import { intl } from 'di18n-react';
+// import { useTranslations } from "next-intl"; // Next.js i18n example
 import classNames from 'classnames/bind';
-import styles from './style.module.less';
+import styles from './style.module.css';
 
 const cx = classNames.bind(styles);
 

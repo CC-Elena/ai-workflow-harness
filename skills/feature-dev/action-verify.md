@@ -19,7 +19,7 @@ argument-hint: [progress.md 路径]
 
 ### 必做项
 
-- [ ] 构建成功：`pnpm run build:qa`
+- [ ] 构建成功：`npm run build`
 - [ ] 功能可正常使用
 - [ ] 验收条款全部满足
 

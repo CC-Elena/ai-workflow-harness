@@ -20,6 +20,6 @@
   - 将所有 `examples/` 目录重命名为 `references/`
   - 移除 Frontmatter 中的 `triggers` 字段，触发词融入 `description`
 - **feat**: 新增 `skill-creator` 工具链
-  - 添加 `pnpm create-skill` 命令
+  - 添加 `npm run create-skill` 命令
   - 添加标准模板 `TEMPLATE.md` 和指南 `SKILL-GUIDE.md`
 

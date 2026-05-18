@@ -54,14 +54,10 @@ version: 0.1.0
 
 ## 技术栈
 
-- **框架**：React 17.0.2（函数组件 + Hooks）
-- **构建**：Rsbuild + Rspack
-- **状态管理**：Rematch (@rematch/core 2.x) + immer/loading/select
-- **UI 库**：Ant Design 4.21.7
-- **样式**：Less 3.12.2 + CSS Modules (`*.module.less`)
-- **国际化**：di18n-react，资源位于 `src/language/`
-- **代码规范**：ESLint (airbnb-base)
-- **包管理**：pnpm
+- **框架**：Next.js 15 (App Router) + React 19
+- **语言**：TypeScript 5
+- **代码规范**：ESLint 9 (eslint-config-next) + Husky
+- **包管理**：npm
 
 ---
 
@@ -72,21 +68,10 @@ version: 0.1.0
 
 ### 组件规范
 
-- **命名**：大驼峰（如 `TrashMine`、`FileTreeModal`）
-- **结构**：`ComponentName/index.js` + `style.module.less`
+- **命名**：大驼峰
+- **结构**：主要采用 Next.js App Router 结构 (`app/` 目录下存放页面，`components/` 存放复用组件)
+- **语言**：统一使用 TypeScript (`*.ts`, `*.tsx`)
 - **路径**：使用 `@/` 别名
-
-### 样式规范
-
-- CSS Modules：`*.module.less`
-- 使用 `variable-global.less` 语义变量
-
-### 国际化
-
-```javascript
-import { intl } from 'di18n-react';
-intl.t('保存')  // 所有文案必须国际化
-```
 
 ---
 
@@ -94,18 +79,19 @@ intl.t('保存')  // 所有文案必须国际化
 
 以下模块不得随意修改，如需修改必须标注"核心模块变更"：
 
-- `src/model/index.js` - 状态管理
-- `src/routes/route-*.js` - 路由配置
-- `src/utils/request/` - 网络请求
-- `src/assets/style/variable-global.less` - 全局变量
+- `src/app/` - 核心路由与页面入口
+- `src/lib/` - 核心工具与库函数
+- `src/components/` - 全局复用组件
 
 ---
 
 ## 常用命令
 
 ```bash
-pnpm run start
-pnpm run qa             # 编译检查
+npm run dev             # 本地开发
+npm run build           # 生产构建
+npm run lint            # 代码检查
+npm run typecheck       # 类型检查
 ```
 
 ---
@@ -114,5 +100,5 @@ pnpm run qa             # 编译检查
 
 1. **中等及以上复杂度需求**：先给出设计方案，待确认后再编码
 2. **信息不完整时**：先明确假设，列出候选方案及利弊
-3. **验证**：修改后运行 `pnpm run qa`查看是否有编译问题，如果有立即修改
+3. **验证**：修改后运行 `npm run typecheck` 和 `npm run lint` 查看是否有问题，如果有立即修改
 4. **规则文件修改**：修改 `skills/` 目录下的文件，禁止直接修改同步目标文件。提交后会自动同步到各 AI 工具规则目录

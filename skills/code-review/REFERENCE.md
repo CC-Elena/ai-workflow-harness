@@ -12,7 +12,7 @@
 - `src/model/index.js` - 状态管理入口
 - `src/routes/route-*.js` - 路由配置
 - `src/utils/request/` - 网络请求封装
-- `src/assets/style/variable-global.less` - 全局样式变量
+- `src/assets/style/globals.css` - 全局样式变量
 
 **修改核心模块时必须**：
 - 在 PR 描述中标注"核心模块变更"
@@ -25,7 +25,7 @@
 
 **执行命令**：
 ```bash
-pnpm run qa
+npm run lint
 ```
 
 **常见编译错误**：
@@ -47,8 +47,8 @@ pnpm run qa
 **正确示例**：
 ```javascript
 // ✅ 正确
-<button>{intl.t('保存')}</button>
-<span>{intl.t('删除')}</span>
+<button>{t('保存')}</button>
+<span>{t('删除')}</span>
 ```
 
 ---
@@ -104,12 +104,12 @@ cat components-catalog.json | jq '.[] | select(.name | contains("Loading"))'
 
 ### 使用 CSS Modules
 
-**文件命名**：`style.module.less`
+**文件命名**：`style.module.css`
 
 **正确用法**：
 ```javascript
 import classNames from 'classnames/bind';
-import styles from './style.module.less';
+import styles from './style.module.css';
 
 const cx = classNames.bind(styles);
 
@@ -127,7 +127,7 @@ try {
   // 处理数据
 } catch (error) {
   console.error('获取数据失败:', error);
-  message.error(intl.t('获取数据失败'));
+  message.error(t('获取数据失败'));
 }
 ```
 
@@ -185,7 +185,7 @@ const MyPage = React.lazy(() => import('@/pages/MyPage'));
    // 当前
    <span>保存成功</span>
    // 建议
-   <span>{intl.t('保存成功')}</span>
+   <span>{t('保存成功')}</span>
    ```
 
 ### 🟡 警告

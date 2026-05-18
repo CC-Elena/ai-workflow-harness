@@ -27,7 +27,7 @@ argument-hint: [tasks.md 路径]
 1. **理解任务**：阅读描述和验收条款
 2. **复用检查**：搜索现有代码，确认无可复用后再新建
 3. **编码实现**：按 `skills/frontend-dev/SKILL.md` 规范编码
-4. **自检验收**：运行 `pnpm run build:qa` 确保构建通过
+4. **自检验收**：运行 `npm run build` 确保构建通过
 5. **更新进度**：在 `progress.md` 标记任务状态
 
 ## 进度更新
