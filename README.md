@@ -50,6 +50,148 @@ AI Workflow Harness 把这些东西放回仓库中：Spec、Tasks、Run Record�
 8. **可视化工作台**  
    Next.js 应用提供首页工作流概览、Run Record 草稿、资产检索、文件目录树和资产文件内容预览。
 
+## 如何保障 AI Coding 质量
+
+这套 Harness 不替代 Codex、Claude Code、Cursor、Trae 等 Coding Agent，而是在代码库中提供一套可执行、可检查、可复盘的质量保障链路。它让 AI 产出的代码不仅“能跑”，还要做到范围清楚、证据完整、过程可追溯、失败可复盘。
+
+### 1. 防止 AI 走错流程
+
+`AGENTS.md` 是 Codex 的轻量入口，只负责路由，不承载完整规则。它要求 AI 先判断用户是否显式输入 `/spec` 或 `/mini-spec`：
+
+1. 普通自然语言任务默认走 Lightweight Flow：理解目标、声明范围、读取直接相关文件、最小修改、验证、总结。
+2. 只有用户显式触发 `/spec` 或 `/mini-spec` 时，才生成对应 Spec 产物。
+3. Harness 自身的文档、模板、规则、hook、脚本维护默认仍走轻量流程，不能因为任务看起来复杂就自动生成完整 Spec。
+
+这样可以避免 AI 一上来就过度设计，也避免把轻量维护任务变成沉重的流程任务。
+
+### 2. 用 Spec 控制需求理解
+
+完整流程由 `.ai/workflows/README.md` 和 `.ai/workflows/command-routing.md` 定义。小任务可以轻量执行；中大型需求可以通过 `/spec` 进入 SDD 流程：
+
+```text
+PRD / 用户需求
+   ↓
+Spec
+   ↓
+Tasks
+   ↓
+Executor 实现
+   ↓
+Verification
+   ↓
+Run Record
+   ↓
+Evaluation / RCA
+```
+
+Spec 会记录目标、范围、非目标、验收标准、风险和影响面，减少 AI 直接编码时的理解偏差。
+
+### 3. 控制上下文读取，降低 token 消耗
+
+`.ai/workflows/rule-loading-policy.md` 和 `.ai/context/skill-routing-minimal.md` 用来控制 AI 读取什么、不读取什么：
+
+1. 每个任务只选择 1 个主 Skill，确实跨场景时最多再选 1 个辅助 Skill。
+2. Small 任务只读取少量直接相关文件。
+3. Evaluation、Production Gate、RCA 只在触发条件满足时读取。
+4. 不因为“可能有用”就读取所有 Skills、历史 Specs 或长协议。
+
+这让 Harness 保持轻量，避免 AI 被大量规则淹没，也减少规则之间互相干扰。
+
+### 4. 用 Skills 固化工程经验
+
+`skills/` 目录把团队经验拆成可复用能力。例如：
+
+1. `frontend-dev`：前端实现规范。
+2. `component-reuse`：组件复用检查。
+3. `test`：测试和验收。
+4. `code-review`：代码审查。
+5. `ui-fidelity`：视觉还原。
+6. `workflow-assets`：Harness 资产维护。
+
+AI 不只是“会写代码”，还会按团队已有组件、样式、测试、Review 习惯来完成任务。
+
+### 5. 接入 Codex 运行时护栏
+
+本仓库包含 `.codex/config.toml`、`.codex/hooks.json` 和 `scripts/codex-hooks/*`，用于把 Harness 规则接入 Codex 生命周期：
+
+1. `SessionStart`：提醒使用 `AGENTS.md` 作为入口。
+2. `UserPromptSubmit`：对任务做轻量分类。
+3. `PreToolUse`：拦截依赖安装和破坏性命令，提示受保护路径风险。
+4. `PostToolUse`：识别验证命令结果，提醒记录证据。
+5. `Stop`：最终回复前检查是否说明验证、失败风险。
+
+`.ai/policies/codex-rule-levels.json` 提供机器可读的分级规则，供 hook 脚本使用。这样 Harness 不再只靠文档提醒，也能在 AI coding 过程中提前防错。
+
+### 6. 修改后必须验证
+
+`.ai/workflows/verification.md` 定义修改后的验证顺序：
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm run harness:check -- specs/{feature}
+```
+
+涉及 UI 或交互时，还需要页面验证、交互验证或截图检查。验证失败不能写成成功；跳过验证必须说明原因和风险。
+
+### 7. 用 Run Record 追溯执行过程
+
+`specs/{feature}/run-record.md` 记录一次 AI 执行的完整过程：
+
+1. 输入是什么。
+2. 读取了哪些上下文。
+3. 使用了哪些 Skills。
+4. 修改了哪些文件。
+5. 每个任务结果是什么。
+6. 验证命令和证据在哪里。
+7. 实际 diff 是否被覆盖。
+8. 是否需要 RCA。
+
+这让团队事后可以复盘 AI 到底做了什么，而不是只能翻聊天记录。
+
+### 8. 用 Harness Check 做硬门禁
+
+`scripts/check-harness-run.mjs` 是当前最硬的质量门禁。它会检查：
+
+1. Full Spec 是否有 `spec.md`。
+2. Mini Spec 是否有 `mini-spec.md`。
+3. Run Record 是否包含必要章节。
+4. Medium / Large / Risky / Failure 是否有验证记录或内联验证。
+5. `tasks.md` 不能还有 Pending，但 Run Record 写 Success。
+6. Pass / Success 的验证项必须有命令或真实证据文件。
+7. Skipped 必须写跳过原因。
+8. Failed / Partial / Failure 必须引用 RCA。
+9. PR changed 模式下，真实变更文件必须出现在 Run Record 的 diff 覆盖表里。
+
+这能防止 AI 漏记证据、把失败写成功、偷偷修改范围外文件而不说明。
+
+### 9. 用 Evaluation 和 RCA 持续改进
+
+Evaluation Summary 用来评估一次交付质量，RCA 用来记录失败根因，并把结论反哺到 Prompt、Skill、模板或规则中。
+
+因此 Harness 不只检查一次需求是否通过，还会把失败经验沉淀成后续规则资产。
+
+整体上，这套质量保障链路可以概括为：
+
+```text
+明确需求
+   ↓
+控制上下文
+   ↓
+按规则实现
+   ↓
+运行验证
+   ↓
+留下证据
+   ↓
+门禁检查
+   ↓
+失败复盘
+   ↓
+反哺规则
+```
+
 ## 它是怎么工作的
 
 一个中等复杂度需求的推荐流程如下，它覆盖了从 PRD 输入到代码提交前交付的主要环节：
@@ -115,6 +257,7 @@ skills/               # 可复用 AI Skills 和工程规范
 specs/                # 需求 PRD、Spec、Tasks、Run Record、评估和证据
 docs/                 # 工程说明和边界文档
 scripts/              # 本地检查脚本，例如 harness:check
+.agents/skills/       # Codex 原生 Skill 适配层，软链接到 skills/
 ```
 
 其中几个核心入口：
@@ -127,7 +270,10 @@ scripts/              # 本地检查脚本，例如 harness:check
 .ai/templates/run-record-template.md # Run Record 模板
 skills/project/SKILL.md              # 项目级规范
 scripts/check-harness-run.mjs        # Harness 交付门禁脚本
+scripts/check-agent-skill-links.mjs  # 检查 Codex Skill 软链接是否漂移
 ```
+
+`skills/` 是 Harness 的唯一 Skill 规范源。为了适配 Codex 原生 Skill 发现，本仓库在 `.agents/skills/` 下提供同名目录软链接，指向 `skills/*`。这样 Codex 可以自动根据 Skill 描述选择能力，同时避免复制两份规则导致 drift。
 
 ## 本地运行
 

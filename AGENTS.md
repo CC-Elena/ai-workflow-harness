@@ -10,6 +10,7 @@
 
 ## 按需读取
 
+- Codex 优先使用 `.agents/skills/` 原生发现 Skill；这些目录是 `skills/` 的软链接，`skills/` 仍是唯一规范源。
 - 启动和普通任务：只读 `.ai/workflows/command-routing.md` 与 `.ai/context/skill-routing-minimal.md`。
 - 需要判断复杂度或上下文预算时，再读 `.ai/workflows/rule-loading-policy.md`。
 - 修改代码后，最终验证前读 `.ai/workflows/verification.md`。
