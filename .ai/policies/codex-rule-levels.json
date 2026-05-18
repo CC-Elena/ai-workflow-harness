@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ai-workflow-harness.local/schemas/codex-rule-levels.v1.json",
+  "version": 1,
+  "levels": [
+    {
+      "id": "Small",
+      "triggers": ["single file", "documentation", "copy", "static data", "low risk style"],
+      "allowedOperations": ["read", "workspace-write", "local verification"],
+      "requiresApproval": ["network", "dependency change", "guarded file change", "destructive command"],
+      "requiredVerification": ["relevant local check or skipped reason"],
+      "requiredArtifacts": ["final summary"],
+      "stopGate": ["scope declared", "verification reported"]
+    },
+    {
+      "id": "Medium",
+      "triggers": ["multi file", "UI behavior", "tests", "screenshots", "state change"],
+      "allowedOperations": ["read", "workspace-write", "local verification", "browser verification"],
+      "requiresApproval": ["network", "dependency change", "core config change", "out of scope guarded file change"],
+      "requiredVerification": ["lint/typecheck/build when relevant", "behavior check for UI"],
+      "requiredArtifacts": ["run record or verification record when behavior changes"],
+      "stopGate": ["changed files covered", "verification evidence present or skipped reason"]
+    },
+    {
+      "id": "Large",
+      "triggers": ["cross module", "complex state", "API or interface change", "user flow change"],
+      "allowedOperations": ["read", "workspace-write after plan", "staged verification"],
+      "requiresApproval": ["begin implementation without spec confirmation", "network", "dependency change", "guarded file change"],
+      "requiredVerification": ["lint", "typecheck", "build", "tests or behavior verification"],
+      "requiredArtifacts": ["implementation plan", "verification evidence", "risk summary"],
+      "stopGate": ["verification reported", "diff coverage complete when run record exists"]
+    },
+    {
+      "id": "Risky",
+      "triggers": ["permissions", "production data", "auth", "deployment", "CI", "dependency", "irreversible operation", "policy files"],
+      "allowedOperations": ["read", "analysis", "approved workspace-write"],
+      "requiresApproval": ["all writes touching guarded paths", "network", "dependency change", "destructive command", "production command"],
+      "requiredVerification": ["full relevant verification", "manual approval note"],
+      "requiredArtifacts": ["approval note", "verification evidence", "risk summary"],
+      "stopGate": ["approval recorded when required", "verification reported", "no failed verification hidden"]
+    },
+    {
+      "id": "Failure",
+      "triggers": ["verification failed", "partial result", "systemic review issue", "heavy human correction"],
+      "allowedOperations": ["failure analysis", "focused fix", "reverification", "RCA record"],
+      "requiresApproval": ["scope expansion", "rollback", "destructive command"],
+      "requiredVerification": ["failed check reproduced", "fix verified or residual risk recorded"],
+      "requiredArtifacts": ["RCA reference", "updated run record"],
+      "stopGate": ["failure conclusion recorded", "next action clear"]
+    }
+  ],
+  "guardedPaths": [
+    ".ai/",
+    ".codex/",
+    ".github/",
+    "AGENTS.md",
+    "package.json",
+    "package-lock.json",
+    "scripts/",
+    "next.config.ts",
+    "tsconfig.json",
+    "eslint.config.mjs"
+  ],
+  "destructiveCommands": ["rm", "git reset", "git clean", "git checkout --", "chmod -R", "chown -R"],
+  "dependencyCommands": ["npm install", "pnpm install", "yarn add", "bun add", "npm uninstall", "pnpm remove"]
+}

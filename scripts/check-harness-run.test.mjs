@@ -115,6 +115,23 @@ function baseVerification(featureName) {
 `;
 }
 
+function baseMiniSpec(featureName) {
+  return `# Mini Spec: ${featureName}
+
+## 1. 基本信息
+
+- 需求名称：${featureName}
+
+## 2. 目标与范围
+
+验证 mini spec gate。
+
+## 3. 验收标准
+
+1. 可通过 harness check。
+`;
+}
+
 function runRecord(featureName, files) {
   const rows = files.map((filePath) => `| \`${filePath}\` | 范围内 | fixture |`).join('\n');
 
@@ -205,6 +222,70 @@ ${rows}
 `;
 }
 
+function lightweightRunRecord(featureName, files, options = {}) {
+  const rows = files.map((filePath) => `| \`${filePath}\` | 范围内 | fixture |`).join('\n');
+  const mode = options.mode || 'Lightweight';
+  const complexity = options.complexity || 'Small';
+  const extraInput = mode === 'Mini Spec' ? `2. 使用的 Mini Spec：\`specs/${featureName}/mini-spec.md\`` : '2. 使用的 Spec：N/A';
+
+  return `# Run Record: ${featureName}
+
+## 1. 基本信息
+
+- 需求名称：${featureName}
+- 工作模式：${mode}
+- 执行日期：2026-05-18
+- 执行工具：Codex
+- 执行人：Codex
+- 状态：Success
+- Diff 覆盖模式：Feature scope
+
+## 2. 输入
+
+1. 用户需求或 PRD：fixture
+${extraInput}
+3. 使用的上下文索引：N/A
+4. 使用的 Skills：N/A
+
+## 3. Context Pack
+
+- 任务复杂度：${complexity}
+- 规则预算：Light
+- 主 Skill：N/A
+- 辅助 Skill：N/A
+- 跳过的协议：无
+- 升级加载原因：N/A
+
+## 4. 执行摘要
+
+完成轻量 fixture 变更。
+
+## 5. 任务结果
+
+| Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
+|---------|------|----------|----------|------|
+| T1 | Done | fixture | Pass | 无 |
+
+## 6. 验证记录
+
+| 验证项 | 命令或方式 | 结果 | 证据 | 跳过原因 / 风险 |
+|--------|------------|------|------|----------------|
+| Fixture | \`node --version\` | Pass | \`specs/${featureName}/evidence/check.log\` | N/A |
+
+## 10. 实际 Diff 覆盖表
+
+| 文件 | 范围 | 确认原因 |
+|------|------|----------|
+${rows}
+
+## 11. 证据文件表
+
+| 证据文件 | 对应验证 | 说明 |
+|----------|----------|------|
+| \`specs/${featureName}/evidence/check.log\` | Fixture | 命令输出 |
+`;
+}
+
 function addFeature(cwd, featureName, coveredFiles) {
   writeFile(cwd, `specs/${featureName}/spec.md`, baseSpec(featureName));
   writeFile(cwd, `specs/${featureName}/tasks.md`, baseTasks());
@@ -212,6 +293,14 @@ function addFeature(cwd, featureName, coveredFiles) {
   writeFile(cwd, `specs/${featureName}/verification-record.md`, baseVerification(featureName));
   writeFile(cwd, `specs/${featureName}/evidence/check.log`, 'fixture\n');
   writeFile(cwd, `specs/${featureName}/run-record.md`, runRecord(featureName, coveredFiles));
+}
+
+function addLightweightFeature(cwd, featureName, coveredFiles, options = {}) {
+  if (options.mode === 'Mini Spec') {
+    writeFile(cwd, `specs/${featureName}/mini-spec.md`, baseMiniSpec(featureName));
+  }
+  writeFile(cwd, `specs/${featureName}/evidence/check.log`, 'fixture\n');
+  writeFile(cwd, `specs/${featureName}/run-record.md`, lightweightRunRecord(featureName, coveredFiles, options));
 }
 
 function harnessChanged(cwd, base, head) {
@@ -225,7 +314,7 @@ function harnessChanged(cwd, base, head) {
   );
 }
 
-test('changed mode fails when PR files have no Run Record candidate', () => {
+test('当 PR 文件没有 Run Record 候选时，changed 模式失败', () => {
   const cwd = createRepo();
   const base = run('git', ['rev-parse', 'HEAD'], cwd).trim();
   writeFile(cwd, 'src/app.js', 'console.log("missing record");\n');
@@ -235,10 +324,10 @@ test('changed mode fails when PR files have no Run Record candidate', () => {
   const result = harnessChanged(cwd, base, head);
 
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /requires at least one specs\/\{feature\}\/run-record\.md change/);
+  assert.match(result.stderr, /specs\/\{feature\}\/run-record\.md/);
 });
 
-test('changed mode passes when a Run Record covers real PR files', () => {
+test('当 Run Record 覆盖实际 PR 文件时，changed 模式通过', () => {
   const cwd = createRepo();
   const base = run('git', ['rev-parse', 'HEAD'], cwd).trim();
   const changedFiles = [
@@ -259,10 +348,10 @@ test('changed mode passes when a Run Record covers real PR files', () => {
   const result = harnessChanged(cwd, base, head);
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Harness changed-file check passed/);
+  assert.match(result.stdout, /Harness .*通过/);
 });
 
-test('changed mode checks every changed feature Run Record', () => {
+test('changed 模式检查每个已更改特性的 Run Record', () => {
   const cwd = createRepo();
   const base = run('git', ['rev-parse', 'HEAD'], cwd).trim();
   const alphaFiles = [
@@ -291,10 +380,10 @@ test('changed mode checks every changed feature Run Record', () => {
   const result = harnessChanged(cwd, base, head);
 
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /tasks\.md still contains Pending rows/);
+  assert.match(result.stderr, /tasks\.md.*Pending/);
 });
 
-test('single feature mode remains backward compatible', () => {
+test('单一特性模式保持向后兼容', () => {
   const cwd = createRepo();
   const featureFiles = [
     'specs/failure-rca-sample/spec.md',
@@ -312,5 +401,99 @@ test('single feature mode remains backward compatible', () => {
   });
 
   assert.equal(result.status, 0, result.stderr);
-  assert.match(result.stdout, /Harness check passed for specs\/failure-rca-sample/);
+  assert.match(result.stdout, /Harness 检查已通过： specs\/failure-rca-sample/);
+});
+
+test('单一特性模式接受没有完整 spec 制品的轻量级记录', () => {
+  const cwd = createRepo();
+  const featureFiles = ['specs/lightweight/evidence/check.log', 'specs/lightweight/run-record.md'];
+  addLightweightFeature(cwd, 'lightweight', featureFiles, { mode: 'Lightweight', complexity: 'Small' });
+
+  const result = spawnSync(process.execPath, ['scripts/check-harness-run.mjs', 'specs/lightweight'], {
+    cwd,
+    encoding: 'utf8'
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Harness 检查已通过： specs\/lightweight/);
+});
+
+test('单一特性模式接受没有完整 spec 制品的 mini-spec 记录', () => {
+  const cwd = createRepo();
+  const featureFiles = [
+    'specs/mini/mini-spec.md',
+    'specs/mini/evidence/check.log',
+    'specs/mini/run-record.md'
+  ];
+  addLightweightFeature(cwd, 'mini', featureFiles, { mode: 'Mini Spec', complexity: 'Medium' });
+
+  const result = spawnSync(process.execPath, ['scripts/check-harness-run.mjs', 'specs/mini'], {
+    cwd,
+    encoding: 'utf8'
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Harness 检查已通过： specs\/mini/);
+});
+
+test('codex 提示分类器保持 harness 维护为轻量流程', () => {
+  const result = spawnSync(
+    process.execPath,
+    ['scripts/codex-hooks/classify-user-prompt.mjs'],
+    {
+      cwd: path.resolve('.'),
+      input: JSON.stringify({ prompt: '修改 .codex/hooks.json 并调整 approval 策略' }),
+      encoding: 'utf8'
+    }
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /Risky/);
+  assert.match(result.stdout, /Lightweight Harness Maintenance/);
+  assert.match(result.stdout, /Do not create full Spec artifacts/);
+});
+
+test('codex pre-tool 钩子阻止依赖项更改', () => {
+  const result = spawnSync(
+    process.execPath,
+    ['scripts/codex-hooks/pre-tool-policy.mjs'],
+    {
+      cwd: path.resolve('.'),
+      input: JSON.stringify({
+        hook_event_name: 'PreToolUse',
+        tool_name: 'Bash',
+        tool_input: { command: 'npm install left-pad' }
+      }),
+      encoding: 'utf8'
+    }
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout);
+  assert.equal(output.hookSpecificOutput.permissionDecision, 'deny');
+  assert.match(output.hookSpecificOutput.permissionDecisionReason, /Dependency changes require explicit user approval/);
+});
+
+test('codex stop 钩子阻止没有验证总结的更改工作', () => {
+  const cwd = createRepo();
+  writeFile(cwd, 'src/app.js', 'console.log("changed");\n');
+
+  const result = spawnSync(
+    process.execPath,
+    [path.resolve('scripts/codex-hooks/stop-harness-gate.mjs')],
+    {
+      cwd,
+      input: JSON.stringify({
+        hook_event_name: 'Stop',
+        stop_hook_active: false,
+        last_assistant_message: '修改了 src/app.js。'
+      }),
+      encoding: 'utf8'
+    }
+  );
+
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout);
+  assert.equal(output.decision, 'block');
+  assert.match(output.reason, /does not mention verification/);
 });

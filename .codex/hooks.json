@@ -1,0 +1,57 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/codex-hooks/session-start.mjs"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/codex-hooks/classify-user-prompt.mjs"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|apply_patch|functions.apply_patch|functions.exec_command|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/codex-hooks/pre-tool-policy.mjs"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|functions.exec_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/codex-hooks/post-tool-record.mjs"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/codex-hooks/stop-harness-gate.mjs"
+          }
+        ]
+      }
+    ]
+  }
+}
