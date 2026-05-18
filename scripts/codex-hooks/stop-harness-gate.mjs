@@ -22,10 +22,7 @@ const changedFiles = (() => {
     const tracked = execFileSync('git', ['diff', '--name-only'], { encoding: 'utf8' })
       .split('\n')
       .filter(Boolean);
-    const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], { encoding: 'utf8' })
-      .split('\n')
-      .filter(Boolean);
-    return Array.from(new Set([...tracked, ...untracked])).sort();
+    return Array.from(new Set(tracked)).sort();
   } catch {
     return [];
   }

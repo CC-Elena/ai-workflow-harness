@@ -4,18 +4,13 @@
 
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
-project_doc_max_bytes = 65536
+project_doc_max_bytes = 16384
 
 [features]
 hooks = true
 
 [sandbox_workspace_write]
 network_access = false
-writable_roots = [
-  "/Users/cc/work/ai-workflow-harness",
-  "/private/tmp",
-  "/private/var/folders/cr/jsxddfrx20l78s57h_tw2bt00000gn/T"
-]
 
 [profiles.harness-strict]
 sandbox_mode = "workspace-write"

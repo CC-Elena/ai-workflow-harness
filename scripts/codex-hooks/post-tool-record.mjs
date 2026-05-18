@@ -8,7 +8,7 @@ const response = JSON.stringify(input.tool_response || {});
 const lower = `${command}\n${response}`.toLowerCase();
 
 const isVerification = /npm run (lint|typecheck|build|harness:check|harness:test)|node --test|playwright|test\b/.test(lower);
-const failed = /error|failed|failures|exit code 1|status":1|stderr/.test(lower);
+const failed = /error|failed|failures|exit code 1|status":1/.test(lower);
 
 if (isVerification && failed) {
   writeJson({

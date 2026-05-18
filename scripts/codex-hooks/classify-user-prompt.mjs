@@ -11,8 +11,9 @@ const levelPolicy = policy.levels.find((level) => level.id === classification.le
 const approvalItems = levelPolicy?.requiresApproval?.join(', ') || 'network, dependency change, guarded file change';
 const verificationItems = levelPolicy?.requiredVerification?.join(', ') || 'relevant verification';
 
-process.stdout.write(`Harness classification: ${classification.level} (${classification.workMode}).
-Required verification: ${verificationItems}.
-Requires approval for: ${approvalItems}.
-Do not create full Spec artifacts unless the user explicitly requests /spec. Harness maintenance stays lightweight by default, even when Risky.
+if (classification.level === 'Small' && classification.workMode === 'Lightweight') {
+  process.exit(0);
+}
+
+process.stdout.write(`Harness: ${classification.level} / ${classification.workMode}. Verify: ${verificationItems}. Approval: ${approvalItems}. Full Spec only after explicit /spec; Harness maintenance stays lightweight by default.
 `);

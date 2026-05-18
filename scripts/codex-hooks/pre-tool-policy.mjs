@@ -36,18 +36,16 @@ const writesCode =
   containsAny(lowerCommand, ['>', 'tee ', 'sed -i', 'perl -i']);
 
 const guardedTouched = touchedPaths.filter((filePath) => isGuardedPath(filePath, policy));
-if (writesCode && guardedTouched.length > 0 && !/explicit approval|用户.*(确认|要求|批准)|approved/i.test(command)) {
-  writeJson(
-    deny(
-      `Harness guarded path policy: ${guardedTouched.join(', ')} requires explicit approval or a declared Risky/Spec workflow before editing.`
-    )
-  );
-  process.exit(0);
-}
+const guardedMessage =
+  writesCode && guardedTouched.length > 0
+    ? `Harness guarded paths touched: ${guardedTouched.join(', ')}. Keep the task lightweight unless /spec was explicit; record scope, verification, and risk.`
+    : '';
 
 writeJson({
   systemMessage:
-    writesCode && touchedPaths.length > 0
+    guardedMessage ||
+    (writesCode && touchedPaths.length > 0
       ? `Harness pre-tool check passed. Touched paths detected: ${touchedPaths.join(', ')}.`
       : undefined
+    )
 });

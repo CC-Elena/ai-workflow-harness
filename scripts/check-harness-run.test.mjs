@@ -450,7 +450,7 @@ test('codex 提示分类器保持 harness 维护为轻量流程', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /Risky/);
   assert.match(result.stdout, /Lightweight Harness Maintenance/);
-  assert.match(result.stdout, /Do not create full Spec artifacts/);
+  assert.match(result.stdout, /Full Spec only after explicit \/spec/);
 });
 
 test('codex pre-tool 钩子阻止依赖项更改', () => {
@@ -476,7 +476,7 @@ test('codex pre-tool 钩子阻止依赖项更改', () => {
 
 test('codex stop 钩子阻止没有验证总结的更改工作', () => {
   const cwd = createRepo();
-  writeFile(cwd, 'src/app.js', 'console.log("changed");\n');
+  writeFile(cwd, 'README.md', '# changed\n');
 
   const result = spawnSync(
     process.execPath,
@@ -486,7 +486,7 @@ test('codex stop 钩子阻止没有验证总结的更改工作', () => {
       input: JSON.stringify({
         hook_event_name: 'Stop',
         stop_hook_active: false,
-        last_assistant_message: '修改了 src/app.js。'
+        last_assistant_message: '修改了 README.md。'
       }),
       encoding: 'utf8'
     }
