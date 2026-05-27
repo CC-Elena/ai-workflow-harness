@@ -6,29 +6,33 @@
 
 | 类型 | 内容 |
 |------|------|
-| 前端框架 | React 17.0.2，函数组件 + Hooks |
-| 构建 | Rsbuild + Rspack |
-| 状态管理 | Rematch + immer/loading/select |
-| UI 库 | Ant Design 4.21.7 |
-| 样式 | Less + CSS Modules |
-| 国际化 | di18n-react |
-| 包管理 | pnpm |
+| 前端框架 | Next.js 15 App Router |
+| 运行时 | React 19 + TypeScript |
+| 数据来源 | 静态 TypeScript 数据模块 |
+| UI 库 | 无外部 UI 库 |
+| 样式 | `app/globals.css` 全局 CSS |
+| 国际化 | 未接入国际化系统 |
+| 包管理 | npm |
 
 
 ## 4. 核心模块保护
 
 以下文件或目录属于高风险范围，修改前必须在计划中标注“核心模块变更”：
 
-1. `src/model/index.js`
-2. `src/routes/route-*.js`
-3. `src/utils/request/`
+1. `scripts/check-harness-run.mjs`
+2. `.ai/templates/`
+3. `.ai/workflows/`
+4. `app/api/files/content/route.ts`
 
 
 ## 5. 常用命令
 
 ```bash
-pnpm run start
-pnpm run qa
+npm run dev
+npm run lint
+npm run typecheck
+npm run build
+npm run harness:check -- specs/{feature}
 ```
 
 ## 6. Codex 执行前检查
@@ -37,7 +41,6 @@ pnpm run qa
 
 1. 是否涉及核心模块。
 2. 是否影响多个环境。
-3. 是否需要国际化。
-4. 是否可以复用现有组件或 Hook。
+3. 是否需要更新 `app/workflow-data.ts` 或 `app/files/file-data.ts`。
+4. 是否可以复用现有组件、样式和数据结构。
 5. 是否需要补充测试或截图验证。
-

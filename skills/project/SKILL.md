@@ -54,14 +54,13 @@ version: 0.1.0
 
 ## 技术栈
 
-- **框架**：React 17.0.2（函数组件 + Hooks）
-- **构建**：Rsbuild + Rspack
-- **状态管理**：Rematch (@rematch/core 2.x) + immer/loading/select
-- **UI 库**：Ant Design 4.21.7
-- **样式**：Less 3.12.2 + CSS Modules (`*.module.less`)
-- **国际化**：di18n-react，资源位于 `src/language/`
-- **代码规范**：ESLint (airbnb-base)
-- **包管理**：pnpm
+- **框架**：Next.js 15 App Router
+- **运行时**：React 19 + TypeScript
+- **样式**：全局 CSS，入口为 `app/globals.css`
+- **数据来源**：静态 TypeScript 数据模块，主要入口为 `app/workflow-data.ts` 和 `app/files/file-data.ts`
+- **API**：Next.js Route Handler，例如 `app/api/files/content/route.ts`
+- **代码规范**：ESLint 9 + `eslint-config-next`
+- **包管理**：npm，锁文件为 `package-lock.json`
 
 ---
 
@@ -72,21 +71,22 @@ version: 0.1.0
 
 ### 组件规范
 
-- **命名**：大驼峰（如 `TrashMine`、`FileTreeModal`）
-- **结构**：`ComponentName/index.js` + `style.module.less`
-- **路径**：使用 `@/` 别名
+- 页面入口位于 `app/**/page.tsx`。
+- 交互组件使用客户端组件，并在文件顶部声明 `'use client';`。
+- 共享工作流数据优先集中维护在 `app/workflow-data.ts`。
+- 文件浏览器数据优先集中维护在 `app/files/file-data.ts`。
+- 新增页面或 API 时遵循 Next.js App Router 目录约定。
 
 ### 样式规范
 
-- CSS Modules：`*.module.less`
-- 使用 `variable-global.less` 语义变量
+- 全局样式集中维护在 `app/globals.css`。
+- 优先复用已有 class、布局节奏和响应式断点。
+- 不引入新的 UI 库或图标库，除非需求明确且经过确认。
 
-### 国际化
+### 文案规范
 
-```javascript
-import { intl } from 'di18n-react';
-intl.t('保存')  // 所有文案必须国际化
-```
+- 当前仓库没有接入国际化系统。
+- 文案可以直接写中文或英文，但同一页面内保持语气和命名一致。
 
 ---
 
@@ -94,18 +94,22 @@ intl.t('保存')  // 所有文案必须国际化
 
 以下模块不得随意修改，如需修改必须标注"核心模块变更"：
 
-- `src/model/index.js` - 状态管理
-- `src/routes/route-*.js` - 路由配置
-- `src/utils/request/` - 网络请求
-- `src/assets/style/variable-global.less` - 全局变量
+- `scripts/check-harness-run.mjs` - Harness 门禁逻辑
+- `.ai/templates/` - 工作流模板，会影响后续所有需求记录
+- `.ai/workflows/` - 工作流协议
+- `skills/project/SKILL.md` - 项目级最高规则
+- `app/api/files/content/route.ts` - 文件读取白名单和安全边界
 
 ---
 
 ## 常用命令
 
 ```bash
-pnpm run start
-pnpm run qa             # 编译检查
+npm run dev
+npm run lint
+npm run typecheck
+npm run build
+npm run harness:check -- specs/{feature}
 ```
 
 ---
@@ -114,5 +118,5 @@ pnpm run qa             # 编译检查
 
 1. **中等及以上复杂度需求**：先给出设计方案，待确认后再编码
 2. **信息不完整时**：先明确假设，列出候选方案及利弊
-3. **验证**：修改后运行 `pnpm run qa`查看是否有编译问题，如果有立即修改
+3. **验证**：修改后按风险运行 `npm run lint`、`npm run typecheck`、`npm run build` 或 `npm run harness:check -- specs/{feature}`；无法运行时必须记录原因和风险
 4. **规则文件修改**：修改 `skills/` 目录下的文件，禁止直接修改同步目标文件。提交后会自动同步到各 AI 工具规则目录
