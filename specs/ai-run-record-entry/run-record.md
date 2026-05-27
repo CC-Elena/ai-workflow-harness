@@ -3,7 +3,7 @@
 ## 1. 基本信息
 
 - 需求名称：AI 工作流执行记录入口
-- Spec 文件：`specs/ai-run-record-entry/spec.md`
+- Spec 文件：N/A（模拟流程记录，已按轻量流程移除非必要 Spec）
 - Task 文件：`specs/ai-run-record-entry/tasks.md`
 - 执行日期：2026-05-02 至 2026-05-03
 - 执行工具：Codex
@@ -13,7 +13,7 @@
 ## 2. 输入
 
 1. 用户需求或 PRD：用户要求“创建一个模拟 PRD 来执行”。
-2. 使用的 Spec：`specs/ai-run-record-entry/spec.md`
+2. 使用的 Spec：N/A（用户未显式 `/spec`）
 3. 使用的上下文索引：
    - `.ai/workflows/README.md`
    - `.ai/workflows/planner-executor.md`
@@ -35,7 +35,7 @@
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
 | T1 | Done | `specs/ai-run-record-entry/prd.md` | Pass | 文件已创建 |
-| T2 | Done | `specs/ai-run-record-entry/spec.md` | Pass | Spec 覆盖主要模板字段 |
+| T2 | Done | N/A | Pass | 历史模拟步骤，Spec 文件已清理 |
 | T3 | Done | `specs/ai-run-record-entry/tasks.md` | Pass | 已拆解 5 个任务 |
 | T4 | Done | `.ai/evals/README.md` | Pass | 已补充最小示例和常见错误 |
 | T5 | Done | `specs/ai-run-record-entry/run-record.md` | Pass | 本文件 |
@@ -45,7 +45,6 @@
 | 文件 | 变更说明 |
 |------|----------|
 | `specs/ai-run-record-entry/prd.md` | 新增模拟 PRD |
-| `specs/ai-run-record-entry/spec.md` | 新增结构化 Spec |
 | `specs/ai-run-record-entry/tasks.md` | 新增任务拆解，并同步 T4、T5 完成状态 |
 | `.ai/evals/README.md` | 补充 Run Record、RCA 最小示例和常见错误 |
 | `specs/ai-run-record-entry/run-record.md` | 新增本次执行记录 |

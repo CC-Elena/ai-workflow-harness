@@ -79,13 +79,13 @@ Skill 使用分层加载系统来高效管理上下文：
 
 ```bash
 # 使用 npm 脚本 (推荐)
-pnpm create-skill <skill-name>
+npm run create-skill <skill-name>
 
 # 直接执行
 node skills/skill-creator/scripts/init-skill.js <skill-name>
 
 # 选项
-pnpm create-skill <skill-name> --path skills
+npm run create-skill <skill-name> --path skills
 ```
 
 ### 第四步：编辑 Skill
@@ -114,7 +114,7 @@ version: 0.1.0
 运行同步命令以更新中心索引：
 
 ```bash
-pnpm sync:skills
+npm run sync
 ```
 
 ### 第六步：迭代

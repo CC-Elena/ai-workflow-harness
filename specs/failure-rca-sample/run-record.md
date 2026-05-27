@@ -29,7 +29,7 @@
 
 | 等级 | 文件或资产 | 使用原因 | 阶段 | 是否已读取 |
 |------|------------|----------|------|------------|
-| P0 | `specs/failure-rca-sample/spec.md` | 需求可信源 | Planner | Yes |
+| P0 | `specs/failure-rca-sample/run-record.md` | 失败样本记录 | Record | Yes |
 | P0 | `.ai/templates/rca-template.md` | RCA 结构 | Record | Yes |
 | P1 | `.ai/workflows/evaluation-metrics.md` | Controlled Rollout 条件 | Record | Yes |
 
@@ -41,7 +41,7 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Done | `specs/failure-rca-sample/prd.md`、`specs/failure-rca-sample/spec.md`、`specs/failure-rca-sample/tasks.md` | Pass | 样本文档齐全 |
+| T1 | Done | `specs/failure-rca-sample/prd.md`、`specs/failure-rca-sample/tasks.md` | Pass | 样本文档齐全 |
 | T2 | Done | `specs/failure-rca-sample/evidence/mock-verification-failure.log` | Failed | 受控失败证据 |
 | T3 | Done | `specs/failure-rca-sample/rca.md` | Pass | RCA 已补齐 |
 | T4 | Done | `specs/failure-rca-sample/evaluation-summary.md` | Pass | 评估摘要已补齐 |
@@ -86,7 +86,7 @@
 | 文件 | 范围 | 确认原因 |
 |------|------|----------|
 | `specs/failure-rca-sample/prd.md` | 范围内 | 失败样本输入 |
-| `specs/failure-rca-sample/spec.md` | 范围内 | 失败样本可信源 |
+| `specs/failure-rca-sample/spec.md` | 范围内 | 失败样本结构说明 |
 | `specs/failure-rca-sample/tasks.md` | 范围内 | 失败样本任务 |
 | `specs/failure-rca-sample/run-record.md` | 范围内 | 失败样本记录 |
 | `specs/failure-rca-sample/evaluation-summary.md` | 范围内 | 失败样本评估 |

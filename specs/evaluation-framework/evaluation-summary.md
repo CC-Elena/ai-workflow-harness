@@ -3,7 +3,7 @@
 ## 1. 基本信息
 
 - 需求名称：AI 工作流评估框架
-- Spec：`specs/evaluation-framework/spec.md`
+- Spec：N/A（Harness 评估框架维护，已按轻量流程移除非必要 Spec）
 - 评估日期：2026-05-04
 - 评估人：Codex
 - 评估等级目标：内部试运行
@@ -12,9 +12,9 @@
 
 | 阻断项 | 结果 | 证据 |
 |--------|------|------|
-| 没有 Spec 就进入 Executor | Pass | `specs/evaluation-framework/spec.md` |
+| 没有 Spec 就进入 Executor | Pass | 本任务不属于前端需求开发，未触发 `/spec` |
 | 验证未运行却记录为 Pass | Pass | `specs/evaluation-framework/run-record.md` |
-| 修改超出任务影响范围 | Pass | 仅更新 `.ai/`、`specs/`、`app/workflow-data.ts` |
+| 修改超出任务影响范围 | Pass | 仅更新 `.ai/`、`specs/`、`src/lib/data/workflow-data.ts` |
 | 涉及高风险模块但没有人工确认 | Pass | 未涉及高风险模块 |
 | 失败后没有记录原因 | Pass | 当前无失败项 |
 | 人工大幅修改后没有 RCA | Pass | 当前无人工大幅修改 |
@@ -24,10 +24,10 @@
 
 | 维度 | 权重 | 得分 | 证据 |
 |------|------|------|------|
-| Spec 质量 | 15 | 14 | `specs/evaluation-framework/spec.md` |
+| 需求边界质量 | 15 | 14 | `specs/evaluation-framework/prd.md` |
 | 任务拆解质量 | 15 | 15 | `specs/evaluation-framework/tasks.md` |
 | 上下文与 Skill 使用 | 15 | 13 | `.ai/workflows/README.md`、`.ai/context/skill-routing.md` |
-| 执行质量 | 20 | 19 | `.ai/workflows/evaluation-metrics.md`、`app/workflow-data.ts` |
+| 执行质量 | 20 | 19 | `.ai/workflows/evaluation-metrics.md`、`src/lib/data/workflow-data.ts` |
 | 验证质量 | 20 | 20 | lint、typecheck、build、页面检查 |
 | 记录与 RCA | 15 | 14 | `specs/evaluation-framework/run-record.md` |
 

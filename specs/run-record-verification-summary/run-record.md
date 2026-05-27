@@ -29,15 +29,15 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Done | `app/workflow-workspace.tsx` | Pass | `RunDraft` 增加 `verificationSummary` |
-| T2 | Done | `app/workflow-workspace.tsx` | Pass | 表单新增验证摘要 textarea |
+| T1 | Done | `src/components/views/workflow-workspace.tsx` | Pass | `RunDraft` 增加 `verificationSummary` |
+| T2 | Done | `src/components/views/workflow-workspace.tsx` | Pass | 表单新增验证摘要 textarea |
 | T3 | Done | `specs/run-record-verification-summary/run-record.md` | Pass | 已记录执行结果 |
 
 ## 5. 修改文件
 
 | 文件 | 变更说明 |
 |------|----------|
-| `app/workflow-workspace.tsx` | 扩展草稿数据结构、旧数据兼容和验证摘要表单 |
+| `src/components/views/workflow-workspace.tsx` | 扩展草稿数据结构、旧数据兼容和验证摘要表单 |
 | `specs/run-record-verification-summary/*` | 新增 P2 试点 PRD、Spec、Tasks、Run Record |
 
 ## 6. 验证记录

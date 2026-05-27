@@ -25,8 +25,8 @@
 
 **修复建议**：
 
-```less
-// src/pages/Permission/style.module.less
+```css
+// src/pages/Permission/style.module.css
 .pageTitle {
   font-size: 20px;      // 原 18px
   font-weight: 600;     // 原 500
@@ -63,7 +63,7 @@
 
 **修复建议**：
 
-```less
+```css
 .listItem:hover {
   background: #F5F7FA;  // 原 #FAFAFA
 }
@@ -79,7 +79,7 @@
 
 **修复建议**：
 
-```less
+```css
 .card {
   padding: 16px 20px;  // 原 16px
 }
@@ -101,12 +101,12 @@
 
 ## 修复清单
 
-- [ ] `.pageTitle` 字号改为 20px - `style.module.less:12`
-- [ ] `.pageTitle` 字重改为 600 - `style.module.less:13`
+- [ ] `.pageTitle` 字号改为 20px - `style.module.css:12`
+- [ ] `.pageTitle` 字重改为 600 - `style.module.css:13`
 - [ ] 图标尺寸改为 16px - `index.js:45`
-- [ ] hover 背景色改为 #F5F7FA - `style.module.less:28`
-- [ ] 卡片内边距改为 16px 20px - `style.module.less:8`
-- [ ] 搜索框圆角改为 6px - `style.module.less:52`
+- [ ] hover 背景色改为 #F5F7FA - `style.module.css:28`
+- [ ] 卡片内边距改为 16px 20px - `style.module.css:8`
+- [ ] 搜索框圆角改为 6px - `style.module.css:52`
 
 ---
 

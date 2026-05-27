@@ -1,0 +1,21 @@
+# Project-local Codex runtime settings for AI Workflow Harness.
+# Keep business workflow rules in AGENTS.md and .ai/; this file only configures
+# Codex runtime behavior and project guardrails.
+
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+project_doc_max_bytes = 16384
+
+[features]
+hooks = true
+
+[sandbox_workspace_write]
+network_access = false
+
+[profiles.harness-strict]
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+model_reasoning_effort = "high"
+
+[projects."/Users/cc/work/ai-workflow-harness"]
+trust_level = "trusted"

@@ -32,8 +32,8 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Done | `app/workflow-workspace.tsx` | Pass | Asset 分类增加 Evaluation、Skill |
-| T2 | Done | `app/workflow-workspace.tsx` | Pass | 增加新增资产条目 |
+| T1 | Done | `src/components/views/workflow-workspace.tsx` | Pass | Asset 分类增加 Evaluation、Skill |
+| T2 | Done | `src/components/views/workflow-workspace.tsx` | Pass | 增加新增资产条目 |
 | T3 | Done | `specs/asset-catalog-evaluation-filter/run-record.md` | Pass | 已记录执行结果 |
 
 ## 5. 修改文件
@@ -48,7 +48,7 @@
 | `skills/README.md` | 更新 Skill 索引和工作流资产入口 |
 | `specs/real-pilot-candidates.md` | 新增真实低风险试点候选清单 |
 | `specs/asset-catalog-evaluation-filter/*` | 新增首个真实试点 PRD、Spec、Tasks、Run Record |
-| `app/workflow-workspace.tsx` | 扩展资产分类和静态资产条目 |
+| `src/components/views/workflow-workspace.tsx` | 扩展资产分类和静态资产条目 |
 
 ## 6. 验证记录
 

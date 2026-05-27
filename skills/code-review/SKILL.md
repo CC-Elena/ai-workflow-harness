@@ -26,7 +26,7 @@ dependencies: [frontend-dev]
 ### 🔴 P0 检查项（红线）
 
 - [ ] 未修改核心模块（或已标注说明）
-- [ ] 编译通过 (`pnpm run qa`)
+- [ ] 编译通过 (`npm run lint`)
 - [ ] 无硬编码中英文字符串
 - [ ] 声明了影响环境范围
 - [ ] 无硬编码密钥/Token
@@ -38,7 +38,7 @@ dependencies: [frontend-dev]
 - [ ] 使用 CSS Modules
 - [ ] 使用 `@/` 路径别名
 - [ ] 符合文件结构规范
-- [ ] `intl.t()` 国际化
+- [ ] `t()` 国际化
 - [ ] 异步有错误处理
 
 ### 🟢 P2 检查项（最佳实践）

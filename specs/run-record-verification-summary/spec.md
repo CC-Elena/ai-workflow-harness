@@ -46,7 +46,7 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| 页面 | `app/workflow-workspace.tsx` | 扩展草稿数据和表单 |
+| 页面 | `src/components/views/workflow-workspace.tsx` | 扩展草稿数据和表单 |
 
 ## 7. 数据与接口
 

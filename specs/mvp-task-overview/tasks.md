@@ -10,8 +10,8 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 增加 MVP 概览数据和 UI | `app/workflow-workspace.tsx`、`app/globals.css` | 无 | Done |
-| T2 | 同步工作流阶段状态 | `app/workflow-workspace.tsx` | T1 | Done |
+| T1 | 增加 MVP 概览数据和 UI | `src/components/views/workflow-workspace.tsx`、`src/app/globals.css` | 无 | Done |
+| T2 | 同步工作流阶段状态 | `src/components/views/workflow-workspace.tsx` | T1 | Done |
 | T3 | 验证并记录执行结果 | `specs/mvp-task-overview/run-record.md` | T1-T2 | Done |
 
 ## 3. 任务详情
@@ -25,15 +25,15 @@
 #### 输入
 
 1. Spec 相关段落：F1、F2。
-2. 必读上下文：`app/workflow-workspace.tsx`、`app/globals.css`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`、`src/app/globals.css`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 新增静态数据和区块 |
-| 文件 | `app/globals.css` | 新增概览样式 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 新增静态数据和区块 |
+| 文件 | `src/app/globals.css` | 新增概览样式 |
 
 #### 执行动作
 
@@ -73,7 +73,7 @@
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 更新 stage 状态和 hero 文案 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 更新 stage 状态和 hero 文案 |
 
 #### 执行动作
 

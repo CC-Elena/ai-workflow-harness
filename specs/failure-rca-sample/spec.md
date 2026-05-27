@@ -1,92 +1,74 @@
-# Feature Spec: 失败路径与 RCA 样本
+# Spec: 失败路径与 RCA 样本
 
 ## 1. 基本信息
 
 - 需求名称：失败路径与 RCA 样本
-- 需求来源：Harness 评估框架缺口
-- 负责人：Codex
-- 创建日期：2026-05-09
-- 状态：Done
+- 需求类型：受控失败样本
+- 维护日期：2026-05-18
 
 ## 2. 背景与目标
 
-当前项目已有成功闭环，但缺少失败闭环样本。本需求通过记录一个模拟验证失败，补齐失败样本、RCA 和反哺路径。
+该样本用于验证 Harness Gate 对失败交付的处理：失败或 Failure 复杂度记录必须保留 Failed / Partial 状态、引用真实或模拟失败证据，并提供 RCA 文件，避免把失败路径改写成成功。
 
 ## 3. 范围
 
-### 3.1 本次包含
+范围内：
 
-1. 新增失败样本 PRD、Spec、Tasks、Run Record、Evaluation Summary 和 RCA。
-2. 新增一份失败验证证据文件。
-3. 确认失败样本不影响 CI 和业务代码。
+1. 失败状态 Run Record。
+2. 模拟失败证据。
+3. RCA 文件。
+4. Evaluation Summary。
 
-### 3.2 本次不包含
+范围外：
 
-1. 不修改应用运行代码。
-2. 不制造真实 lint、typecheck 或 build 失败。
-3. 不实现自动 RCA 生成器。
+1. 不制造真实代码失败。
+2. 不作为业务功能验收样本。
 
-## 4. 用户场景
+## 4. 用户故事
 
-| 场景 | 用户行为 | 期望结果 |
-|------|----------|----------|
-| 查看失败样本 | 用户阅读失败 Run Record | 能看到失败原因、证据和 RCA |
-| 执行门禁 | 用户运行 harness check | 失败样本因为有 RCA 和证据而通过结构检查 |
+作为 Harness 维护者，我希望有一个稳定失败样本，证明门禁能识别 RCA 要求和失败证据要求。
 
 ## 5. 功能要求
 
-| 编号 | 功能点 | 说明 | 优先级 |
-|------|--------|------|--------|
-| F1 | 失败记录 | Run Record 标记 Failed，并引用失败证据 | P0 |
-| F2 | RCA | RCA 记录根因、修复动作和反哺项 | P0 |
-| F3 | 评估 | Evaluation Summary 说明该样本用于 Controlled Rollout 补充条件 | P1 |
+1. Run Record 状态保持 `Failed`。
+2. 任务复杂度保持 `Failure`。
+3. Run Record 必须引用 `rca.md`。
+4. 失败证据文件必须存在。
 
-## 6. 页面与组件影响
+## 6. 非功能要求
 
-| 类型 | 名称或路径 | 变更说明 |
-|------|------------|----------|
-| 页面 | N/A | 不涉及 |
-| 组件 | N/A | 不涉及 |
-| Hook | N/A | 不涉及 |
-| API | N/A | 不涉及 |
+1. 样本不得破坏 lint、typecheck 或 build。
+2. 样本应可被 `npm run harness:check -- specs/failure-rca-sample` 稳定检查。
 
 ## 7. 数据与接口
 
-| 接口或数据源 | 请求/输入 | 响应/输出 | 约束 |
-|--------------|-----------|-----------|------|
-| N/A | N/A | N/A | 不涉及 |
+使用现有 Harness Run Record、Evaluation Summary、RCA 和 evidence 文件格式。
 
-## 8. 权限与异常场景
+## 8. 边界与异常
 
-| 场景 | 处理方式 |
-|------|----------|
-| 验证失败 | 保留 Failed 状态并生成 RCA |
-| 证据缺失 | Harness Gate 应阻断 |
+1. 该样本的 Failed 状态是预期结果，不代表 CI 失败。
+2. Harness Check 通过表示失败路径记录完整，不表示业务执行成功。
 
-## 9. 设计与交互约束
+## 9. 验证方案
 
-1. 是否有设计稿：否。
-2. 是否需要截图验收：否。
-3. 样式和组件约束：不涉及。
-4. 国际化要求：不涉及。
+运行：
 
-## 10. 工程约束
+```bash
+npm run harness:check -- specs/failure-rca-sample
+```
 
-1. 不修改应用运行代码。
-2. 不让 CI 失败。
-3. 失败样本必须引用真实证据文件和 RCA 文件。
+## 10. 交付物
+
+1. `specs/failure-rca-sample/run-record.md`
+2. `specs/failure-rca-sample/rca.md`
+3. `specs/failure-rca-sample/evidence/mock-verification-failure.log`
 
 ## 11. 验收标准
 
-| 编号 | 验收项 | 验收方式 |
-|------|--------|----------|
-| A1 | Run Record 状态为 Failed | 人工检查 |
-| A2 | RCA 文件存在并被 Run Record 引用 | harness check |
-| A3 | 失败证据文件存在 | harness check |
+1. Harness Check 能通过该失败样本。
+2. RCA 引用存在且文件存在。
+3. 失败证据文件存在。
 
 ## 12. 风险与待确认问题
 
-| 类型 | 说明 | 处理方式 |
-|------|------|----------|
-| 风险 | 失败样本被误认为真实 CI 失败 | 在 Run Record 和证据中标明为模拟失败 |
-| 待确认 | 后续是否需要更多失败类型 | 下一阶段根据真实需求补充 |
+无。

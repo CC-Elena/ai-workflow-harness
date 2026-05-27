@@ -24,9 +24,7 @@ dependencies: [frontend-dev]
 
 - `components-catalog.json`
 - `hooks-catalog.json`
-- `src/baseComponents/`
-- `src/componentsUI/`
-- `src/shared/components/`
+- `src/components/`
 
 ## 采用阈值
 

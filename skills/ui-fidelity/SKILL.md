@@ -48,5 +48,5 @@ version: 0.1.0
 ## 🟢 轻微问题
 
 ## 修复清单
-- [ ] 问题1 - 文件: `path/to/file.less`
+- [ ] 问题1 - 文件: `path/to/file.css`
 ```

@@ -10,8 +10,8 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 扩展资产分类类型和筛选按钮 | `app/workflow-workspace.tsx` | 无 | Done |
-| T2 | 补充 Evaluation 与 Skill 资产条目 | `app/workflow-workspace.tsx` | T1 | Done |
+| T1 | 扩展资产分类类型和筛选按钮 | `src/components/views/workflow-workspace.tsx` | 无 | Done |
+| T2 | 补充 Evaluation 与 Skill 资产条目 | `src/components/views/workflow-workspace.tsx` | T1 | Done |
 | T3 | 验证构建并记录执行结果 | `specs/asset-catalog-evaluation-filter/run-record.md` | T1-T2 | Done |
 
 ## 3. 任务详情
@@ -25,14 +25,14 @@
 #### 输入
 
 1. Spec 相关段落：F1、F2、A1。
-2. 必读上下文：`app/workflow-workspace.tsx`。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`。
 3. 必读 Skills：`skills/frontend-dev/SKILL.md`、`skills/workflow-assets/SKILL.md`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 更新 Asset 类型和分类数组 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 更新 Asset 类型和分类数组 |
 
 #### 执行动作
 
@@ -70,7 +70,7 @@
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/workflow-workspace.tsx` | 增加静态资产条目 |
+| 文件 | `src/components/views/workflow-workspace.tsx` | 增加静态资产条目 |
 
 #### 执行动作
 

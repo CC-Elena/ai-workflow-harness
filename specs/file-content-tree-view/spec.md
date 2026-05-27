@@ -46,10 +46,10 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| API | `app/api/files/content/route.ts` [NEW] | 受限读取资产文件内容 |
-| 数据 | `app/files/file-data.ts` | 增加目录树类型和构建函数 |
-| 页面组件 | `app/files/file-workspace.tsx` | 改为目录树和内容预览 |
-| 样式 | `app/globals.css` | 增加文件浏览器布局和预览样式 |
+| API | `src/app/api/files/content/route.ts` [NEW] | 受限读取资产文件内容 |
+| 数据 | `src/lib/data/file-data.ts` | 增加目录树类型和构建函数 |
+| 页面组件 | `src/components/views/file-workspace.tsx` | 改为目录树和内容预览 |
+| 样式 | `src/app/globals.css` | 增加文件浏览器布局和预览样式 |
 
 ## 6. 数据与接口
 

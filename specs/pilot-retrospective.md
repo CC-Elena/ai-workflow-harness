@@ -24,7 +24,7 @@ P1、P2、P3 均跑通了 `PRD -> Spec -> Tasks -> Code Change -> Verification -
 | 后续 UI 试点补充截图验证 | `specs/mvp-task-overview/verification-record.md` | Done |
 | 补齐 P1 截图验证记录 | `specs/asset-catalog-evaluation-filter/verification-record.md` | Done |
 | 明确下一阶段推广范围和风险边界 | `specs/next-stage-rollout-boundary.md` | Done |
-| 集中维护首页工作流数据 | `app/workflow-data.ts` | Done |
+| 集中维护首页工作流数据 | `src/lib/data/workflow-data.ts` | Done |
 | 补齐工作流评估指标与投产门槛 | `.ai/workflows/evaluation-metrics.md` | Done |
 | 补齐 Rubric、Gate Check 和 Evaluation Summary 模板 | `.ai/workflows/eval-rubric.md`、`.ai/templates/*` | Done |
 | 记录工作流缺陷与后续优化关注项 | `specs/workflow-defect-register.md` | Done |
@@ -32,7 +32,7 @@ P1、P2、P3 均跑通了 `PRD -> Spec -> Tasks -> Code Change -> Verification -
 
 ## 4. 风险与建议
 
-1. 当前首页资产列表和 MVP 概览已经集中到 `app/workflow-data.ts`，后续新增资产优先更新该数据模块。
+1. 当前首页资产列表和 MVP 概览已经集中到 `src/lib/data/workflow-data.ts`，后续新增资产优先更新该数据模块。
 2. 下一阶段推广应先使用 `.ai/workflows/evaluation-metrics.md` 进行评分，达到对应门槛后再扩大使用范围。
 3. 下一阶段推广应遵守 `specs/next-stage-rollout-boundary.md`，继续排除 MCP、后端接口和无人值守合并。
 4. 若下一阶段需要自动统计，应另开需求，不在当前 MVP 内隐式加入文件扫描或后台服务。

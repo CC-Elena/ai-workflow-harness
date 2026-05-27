@@ -23,22 +23,22 @@
 
 ## 3. 执行摘要
 
-本次完成可选增强：将首页阶段、资产、任务和试点数据迁移到 `app/workflow-data.ts`，并让 MVP 任务数、试点数和最近任务由数据数组计算。
+本次完成可选增强：将首页阶段、资产、任务和试点数据迁移到 `src/lib/data/workflow-data.ts`，并让 MVP 任务数、试点数和最近任务由数据数组计算。
 
 ## 4. 任务结果
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Done | `app/workflow-data.ts` | Pass | 新增集中数据模块 |
-| T2 | Done | `app/workflow-workspace.tsx` | Pass | 页面改为导入数据并计算指标 |
+| T1 | Done | `src/lib/data/workflow-data.ts` | Pass | 新增集中数据模块 |
+| T2 | Done | `src/components/views/workflow-workspace.tsx` | Pass | 页面改为导入数据并计算指标 |
 | T3 | Done | `specs/workflow-data-registry/run-record.md` | Pass | 已记录执行结果 |
 
 ## 5. 修改文件
 
 | 文件 | 变更说明 |
 |------|----------|
-| `app/workflow-data.ts` | 新增首页工作流数据源 |
-| `app/workflow-workspace.tsx` | 删除重复数据常量，改为导入并计算指标 |
+| `src/lib/data/workflow-data.ts` | 新增首页工作流数据源 |
+| `src/components/views/workflow-workspace.tsx` | 删除重复数据常量，改为导入并计算指标 |
 | `specs/workflow-data-registry/*` | 新增可选增强 PRD、Spec、Tasks、Run Record |
 | `specs/development-plan-tasks.md` | 新增 T11 任务 |
 | `specs/pilot-retrospective.md` | 补充数据集中维护优化项 |

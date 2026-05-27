@@ -52,7 +52,7 @@ dependencies: [frontend-dev]
 
 ## 阶段二：环境探测与选择方式
 
-1. **环境探测**：检查开发服务器是否已启动（如 `localhost:4001`）。若未启动，优先建议启动，使用脚本命令`pnpm run qa`。
+1. **环境探测**：检查开发服务器是否已启动（如 `localhost:4001`）。若未启动，优先建议启动，使用脚本命令`npm run lint`。
 2. **侦察模式**：在编写任何脚本前，建议先通过截图或 DOM dump 确认页面元素选择器，避免盲猜。
 
 > ⚠️ **必须询问用户选择测试方式**
@@ -75,7 +75,7 @@ dependencies: [frontend-dev]
 1. **先侦察**：确认关键元素选择器
 2. 按照 `action-gen-e2e-script.md` 生成测试脚本
    - 🔴 **关键**：必须包含 `page.wait_for_load_state('networkidle')` 等待逻辑
-3. 运行 `pnpm test:e2e`
+3. 运行 `npm run test:e2e`
 4. 产出：`e2e/{component}/*.spec.ts`
 
 ### 方式 B：AI 浏览器测试

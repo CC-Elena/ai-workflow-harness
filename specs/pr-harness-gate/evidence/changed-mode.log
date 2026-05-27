@@ -1,0 +1,5 @@
+
+> ai-workflow-harness@0.1.0 harness:check
+> node scripts/check-harness-run.mjs --changed --base HEAD --head HEAD
+
+Harness changed-file check passed for HEAD...HEAD: no changed files

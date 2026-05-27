@@ -1,0 +1,12 @@
+[
+  {
+    "name": "GET",
+    "path": "src/app/api/files/content/route.ts",
+    "description": "获取资产文件内容的 API 路由  接收 `?path=` 查询参数，调用后端 Service 层读取文件内容并返回。 如果发生错误（如越权访问或文件不存在），返回 404 状态码。  @param {Request} request - 传入的 Next.js API 请求对象 @returns {Promise<Response>} 包含文件内容信息的 JSON 响应"
+  },
+  {
+    "name": "getFileContent",
+    "path": "src/lib/services/file-service.ts",
+    "description": "安全读取仓库资产文件的内容  校验请求的文件路径是否在 allowedPaths 中，并防止路径穿越攻击 (Path Traversal)。 如果文件合法，读取 UTF-8 文本并返回基本信息。  @param {string} requestedPath - 请求读取的相对文件路径 @returns {Promise<{path: string, content: string, size: number}>} 文件内容及元数据 @throws {Error} 如果路径不被允许或文件不存在时抛出"
+  }
+]

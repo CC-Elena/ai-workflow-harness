@@ -57,9 +57,8 @@ AI Workflow Harness 已经沉淀了 Spec、Task、Run Record、RCA 等工作流�
 
 ## 6. 验收标准
 
-1. `specs/ai-run-record-entry/spec.md` 符合 Spec 模板结构。
+1. `specs/ai-run-record-entry/run-record.md` 能说明本次模拟链路。
 2. `specs/ai-run-record-entry/tasks.md` 至少拆解 3 个可执行任务。
 3. `specs/ai-run-record-entry/run-record.md` 记录本次模拟执行结果。
 4. `.ai/evals/README.md` 能作为执行记录入口说明使用。
 5. 本次试点不修改真实业务代码。
-

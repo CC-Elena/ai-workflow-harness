@@ -10,11 +10,11 @@
 
 | ID | 任务 | 影响范围 | 依赖 | 状态 |
 |----|------|----------|------|------|
-| T1 | 创建文件数据模块 | `app/files/file-data.ts` [NEW] | 无 | Done |
-| T2 | 创建文件列表页主组件 | `app/files/file-workspace.tsx` [NEW] | T1 | Done |
-| T3 | 追加文件列表页和导航栏样式 | `app/globals.css` | T2 | Done |
-| T4 | 创建路由页面入口 | `app/files/page.tsx` [NEW] | T2 | Done |
-| T5 | 添加全局导航栏 | `app/layout.tsx` | T3 | Done |
+| T1 | 创建文件数据模块 | `src/lib/data/file-data.ts` [NEW] | 无 | Done |
+| T2 | 创建文件列表页主组件 | `src/components/views/file-workspace.tsx` [NEW] | T1 | Done |
+| T3 | 追加文件列表页和导航栏样式 | `src/app/globals.css` | T2 | Done |
+| T4 | 创建路由页面入口 | `src/app/files/page.tsx` [NEW] | T2 | Done |
+| T5 | 添加全局导航栏 | `src/app/layout.tsx` | T3 | Done |
 | T6 | 验证并记录执行结果 | `specs/file-list-page/run-record.md` | T1-T5 | Done |
 
 ## 3. Context Pack
@@ -23,10 +23,10 @@
 |------|------------|----------|------|------------|
 | P0 | `specs/file-list-page/spec.md` | 需求可信源 | Plan / Execute | ✅ |
 | P0 | `specs/file-list-page/prd.md` | 需求背景 | Plan | ✅ |
-| P1 | `app/workflow-data.ts` | 复用数据源和类型 | Execute | ✅ |
-| P1 | `app/workflow-workspace.tsx` | 参考组件实现模式 | Execute | ✅ |
-| P1 | `app/globals.css` | 参考样式和复用变量 | Execute | ✅ |
-| P1 | `app/layout.tsx` | 修改全局布局 | Execute | ✅ |
+| P1 | `src/lib/data/workflow-data.ts` | 复用数据源和类型 | Execute | ✅ |
+| P1 | `src/components/views/workflow-workspace.tsx` | 参考组件实现模式 | Execute | ✅ |
+| P1 | `src/app/globals.css` | 参考样式和复用变量 | Execute | ✅ |
+| P1 | `src/app/layout.tsx` | 修改全局布局 | Execute | ✅ |
 | P3 | `skills/project/SKILL.md` | 工程规范 | Plan / Execute | ✅ |
 | P3 | `.ai/context/common-patterns.md` | 实现模式参考 | Plan | ✅ |
 
@@ -41,17 +41,17 @@
 #### 输入
 
 1. Spec 相关段落：F1。
-2. 必读上下文：`app/workflow-data.ts`。
+2. 必读上下文：`src/lib/data/workflow-data.ts`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/files/file-data.ts` [NEW] | 文件列表数据和类型定义 |
+| 文件 | `src/lib/data/file-data.ts` [NEW] | 文件列表数据和类型定义 |
 
 #### 执行动作
 
-1. 创建 `app/files/file-data.ts`。
+1. 创建 `src/lib/data/file-data.ts`。
 2. 定义 `FileItem` 类型（扩展 `Asset`，增加 `icon` 字段）。
 3. 从 `workflow-data.ts` 导入 `assets` 和 `AssetCategory` 类型。
 4. 导出 `fileItems` 数组，映射 `assets` 数据并根据分类设定图标。
@@ -81,17 +81,17 @@
 #### 输入
 
 1. Spec 相关段落：F1-F5、F7、F8、A1-A5。
-2. 必读上下文：`app/workflow-workspace.tsx`（参考组件模式）、`app/files/file-data.ts`（数据源）。
+2. 必读上下文：`src/components/views/workflow-workspace.tsx`（参考组件模式）、`src/lib/data/file-data.ts`（数据源）。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/files/file-workspace.tsx` [NEW] | 文件列表页主组件 |
+| 文件 | `src/components/views/file-workspace.tsx` [NEW] | 文件列表页主组件 |
 
 #### 执行动作
 
-1. 创建 `app/files/file-workspace.tsx`，标记 `'use client'`。
+1. 创建 `src/components/views/file-workspace.tsx`，标记 `'use client'`。
 2. 实现 `pinnedPaths` 状态管理（`useState` + `localStorage`）。
 3. 实现 `useEffect` 从 `localStorage` 恢复置顶状态。
 4. 实现 `togglePin` 函数：添加/移除路径并同步 `localStorage`。
@@ -127,13 +127,13 @@
 #### 输入
 
 1. Spec 相关段落：设计约束。
-2. 必读上下文：`app/globals.css`（现有样式和变量）。
+2. 必读上下文：`src/app/globals.css`（现有样式和变量）。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/globals.css` | 追加样式 |
+| 文件 | `src/app/globals.css` | 追加样式 |
 
 #### 执行动作
 
@@ -172,17 +172,17 @@
 
 #### 输入
 
-1. 参考 `app/page.tsx` 现有模式。
+1. 参考 `src/app/page.tsx` 现有模式。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/files/page.tsx` [NEW] | 路由入口 |
+| 文件 | `src/app/files/page.tsx` [NEW] | 路由入口 |
 
 #### 执行动作
 
-1. 创建 `app/files/page.tsx`。
+1. 创建 `src/app/files/page.tsx`。
 2. 导入并渲染 `FileWorkspace` 组件。
 
 #### 验收标准
@@ -208,18 +208,18 @@
 #### 输入
 
 1. Spec 相关段落：F6、A6。
-2. 必读上下文：`app/layout.tsx`。
+2. 必读上下文：`src/app/layout.tsx`。
 
 #### 影响范围
 
 | 类型 | 路径或名称 | 说明 |
 |------|------------|------|
-| 文件 | `app/layout.tsx` | 添加导航栏 |
-| 组件 | `app/nav-bar.tsx` [NEW] | 导航栏客户端组件 |
+| 文件 | `src/app/layout.tsx` | 添加导航栏 |
+| 组件 | `src/components/layouts/nav-bar.tsx` [NEW] | 导航栏客户端组件 |
 
 #### 执行动作
 
-1. 创建 `app/nav-bar.tsx`，使用 `'use client'` 和 `usePathname`。
+1. 创建 `src/components/layouts/nav-bar.tsx`，使用 `'use client'` 和 `usePathname`。
 2. 渲染导航链接：首页 (`/`) 和文件列表 (`/files`)。
 3. 当前路径高亮对应链接。
 4. 在 `layout.tsx` 的 `<body>` 中引入导航栏组件。

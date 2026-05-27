@@ -54,13 +54,10 @@ version: 0.1.0
 
 ## 技术栈
 
-- **框架**：Next.js 15 App Router
-- **运行时**：React 19 + TypeScript
-- **样式**：全局 CSS，入口为 `app/globals.css`
-- **数据来源**：静态 TypeScript 数据模块，主要入口为 `app/workflow-data.ts` 和 `app/files/file-data.ts`
-- **API**：Next.js Route Handler，例如 `app/api/files/content/route.ts`
-- **代码规范**：ESLint 9 + `eslint-config-next`
-- **包管理**：npm，锁文件为 `package-lock.json`
+- **框架**：Next.js 15 (App Router) + React 19
+- **语言**：TypeScript 5
+- **代码规范**：ESLint 9 (eslint-config-next) + Husky
+- **包管理**：npm
 
 ---
 
@@ -71,22 +68,10 @@ version: 0.1.0
 
 ### 组件规范
 
-- 页面入口位于 `app/**/page.tsx`。
-- 交互组件使用客户端组件，并在文件顶部声明 `'use client';`。
-- 共享工作流数据优先集中维护在 `app/workflow-data.ts`。
-- 文件浏览器数据优先集中维护在 `app/files/file-data.ts`。
-- 新增页面或 API 时遵循 Next.js App Router 目录约定。
-
-### 样式规范
-
-- 全局样式集中维护在 `app/globals.css`。
-- 优先复用已有 class、布局节奏和响应式断点。
-- 不引入新的 UI 库或图标库，除非需求明确且经过确认。
-
-### 文案规范
-
-- 当前仓库没有接入国际化系统。
-- 文案可以直接写中文或英文，但同一页面内保持语气和命名一致。
+- **命名**：大驼峰
+- **结构**：主要采用 Next.js App Router 结构 (`app/` 目录下存放页面，`components/` 存放复用组件)
+- **语言**：统一使用 TypeScript (`*.ts`, `*.tsx`)
+- **路径**：使用 `@/` 别名
 
 ---
 
@@ -94,22 +79,19 @@ version: 0.1.0
 
 以下模块不得随意修改，如需修改必须标注"核心模块变更"：
 
-- `scripts/check-harness-run.mjs` - Harness 门禁逻辑
-- `.ai/templates/` - 工作流模板，会影响后续所有需求记录
-- `.ai/workflows/` - 工作流协议
-- `skills/project/SKILL.md` - 项目级最高规则
-- `app/api/files/content/route.ts` - 文件读取白名单和安全边界
+- `src/app/` - 核心路由与页面入口
+- `src/lib/` - 核心工具与库函数
+- `src/components/` - 全局复用组件
 
 ---
 
 ## 常用命令
 
 ```bash
-npm run dev
-npm run lint
-npm run typecheck
-npm run build
-npm run harness:check -- specs/{feature}
+npm run dev             # 本地开发
+npm run build           # 生产构建
+npm run lint            # 代码检查
+npm run typecheck       # 类型检查
 ```
 
 ---
@@ -118,5 +100,5 @@ npm run harness:check -- specs/{feature}
 
 1. **中等及以上复杂度需求**：先给出设计方案，待确认后再编码
 2. **信息不完整时**：先明确假设，列出候选方案及利弊
-3. **验证**：修改后按风险运行 `npm run lint`、`npm run typecheck`、`npm run build` 或 `npm run harness:check -- specs/{feature}`；无法运行时必须记录原因和风险
+3. **验证**：修改后运行 `npm run typecheck` 和 `npm run lint` 查看是否有问题，如果有立即修改
 4. **规则文件修改**：修改 `skills/` 目录下的文件，禁止直接修改同步目标文件。提交后会自动同步到各 AI 工具规则目录

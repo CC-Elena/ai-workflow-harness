@@ -18,7 +18,7 @@
 
 | 等级 | 内容 | 是否必须 | 例子 |
 |------|------|----------|------|
-| P0 | 直接修改文件和 Spec | 必须 | `app/workflow-data.ts`、`spec.md` |
+| P0 | 直接修改文件和 Spec | 必须 | `src/lib/data/workflow-data.ts`、`spec.md` |
 | P1 | 直接依赖文件 | 必须 | 调用组件、Hook、API、样式文件 |
 | P2 | 同类历史实现 | 推荐 | 相似页面、相似 Run Record |
 | P3 | 工程规范和 Skill | 推荐 | `skills/frontend-dev/SKILL.md` |

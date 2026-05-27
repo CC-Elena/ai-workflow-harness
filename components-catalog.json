@@ -1,0 +1,32 @@
+[
+  {
+    "name": "FilesPage",
+    "path": "src/app/files/page.tsx",
+    "description": "No description provided"
+  },
+  {
+    "name": "RootLayout",
+    "path": "src/app/layout.tsx",
+    "description": "No description provided"
+  },
+  {
+    "name": "Home",
+    "path": "src/app/page.tsx",
+    "description": "No description provided"
+  },
+  {
+    "name": "NavBar",
+    "path": "src/components/layouts/nav-bar.tsx",
+    "description": "全局导航栏组件 (NavBar)  负责应用顶部的路由切换导航功能，根据当前路由自动高亮对应的菜单项。  @returns {JSX.Element} 导航栏 UI 组件"
+  },
+  {
+    "name": "FileWorkspace",
+    "path": "src/components/views/file-workspace.tsx",
+    "description": "文件资源管理主组件 (FileWorkspace)  负责展示资产文件的层级目录树（支持展开/折叠和搜索），并提供 Markdown 渲染预览功能。 它通过内部调用 `/api/files/content` 获取真实的物理文件内容。  @returns {JSX.Element} 文件浏览与 Markdown 预览界面"
+  },
+  {
+    "name": "WorkflowWorkspace",
+    "path": "src/components/views/workflow-workspace.tsx",
+    "description": "工作流数据看板主组件 (WorkflowWorkspace)  负责在首页展示 AI Agent 的所有工作流数据、资产分类、Pilot 清单和 MVP 完成概览。 该组件在前端基于预定义的数据进行统计和渲染，是项目的核心入口大盘。  @returns {JSX.Element} 数据大盘可视化页面"
+  }
+]

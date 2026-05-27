@@ -53,6 +53,14 @@ pnpm run qa
 npm run harness:check -- specs/{feature}
 ```
 
+在 CI 的 pull request 事件中，使用 PR 真实 diff 模式：
+
+```bash
+npm run harness:check -- --changed --base <baseRef> --head <headRef>
+```
+
+该模式会检查 `base...head` 的所有变更文件，要求它们被至少一个本 PR 涉及的 Run Record 的“实际 Diff 覆盖表”覆盖。`Diff 覆盖模式：Feature scope` 只影响本地单 feature 检查，不会在 PR 模式中隐藏跨目录变更。
+
 该命令失败时，不得将 Run Record 状态写为 `Success`。业务功能验收仍由需求自己的验收标准、测试或浏览器验证负责；`harness:check` 只检查流程、证据和范围控制。
 
 ## 3. 验证记录格式

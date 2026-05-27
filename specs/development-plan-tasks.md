@@ -36,20 +36,20 @@
 | T7-3 | 完成一次模拟执行记录试点 | `specs/ai-run-record-entry/*` | Done |
 | T8-1 | 选择 2-3 个真实低风险需求 | `specs/real-pilot-candidates.md` | Done |
 | T8-2 | 为真实需求生成 Spec 与 Task List | `specs/asset-catalog-evaluation-filter/spec.md`、`tasks.md` | Done |
-| T8-3 | 执行至少一个真实代码修改闭环 | `app/workflow-workspace.tsx`、`specs/asset-catalog-evaluation-filter/run-record.md` | Done |
+| T8-3 | 执行至少一个真实代码修改闭环 | `src/components/views/workflow-workspace.tsx`、`specs/asset-catalog-evaluation-filter/run-record.md` | Done |
 | T8-4 | 产出试点复盘报告与优化清单 | `specs/pilot-retrospective.md` | Done |
 | T9-1 | 修复 Next 15 lint 验证链路 | `eslint.config.mjs`、`package.json`、`.ai/workflows/verification.md` | Done |
-| T9-2 | 完成 P2 Run Record 草稿验证摘要试点 | `specs/run-record-verification-summary/*`、`app/workflow-workspace.tsx` | Done |
-| T9-3 | 完成 P3 首页 MVP 任务完成概览试点 | `specs/mvp-task-overview/*`、`app/workflow-workspace.tsx`、`app/globals.css` | Done |
+| T9-2 | 完成 P2 Run Record 草稿验证摘要试点 | `specs/run-record-verification-summary/*`、`src/components/views/workflow-workspace.tsx` | Done |
+| T9-3 | 完成 P3 首页 MVP 任务完成概览试点 | `specs/mvp-task-overview/*`、`src/components/views/workflow-workspace.tsx`、`src/app/globals.css` | Done |
 | T9-4 | 补齐 UI 截图验证记录 | `specs/mvp-task-overview/verification-record.md` | Done |
 | T10-1 | 补齐 P1 截图验证记录 | `specs/asset-catalog-evaluation-filter/verification-record.md` | Done |
 | T10-2 | 明确下一阶段推广范围和风险边界 | `specs/next-stage-rollout-boundary.md` | Done |
-| T11-1 | 集中维护首页工作流数据 | `app/workflow-data.ts`、`app/workflow-workspace.tsx` | Done |
-| T11-2 | 用数据计算 MVP 任务和试点指标 | `app/workflow-workspace.tsx` | Done |
+| T11-1 | 集中维护首页工作流数据 | `src/lib/data/workflow-data.ts`、`src/components/views/workflow-workspace.tsx` | Done |
+| T11-2 | 用数据计算 MVP 任务和试点指标 | `src/components/views/workflow-workspace.tsx` | Done |
 | T12-1 | 定义 AI 工作流评估指标体系和投产门槛 | `.ai/workflows/evaluation-metrics.md` | Done |
 | T12-2 | 补齐评估 Rubric 与 grader 输出格式 | `.ai/workflows/eval-rubric.md` | Done |
 | T12-3 | 新增 Evaluation Summary、Gate Check 和 Rubric 模板 | `.ai/templates/evaluation-summary-template.md`、`gate-check-template.md`、`rubric-template.md` | Done |
-| T12-4 | 将评估层接入工作流入口、记录模板和首页索引 | `.ai/workflows/README.md`、`.ai/templates/run-record-template.md`、`app/workflow-data.ts` | Done |
+| T12-4 | 将评估层接入工作流入口、记录模板和首页索引 | `.ai/workflows/README.md`、`.ai/templates/run-record-template.md`、`src/lib/data/workflow-data.ts` | Done |
 | T13-1 | 记录 AI 工作流缺陷与后续业务迭代优化项 | `specs/workflow-defect-register.md` | Done |
 | T14-1 | 增加轻量规则加载策略，降低 token 和 Skill 过载 | `.ai/workflows/rule-loading-policy.md` | Done |
 | T14-2 | 增加最小 Skill 路由，默认 1 主 Skill、最多 1 辅 Skill | `.ai/context/skill-routing-minimal.md`、`.ai/context/skill-routing.md` | Done |
@@ -58,7 +58,7 @@
 
 截至 2026-05-04，`开发计划.md` 中 MVP 所需的仓库资产、工作流协议、Prompt、上下文索引、Skill 路由、验证协议、执行记录和真实需求试点均已形成可读取的仓库文件。
 
-真实需求试点 P1、P2、P3 均已完成 PRD、Spec、Tasks、代码修改、验证和 Run Record。P1、P3 均已补齐截图验证记录。首页展示数据已集中到 `app/workflow-data.ts`，MVP 指标由数据计算。MCP 能力按当前范围明确不实现，也不作为剩余任务追踪。
+真实需求试点 P1、P2、P3 均已完成 PRD、Spec、Tasks、代码修改、验证和 Run Record。P1、P3 均已补齐截图验证记录。首页展示数据已集中到 `src/lib/data/workflow-data.ts`，MVP 指标由数据计算。MCP 能力按当前范围明确不实现，也不作为剩余任务追踪。
 
 后续可选增强已补齐评估层：新增评估指标体系、投产门槛、阻断项、Rubric、Gate Check 模板和 Evaluation Summary 模板。该层参考 OpenAI Evals / Graders / Trace Grading 与 Anthropic Success Criteria / Evaluation Tool / Test Design 的公开原则，但仍保持仓库资产形态，不新增平台、数据库、MCP 或 Agent Runtime。
 

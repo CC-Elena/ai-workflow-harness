@@ -45,7 +45,7 @@ dependencies: [frontend-dev]
 
 ## 阶段二：生成骨架屏代码
 
-1. **抓取实际 DOM**：启动 `pnpm run qa`，访问目标页面
+1. **抓取实际 DOM**：启动 `npm run lint`，访问目标页面
 2. **分析对比**：DOM 结构 + 设计稿 + 已有骨架屏代码
 3. **生成代码**：复用公共组件（SharedHeader、FileTableSkeleton）
 4. **添加样式**：更新 `commonCss.js`
@@ -56,7 +56,7 @@ dependencies: [frontend-dev]
 ## 阶段三：注入到 HTML
 
 ```bash
-pnpm run skeleton
+npm run skeleton
 ```
 
 验证：

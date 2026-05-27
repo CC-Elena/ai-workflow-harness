@@ -62,11 +62,11 @@
 
 | 类型 | 名称或路径 | 变更说明 |
 |------|------------|----------|
-| 页面 | `app/files/page.tsx` [NEW] | 文件列表页路由入口 |
-| 组件 | `app/files/file-workspace.tsx` [NEW] | 文件列表页主组件 |
-| 数据 | `app/files/file-data.ts` [NEW] | 文件列表扩展数据 |
-| 布局 | `app/layout.tsx` | 添加全局导航栏 |
-| 样式 | `app/globals.css` | 追加文件列表页和导航栏样式 |
+| 页面 | `src/app/files/page.tsx` [NEW] | 文件列表页路由入口 |
+| 组件 | `src/components/views/file-workspace.tsx` [NEW] | 文件列表页主组件 |
+| 数据 | `src/lib/data/file-data.ts` [NEW] | 文件列表扩展数据 |
+| 布局 | `src/app/layout.tsx` | 添加全局导航栏 |
+| 样式 | `src/app/globals.css` | 追加文件列表页和导航栏样式 |
 
 ## 7. 数据与接口
 

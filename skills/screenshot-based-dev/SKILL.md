@@ -64,7 +64,7 @@ dependencies: [frontend-dev]
 
 **页面级功能目录结构**：
 - 页面目录：`src/pages/<entry>/<FeatureName>/`
-- 样式文件：`style.module.less`（CSS Modules）
+- 样式文件：`style.module.css`（CSS Modules）
 
 ---
 

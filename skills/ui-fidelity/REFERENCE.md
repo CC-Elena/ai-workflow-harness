@@ -36,7 +36,7 @@
 
 **常见问题**：
 - 使用硬编码色值（如 `#333`）
-- 未使用 `variable-global.less` 变量
+- 未使用 `globals.css` 变量
 
 **评分标准**：
 - **95%+**：完全使用设计 token
@@ -163,7 +163,7 @@
 - **位置**: 文件列表区域
 - **设计**: margin-bottom: 16px
 - **实现**: margin-bottom: 8px
-- **文件**: `src/pages/Knowledge/FileList/style.module.less:45`
+- **文件**: `src/pages/Knowledge/FileList/style.module.css:45`
 
 ## 🟡 中等问题
 
@@ -178,7 +178,7 @@
 - **实现**: 18px
 
 ## 修复清单
-- [ ] 修复列表项 margin-bottom: 16px - `style.module.less:45`
-- [ ] 修复按钮 Hover 颜色 - `DocButton/style.module.less`
+- [ ] 修复列表项 margin-bottom: 16px - `style.module.css:45`
+- [ ] 修复按钮 Hover 颜色 - `DocButton/style.module.css`
 - [ ] 调整图标尺寸为 20px
 ```

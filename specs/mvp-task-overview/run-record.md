@@ -29,16 +29,16 @@
 
 | Task ID | 结果 | 修改文件 | 验证结果 | 备注 |
 |---------|------|----------|----------|------|
-| T1 | Done | `app/workflow-workspace.tsx`、`app/globals.css` | Pass | 新增 MVP 概览区，当前任务数由数据模块计算为 36/36 |
-| T2 | Done | `app/workflow-workspace.tsx` | Pass | 阶段状态同步为 Ready |
+| T1 | Done | `src/components/views/workflow-workspace.tsx`、`src/app/globals.css` | Pass | 新增 MVP 概览区，当前任务数由数据模块计算为 36/36 |
+| T2 | Done | `src/components/views/workflow-workspace.tsx` | Pass | 阶段状态同步为 Ready |
 | T3 | Done | `specs/mvp-task-overview/run-record.md` | Pass | 已记录执行结果 |
 
 ## 5. 修改文件
 
 | 文件 | 变更说明 |
 |------|----------|
-| `app/workflow-workspace.tsx` | 新增 MVP 概览数据和区块，更新阶段状态 |
-| `app/globals.css` | 新增概览区响应式样式 |
+| `src/components/views/workflow-workspace.tsx` | 新增 MVP 概览数据和区块，更新阶段状态 |
+| `src/app/globals.css` | 新增概览区响应式样式 |
 | `specs/mvp-task-overview/*` | 新增 P3 试点 PRD、Spec、Tasks、Run Record |
 | `specs/mvp-task-overview/verification-record.md` | 新增截图与浏览器验证记录 |
 

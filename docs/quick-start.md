@@ -104,7 +104,13 @@ harness:check
 
 ### 2.6 配置 CI
 
-复制本仓库的 `.github/workflows/ci.yml`，并把 Harness Gate 指向目标项目已有的稳定样本：
+复制本仓库的 `.github/workflows/ci.yml`。PR 事件建议使用真实 diff 门禁：
+
+```bash
+npm run harness:check -- --changed --base <baseRef> --head <headRef>
+```
+
+该模式会从 `base...head` 读取变更文件，并要求至少一个 `specs/{feature}/run-record.md` 覆盖本次 PR 的实际 diff。固定样本只适合做脚本回归：
 
 ```bash
 npm run harness:check -- specs/{feature}
