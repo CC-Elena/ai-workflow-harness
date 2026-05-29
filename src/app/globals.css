@@ -272,15 +272,34 @@ button {
   line-height: 1;
 }
 
-.quality-grid {
+.quality-group-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
+.quality-group {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(238, 242, 234, 0.56);
+}
+
+.quality-group h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.quality-stack {
+  display: grid;
+  gap: 10px;
+}
+
 .quality-card {
-  min-height: 170px;
-  padding: 16px;
+  min-height: 142px;
+  padding: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
@@ -513,7 +532,7 @@ button {
   }
 
   .mvp-grid,
-  .quality-grid {
+  .quality-group-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -543,7 +562,7 @@ button {
   }
 
   .mvp-grid,
-  .quality-grid {
+  .quality-group-grid {
     grid-template-columns: 1fr;
   }
 

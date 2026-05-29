@@ -113,6 +113,55 @@ test('marks period based rates as N/A when denominator data is missing', () => {
   assert.match(snapshot.summary.workflowAdoptionRate.reason, /缺少/);
 });
 
+test('collects PR export raw, effective, review, defect, and groups', () => {
+  const root = makeRepo();
+  writeRun(root, 'demo', baseRun());
+  writeFileSync(
+    path.join(root, 'prs.csv'),
+    `number,title,mergedAt,taskType,riskLevel,aiAssisted,additions,deletions,effectiveAdditions,effectiveDeletions,reviewComments,reviewRounds,requestedChanges,defects7d,defects14d,defects30d,rollback,hotfix
+1,AI UI,2026-06-01,frontend-ui,Medium,yes,100,20,80,10,6,2,1,1,1,1,no,yes
+2,Manual docs,2026-06-02,docs,Small,no,40,10,30,5,1,1,0,0,0,0,no,no
+3,AI bugfix,2026-06-03,bugfix,Risky,yes,60,40,50,20,3,3,0,0,1,1,yes,no
+`
+  );
+
+  const snapshot = collectAiMetrics({ repoRoot: root, prExportPath: 'prs.csv' });
+
+  assert.equal(snapshot.prSummary.totalPrs, 3);
+  assert.equal(snapshot.prSummary.rawChangedLines, 270);
+  assert.equal(snapshot.prSummary.effectiveChangedLines, 195);
+  assert.equal(snapshot.prSummary.aiEffectiveChangedLines, 160);
+  assert.equal(snapshot.summary.workflowAdoptionRate.display, '67%');
+  assert.equal(snapshot.summary.aiAssistedDiffShare.display, '82%');
+  assert.equal(snapshot.reviewQuality.reviewCommentsPer100EffectiveLines.display, '5.1');
+  assert.equal(snapshot.reviewQuality.reviewRoundsPerPr.display, '2');
+  assert.equal(snapshot.reviewQuality.requestedChangesRate.display, '33%');
+  assert.equal(snapshot.defectWindows.defectRate7d.display, '33%');
+  assert.equal(snapshot.defectWindows.defectRate30d.display, '67%');
+  assert.equal(snapshot.defectWindows.rollbackRate.display, '33%');
+  assert.equal(snapshot.defectWindows.hotfixRate.display, '33%');
+  assert.equal(snapshot.groups.byTaskType['frontend-ui'].aiEffectiveDiffShare.display, '100%');
+  assert.equal(snapshot.groups.byRiskLevel.Risky.prCount, 1);
+});
+
+test('falls back to raw lines when effective fields are missing', () => {
+  const root = makeRepo();
+  writeRun(root, 'demo', baseRun());
+  writeFileSync(
+    path.join(root, 'prs.csv'),
+    `number,title,mergedAt,taskType,riskLevel,aiAssisted,additions,deletions,effectiveAdditions,effectiveDeletions,reviewComments,reviewRounds,requestedChanges,defects7d,defects14d,defects30d,rollback,hotfix
+1,AI UI,2026-06-01,frontend-ui,Medium,yes,100,20,,,6,2,0,0,0,0,no,no
+`
+  );
+
+  const snapshot = collectAiMetrics({ repoRoot: root, prExportPath: 'prs.csv' });
+
+  assert.equal(snapshot.prSummary.effectiveChangedLines, 120);
+  assert.equal(snapshot.prSummary.effectiveFallbackPrs, 1);
+  assert.equal(snapshot.summary.aiAssistedDiffShare.status, 'Partial');
+  assert.ok(snapshot.warnings.some((warning) => warning.includes('回退 raw changed lines')));
+});
+
 test('detects skipped rows without reason, out of scope files, manual rework, and defects', () => {
   const root = makeRepo();
   writeRun(

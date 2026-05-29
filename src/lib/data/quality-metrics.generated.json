@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-29T08:04:25.241Z",
+  "generatedAt": "2026-05-29T16:55:29.136Z",
   "period": {
     "source": null,
     "name": null,
@@ -39,20 +39,20 @@
       "value": null,
       "display": "N/A",
       "status": "N/A",
-      "numerator": null,
-      "denominator": null,
+      "numerator": 0,
+      "denominator": 0,
       "reason": "缺少 AI-assisted PR 或总 PR",
-      "source": "period"
+      "source": "prExport"
     },
     "aiAssistedDiffShare": {
       "label": "AI-assisted diff share",
       "value": null,
       "display": "N/A",
       "status": "N/A",
-      "numerator": null,
-      "denominator": null,
+      "numerator": 0,
+      "denominator": 0,
       "reason": "缺少 AI 参与变更行或总变更行",
-      "source": "period"
+      "source": "prExport"
     },
     "aiCodeRetention30d": {
       "label": "30-day AI code retention",
@@ -113,6 +113,102 @@
       "denominator": 13,
       "reason": "",
       "source": "repoLocal"
+    }
+  },
+  "prSummary": {
+    "source": "prExport",
+    "totalPrs": 0,
+    "aiAssistedPrs": 0,
+    "rawChangedLines": 0,
+    "effectiveChangedLines": 0,
+    "aiRawChangedLines": 0,
+    "aiEffectiveChangedLines": 0,
+    "effectiveFallbackPrs": 0,
+    "status": "N/A",
+    "reason": "缺少 PR 导出文件"
+  },
+  "groups": {
+    "byTaskType": {},
+    "byRiskLevel": {}
+  },
+  "reviewQuality": {
+    "reviewCommentsPer100EffectiveLines": {
+      "label": "Review comments / 100 effective lines",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "reason": "缺少 reviewComments 或 effective changed lines",
+      "source": "prExport"
+    },
+    "reviewRoundsPerPr": {
+      "label": "Review rounds / PR",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "reason": "缺少 reviewRounds 字段",
+      "source": "prExport"
+    },
+    "requestedChangesRate": {
+      "label": "Requested changes rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 requestedChanges 字段",
+      "source": "prExport"
+    }
+  },
+  "defectWindows": {
+    "defectRate7d": {
+      "label": "7-day defect rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 defects7d 字段",
+      "source": "prExport"
+    },
+    "defectRate14d": {
+      "label": "14-day defect rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 defects14d 字段",
+      "source": "prExport"
+    },
+    "defectRate30d": {
+      "label": "30-day defect rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 defects30d 字段",
+      "source": "prExport"
+    },
+    "rollbackRate": {
+      "label": "Rollback rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 rollback 字段",
+      "source": "prExport"
+    },
+    "hotfixRate": {
+      "label": "Hotfix rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": 0,
+      "denominator": 0,
+      "reason": "缺少 hotfix 字段",
+      "source": "prExport"
     }
   },
   "runs": [
@@ -538,6 +634,7 @@
       ]
     }
   ],
+  "pulls": [],
   "warnings": [
     "agent-agnostic-frontend-harness-report: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
     "ai-run-record-entry: Skipped 缺少原因: Screenshot",

@@ -1,0 +1,3 @@
+number,title,mergedAt,taskType,riskLevel,aiAssisted,additions,deletions,effectiveAdditions,effectiveDeletions,reviewComments,reviewRounds,requestedChanges,defects7d,defects14d,defects30d,rollback,hotfix
+101,Example UI change,2026-06-10,frontend-ui,Medium,yes,120,30,100,20,4,2,1,0,0,0,no,no
+102,Example docs update,2026-06-11,docs,Small,no,40,10,40,10,1,1,0,0,0,0,no,no

@@ -154,6 +154,12 @@ export const assets: Asset[] = [
     description: '沉淀单项评分证据、理由和改进建议。'
   },
   {
+    title: 'PR 导出模板',
+    path: '.ai/templates/pr-export-template.csv',
+    category: 'Template',
+    description: '定义业务试点 PR 指标导出的 CSV 字段。'
+  },
+  {
     title: '项目地图',
     path: '.ai/context/project-map.md',
     category: 'Context',

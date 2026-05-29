@@ -14,6 +14,7 @@
 - **doc-coauthoring** (v0.0.0) - 引导用户完成结构化的文档共创工作流。当用户想要编写文档、提案、技术规范、决策文档或类似结构化内容时使用。此工作流帮助用户高效地传递上下文、通过迭代完善内容，并验证文档对读者是否有效。当用户提到写文档、创建提案、起草规范或类似文档任务时触发。
 - **feature-dev** (v0.1.0) - 功能开发完整工作流，从 PRD 到代码。用于功能开发、需求开发、PRD、产品需求时。
 - **frontend-design** (v0.0.0) - 创建独特、生产级且具有高设计质量的前端界面。当用户要求构建 Web 组件、页面、制品、海报或应用程序（例如网站、着陆页、仪表板、React 组件、HTML/CSS 布局，或美化任何 Web UI）时使用此 Skill。生成具有创造性、打磨精良的代码和 UI 设计，避免通用的 AI 美学。
+- **package-install** (v0.3.0) - 一体化执行 ai-workflow-harness 的安装、初始化、项目宪法生成与验证。当用户说“安装 harness”“按安装 skill 执行”“setup/install/migrate harness”“接入并验证”时触发此 Skill。
 - **frontend-dev** (v0.1.0) - 前端开发规范。用于前端开发、写代码、编码、实现功能、新增组件时；按最小 Skill 路由命中后读取。 📚
 - **project** (v0.1.0) - AI Workflow Harness 项目上下文和规范
 - **screenshot-based-dev** (v0.1.0) - 基于截图的功能开发规范，从设计稿到代码的 SOP。用于截图开发、按设计稿实现。
@@ -47,6 +48,8 @@ skills/
 │   ├── action-split.md
 │   └── action-verify.md
 ├── frontend-design/
+│   └── SKILL.md
+├── package-install/
 │   └── SKILL.md
 ├── frontend-dev/
 │   ├── REFERENCE.md
@@ -105,6 +108,7 @@ PRD/需求描述 → 生成 Spec → Planner 拆任务 → Executor 执行 → �
 ```
 请按照 skills/code-review/SKILL.md 审查这个 PR
 请按照 skills/feature-dev/SKILL.md 实现以下 PRD
+请按 skills/package-install/SKILL.md 执行安装并完成验证
 ```
 
 ---

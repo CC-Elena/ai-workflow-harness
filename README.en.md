@@ -191,12 +191,12 @@ npx ai-workflow-harness check specs/my-feature         # run the harness:check g
 
 After install, fill in the `[AI to generate]` placeholders in `skills/project/SKILL.md` (stack, commands, protected paths), or ask your AI to read `skills/harness-migration/SKILL.md` and execute Phase 3 for you.
 
-### Option B: have an AI run the migration Skill
+### Option B: ask AI to run the install Skill (one-shot install + migrate + validate)
 
-If you'd rather have the AI generate the project constitution and `project-map` in one shot:
+The install Skill orchestrates the full lifecycle and internally delegates the migration phase to `skills/harness-migration/SKILL.md`.
 
 ```text
-Please read https://raw.githubusercontent.com/CC-Elena/ai-workflow-harness/main/skills/harness-migration/SKILL.md and execute the harness migration init task.
+Please follow skills/package-install/SKILL.md to install, migrate, and validate ai-workflow-harness. Return fix commands on failure.
 ```
 
 Step-by-step: [docs/migration-guide.md](docs/migration-guide.md) and [docs/adoption-checklist.md](docs/adoption-checklist.md).

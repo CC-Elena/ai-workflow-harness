@@ -20,6 +20,7 @@
 | UI 视觉还原或截图对比 | `skills/ui-fidelity/SKILL.md` | 需要对比截图、设计稿或视觉偏差时 |
 | 根据截图实现页面 | `skills/screenshot-based-dev/SKILL.md` | 需求输入主要是截图时 |
 | 测试、E2E、验收清单 | `skills/test/SKILL.md` | 需要生成、执行或解释测试时 |
+| npm 包安装与初始化 | `skills/package-install/SKILL.md` | 需要执行 install/setup/init/check 时 |
 | 代码审查 | `skills/code-review/SKILL.md` | 用户明确要求 review / 审查时 |
 | 文档、方案、规范 | `skills/doc-coauthoring/SKILL.md` | 主要产物是文档时 |
 | 工作流资产维护 | `skills/workflow-assets/SKILL.md` | 修改 `.ai/`、`specs/`、`skills/` 工作流资产时 |

@@ -123,10 +123,18 @@ npx ai-workflow-harness init --all-skills --force
 npx ai-workflow-harness init --dry-run
 ```
 
-### 方式 B：让 AI 跑迁移 Skill
+### 方式 B：让 AI 按 install Skill 一键完成安装、迁移与验证（推荐）
+
+该 Skill 已整合“安装 + 迁移 + 验证”闭环，内部会自动委托 `skills/harness-migration/SKILL.md` 执行迁移阶段。
 
 ```text
-请读取 https://raw.githubusercontent.com/CC-Elena/ai-workflow-harness/main/skills/harness-migration/SKILL.md ，执行 harness 迁移初始化任务。
+请按 skills/package-install/SKILL.md 执行安装、迁移并完成验证，输出失败修复命令。
+```
+
+等价英文示例：
+
+```text
+Follow skills/package-install/SKILL.md to install, migrate, and validate ai-workflow-harness. Return fix commands on failure.
 ```
 
 详见 [docs/migration-guide.md](docs/migration-guide.md) 与 [docs/adoption-checklist.md](docs/adoption-checklist.md)。
