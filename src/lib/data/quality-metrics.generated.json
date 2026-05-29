@@ -1,0 +1,559 @@
+{
+  "generatedAt": "2026-05-29T08:04:25.241Z",
+  "period": {
+    "source": null,
+    "name": null,
+    "team": null,
+    "targetEngineers": null,
+    "assignedSeats": null,
+    "activeAiUsers": null,
+    "totalPrs": null,
+    "aiAssistedPrs": null,
+    "totalChangedLines": null,
+    "aiChangedLines": null,
+    "retainedAiLines30d": null
+  },
+  "summary": {
+    "seatActivationRate": {
+      "label": "Seat activation rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": null,
+      "denominator": null,
+      "reason": "缺少活跃 AI 用户或已分配席位",
+      "source": "period"
+    },
+    "activeAiUserRate": {
+      "label": "Active AI user rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": null,
+      "denominator": null,
+      "reason": "缺少活跃 AI 用户或目标研发人数",
+      "source": "period"
+    },
+    "workflowAdoptionRate": {
+      "label": "AI-assisted PR rate",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": null,
+      "denominator": null,
+      "reason": "缺少 AI-assisted PR 或总 PR",
+      "source": "period"
+    },
+    "aiAssistedDiffShare": {
+      "label": "AI-assisted diff share",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": null,
+      "denominator": null,
+      "reason": "缺少 AI 参与变更行或总变更行",
+      "source": "period"
+    },
+    "aiCodeRetention30d": {
+      "label": "30-day AI code retention",
+      "value": null,
+      "display": "N/A",
+      "status": "N/A",
+      "numerator": null,
+      "denominator": null,
+      "reason": "缺少 30 天保留行或 AI 参与变更行",
+      "source": "period"
+    },
+    "firstPassCiRate": {
+      "label": "First-pass CI pass rate",
+      "value": 0.9230769230769231,
+      "display": "92%",
+      "status": "Partial",
+      "numerator": 12,
+      "denominator": 13,
+      "reason": "部分记录缺少显式字段，已使用仓库记录近似统计",
+      "source": "repoLocal"
+    },
+    "evidenceCompletenessRate": {
+      "label": "Evidence completeness rate",
+      "value": 0.9230769230769231,
+      "display": "92%",
+      "status": "Ready",
+      "numerator": 12,
+      "denominator": 13,
+      "reason": "",
+      "source": "repoLocal"
+    },
+    "scopeDriftRate": {
+      "label": "Scope drift rate",
+      "value": 0.15384615384615385,
+      "display": "15%",
+      "status": "Ready",
+      "numerator": 2,
+      "denominator": 13,
+      "reason": "",
+      "source": "repoLocal"
+    },
+    "largeManualReworkRate": {
+      "label": "Large manual rework rate",
+      "value": 0,
+      "display": "0%",
+      "status": "Ready",
+      "numerator": 0,
+      "denominator": 13,
+      "reason": "",
+      "source": "repoLocal"
+    },
+    "postMergeDefectRate": {
+      "label": "Post-merge defect rate",
+      "value": 0,
+      "display": "0%",
+      "status": "Ready",
+      "numerator": 0,
+      "denominator": 13,
+      "reason": "",
+      "source": "repoLocal"
+    }
+  },
+  "runs": [
+    {
+      "feature": "agent-agnostic-frontend-harness-report",
+      "path": "specs/agent-agnostic-frontend-harness-report/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": "Medium",
+      "date": "2026-05-12",
+      "verification": {
+        "total": 5,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 2,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 14,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "ai-run-record-entry",
+      "path": "specs/ai-run-record-entry/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-02 至 2026-05-03",
+      "verification": {
+        "total": 6,
+        "pass": 3,
+        "fail": 0,
+        "skipped": 3,
+        "skippedWithoutReason": 1,
+        "incompletePass": 0,
+        "complete": false,
+        "warnings": [
+          "Skipped 缺少原因: Screenshot"
+        ]
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": false,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "Skipped 缺少原因: Screenshot",
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "asset-catalog-evaluation-filter",
+      "path": "specs/asset-catalog-evaluation-filter/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-03",
+      "verification": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "evaluation-framework",
+      "path": "specs/evaluation-framework/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-04",
+      "verification": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "explicit-spec-command-routing",
+      "path": "specs/explicit-spec-command-routing/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": "Small",
+      "date": "2026-05-12",
+      "verification": {
+        "total": 3,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 2,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 6,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "failure-rca-sample",
+      "path": "specs/failure-rca-sample/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Failed",
+      "complexity": "Failure",
+      "date": "2026-05-09",
+      "verification": {
+        "total": 5,
+        "pass": 1,
+        "fail": 1,
+        "skipped": 3,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 7,
+        "outOfScope": 0
+      },
+      "firstPassCi": false,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "file-content-tree-view",
+      "path": "specs/file-content-tree-view/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": "Medium",
+      "date": "2026-05-09",
+      "verification": {
+        "total": 7,
+        "pass": 6,
+        "fail": 0,
+        "skipped": 1,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 17,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "file-list-page",
+      "path": "specs/file-list-page/run-record.md",
+      "aiAssisted": true,
+      "tool": "Antigravity Agent / Codex",
+      "status": "Success",
+      "complexity": "Medium",
+      "date": "2026-05-09",
+      "verification": {
+        "total": 7,
+        "pass": 6,
+        "fail": 0,
+        "skipped": 1,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 22,
+        "outOfScope": 4
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": true,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "存在范围外变更",
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "harness-foundation-hardening",
+      "path": "specs/harness-foundation-hardening/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": "Medium",
+      "date": "2026-05-09",
+      "verification": {
+        "total": 6,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 1,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 25,
+        "outOfScope": 2
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": true,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "存在范围外变更",
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "mvp-task-overview",
+      "path": "specs/mvp-task-overview/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-03",
+      "verification": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "pr-harness-gate",
+      "path": "specs/pr-harness-gate/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": "Medium",
+      "date": "2026-05-18",
+      "verification": {
+        "total": 7,
+        "pass": 7,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 21,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "run-record-verification-summary",
+      "path": "specs/run-record-verification-summary/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-03",
+      "verification": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    },
+    {
+      "feature": "workflow-data-registry",
+      "path": "specs/workflow-data-registry/run-record.md",
+      "aiAssisted": true,
+      "tool": "Codex",
+      "status": "Success",
+      "complexity": null,
+      "date": "2026-05-04",
+      "verification": {
+        "total": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "skippedWithoutReason": 0,
+        "incompletePass": 0,
+        "complete": true,
+        "warnings": []
+      },
+      "diff": {
+        "count": 0,
+        "outOfScope": 0
+      },
+      "firstPassCi": true,
+      "firstPassCiSource": "verificationProxy",
+      "evidenceComplete": true,
+      "scopeDrift": false,
+      "largeManualRework": false,
+      "postMergeDefect": false,
+      "warnings": [
+        "缺少 CI first pass 显式字段，使用验证记录作近似判断"
+      ]
+    }
+  ],
+  "warnings": [
+    "agent-agnostic-frontend-harness-report: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "ai-run-record-entry: Skipped 缺少原因: Screenshot",
+    "ai-run-record-entry: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "asset-catalog-evaluation-filter: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "evaluation-framework: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "explicit-spec-command-routing: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "failure-rca-sample: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "file-content-tree-view: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "file-list-page: 存在范围外变更",
+    "file-list-page: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "harness-foundation-hardening: 存在范围外变更",
+    "harness-foundation-hardening: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "mvp-task-overview: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "pr-harness-gate: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "run-record-verification-summary: 缺少 CI first pass 显式字段，使用验证记录作近似判断",
+    "workflow-data-registry: 缺少 CI first pass 显式字段，使用验证记录作近似判断"
+  ]
+}

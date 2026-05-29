@@ -73,6 +73,37 @@
 
 ## 6. 指标定义
 
+### 6.0 AI 代码质量指标
+
+以下指标用于团队试点和 repo-local 指标采集。首版以仓库记录、Run Record、Evaluation Summary、git diff 和周期手工输入为准；GitHub、CI API、Jira、Sentry 等外部数据源仅作为后续接入来源。
+
+#### Adoption
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| seatActivationRate | activeAiUsers / assignedSeats | 持续提升 | 周期指标文件 |
+| activeAiUserRate | activeAiUsers / targetEngineers | 持续提升 | 周期指标文件 |
+| workflowAdoptionRate | aiAssistedPrs / totalPrs | 持续提升 | 周期指标文件 |
+
+#### AI Code Share
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| aiAssistedDiffShare | aiChangedLines / totalChangedLines | 观察趋势，不作为质量结论 | 周期指标文件 |
+| aiCodeRetention30d | retainedAiLines30d / aiChangedLines | 持续提升 | 周期指标文件或后续代码平台 |
+
+#### Delivery Quality
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| firstPassCiRate | firstPassCiPassRuns / aiAssistedRuns | 持续提升 | Run Record 指标快照或验证记录近似 |
+| evidenceCompletenessRate | completeEvidenceRuns / aiAssistedRuns | 100% | Run Record 验证记录 |
+| scopeDriftRate | scopeDriftRuns / aiAssistedRuns | 0% | Run Record Diff 覆盖表 |
+| largeManualReworkRate | mediumOrLargeManualReworkRuns / aiAssistedRuns | 持续下降 | Run Record 人工介入与指标快照 |
+| postMergeDefectRate | runsWithPostMergeDefect / aiAssistedRuns | 持续下降 | Run Record 指标快照 |
+
+缺少分母或字段时必须输出 `N/A` 和原因，不得用 0% 代替未知值。AI 生成代码占比只能说明参与程度，不能单独代表质量；质量判断必须结合 CI、Review、返工、缺陷、证据完整度和范围漂移。
+
 ### 6.1 完成度指标
 
 | 指标 | 计算方式 | 目标 |

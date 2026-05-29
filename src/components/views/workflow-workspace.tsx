@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { assets, pilots, planTasks, stages, type AssetCategory, type StageStatus } from '../../lib/data/workflow-data';
+import qualitySnapshot from '../../lib/data/quality-metrics.generated.json';
 
 type RunDraft = {
   featureName: string;
@@ -52,6 +53,21 @@ const mvpMetrics: MvpMetric[] = [
     detail: latestTask?.title ?? '暂无最近任务'
   }
 ];
+
+type QualitySummaryKey = keyof typeof qualitySnapshot.summary;
+
+const qualityMetricKeys: QualitySummaryKey[] = [
+  'workflowAdoptionRate',
+  'aiAssistedDiffShare',
+  'aiCodeRetention30d',
+  'firstPassCiRate',
+  'evidenceCompletenessRate',
+  'scopeDriftRate',
+  'largeManualReworkRate',
+  'postMergeDefectRate'
+];
+
+const statusClass = (status: string) => (status === 'N/A' ? 'na' : status.toLowerCase());
 
 const statusLabel: Record<StageStatus, string> = {
   ready: 'Ready',
@@ -177,6 +193,35 @@ export default function WorkflowWorkspace() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="section-block" aria-labelledby="quality-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">AI Quality Metrics</p>
+            <h2 id="quality-title">质量指标看板</h2>
+          </div>
+          <span className="section-count">{qualitySnapshot.runs.length} runs</span>
+        </div>
+        <div className="quality-grid">
+          {qualityMetricKeys.map((key) => {
+            const metric = qualitySnapshot.summary[key];
+
+            return (
+              <article className="quality-card" key={key}>
+                <div className="quality-card-top">
+                  <span>{metric.label}</span>
+                  <b className={`quality-state ${statusClass(metric.status)}`}>{metric.status}</b>
+                </div>
+                <strong>{metric.display}</strong>
+                <p>{metric.reason || `${metric.numerator ?? 0}/${metric.denominator ?? 0} from ${metric.source}`}</p>
+              </article>
+            );
+          })}
+        </div>
+        <p className="quality-note">
+          Snapshot {qualitySnapshot.generatedAt.slice(0, 10)} · warnings {qualitySnapshot.warnings.length}
+        </p>
       </section>
 
       <section className="workspace-grid">

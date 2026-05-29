@@ -8,16 +8,39 @@
 - 需求数量：
 - 评估人：
 
-## 2. 需求列表
+## 2. 周期分母
+
+| 字段 | 数值 | 说明 |
+|------|------|------|
+| 目标研发人数 | | targetEngineers |
+| 已分配席位 | | assignedSeats |
+| 活跃 AI 用户 | | activeAiUsers |
+| 总 PR | | totalPrs |
+| AI-assisted PR | | aiAssistedPrs |
+| 总变更行 | | totalChangedLines |
+| AI 参与变更行 | | aiChangedLines |
+| AI 30 天保留行 | | retainedAiLines30d |
+
+## 3. 需求列表
 
 | 需求 | 复杂度 | Agent | 状态 | Run Record | RCA |
 |------|--------|-------|------|------------|-----|
 |      | Small / Medium / Risky | | Success / Partial / Failed | | |
 
-## 3. 质量指标
+## 4. 质量指标
 
 | 指标 | 目标 | 实际 | 说明 |
 |------|------|------|------|
+| seatActivationRate | 持续提升 | | activeAiUsers / assignedSeats |
+| activeAiUserRate | 持续提升 | | activeAiUsers / targetEngineers |
+| workflowAdoptionRate | 持续提升 | | aiAssistedPrs / totalPrs |
+| aiAssistedDiffShare | 观察趋势 | | aiChangedLines / totalChangedLines |
+| aiCodeRetention30d | 持续提升 | | retainedAiLines30d / aiChangedLines |
+| firstPassCiRate | 持续提升 | | firstPassCiPassRuns / aiAssistedRuns |
+| evidenceCompletenessRate | 100% | | completeEvidenceRuns / aiAssistedRuns |
+| scopeDriftRate | 0% | | scopeDriftRuns / aiAssistedRuns |
+| largeManualReworkRate | 持续下降 | | mediumOrLargeManualReworkRuns / aiAssistedRuns |
+| postMergeDefectRate | 持续下降 | | runsWithPostMergeDefect / aiAssistedRuns |
 | Spec 完整率 | >= 90% | | |
 | 修改范围命中率 | >= 95% | | |
 | 组件复用检查率 | 100% | | |
@@ -27,13 +50,13 @@
 | RCA 触发准确率 | 100% | | |
 | 同类问题复发率 | 持续下降 | | |
 
-## 4. 问题归因
+## 5. 问题归因
 
 | 问题 | 分类 | 影响 | 反哺位置 | 状态 |
 |------|------|------|----------|------|
 |      | Spec / Context / Skill / Verification / Review / Tool | | | |
 
-## 5. 推广判断
+## 6. 推广判断
 
 - 结论：Not Ready / Internal Trial / Low-risk Production / Controlled Rollout
 - 依据：
