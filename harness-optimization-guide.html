@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coding 能力演进下的 Harness 架构设计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2332 50%, #0d1b2a 100%);
+            color: #e2e8f0;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-bottom: 2px solid rgba(99, 179, 237, 0.3);
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #63b3ed, #a78bfa, #f687b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .section {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.2);
+        }
+
+        .section-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #63b3ed, #a78bfa);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f1724;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #63b3ed;
+            font-weight: 600;
+        }
+
+        .section-content {
+            color: #cbd5e1;
+            font-size: 1.05rem;
+        }
+
+        .principle-box {
+            background: rgba(99, 179, 237, 0.08);
+            border-left: 4px solid #63b3ed;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .principle-box strong {
+            color: #63b3ed;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead {
+            background: linear-gradient(135deg, rgba(99, 179, 237, 0.2), rgba(167, 139, 250, 0.2));
+        }
+
+        .comparison-table th {
+            padding: 18px 20px;
+            text-align: left;
+            color: #63b3ed;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 2px solid rgba(99, 179, 237, 0.3);
+        }
+
+        .comparison-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(99, 179, 237, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: rgba(99, 179, 237, 0.05);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 3px;
+        }
+
+        .tag-remove {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .tag-keep {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .tag-new {
+            background: rgba(99, 179, 237, 0.15);
+            color: #63b3ed;
+            border: 1px solid rgba(99, 179, 237, 0.3);
+        }
+
+        .architecture-diagram {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(99, 179, 237, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            font-family: "Courier New", monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #a78bfa;
+            overflow-x: auto;
+        }
+
+        .code-block {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: "Courier New", monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #4ade80;
+            overflow-x: auto;
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.1), rgba(99, 179, 237, 0.1));
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .insight-card h4 {
+            color: #a78bfa;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #63b3ed, #a78bfa, #f687b3);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #63b3ed;
+            border: 2px solid #0f1724;
+        }
+
+        .timeline-item:nth-child(2)::before {
+            background: #a78bfa;
+        }
+
+        .timeline-item:nth-child(3)::before {
+            background: #f687b3;
+        }
+
+        .timeline-date {
+            color: #63b3ed;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+            color: #cbd5e1;
+        }
+
+        .warning-box {
+            background: rgba(251, 191, 36, 0.08);
+            border-left: 4px solid #fbbf24;
+            padding: 20px 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .warning-box strong {
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .checklist li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            color: #cbd5e1;
+        }
+
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .x-list {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .x-list li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            color: #cbd5e1;
+        }
+
+        .x-list li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            color: #f87171;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #64748b;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>AI Coding 能力演进下的 Harness 架构设计</h1>
+            <p class="subtitle">
+                随着 Claude Code、Codex 等 AI 编程工具能力持续提升，代码库级别的开发框架如何演进？
+                <br>本文系统阐述 Harness 的架构设计原则、模块取舍策略与实施路线图。
+            </p>
+            <div class="meta">
+                <span>2026年6月</span>
+                <span>架构设计 · AI 编程 · 工程实践</span>
+            </div>
+        </div>
+
+        <!-- Section 1: 核心原则 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2 class="section-title">核心原则：模型能力边界外扩时，每一层都需要重新评估</h2>
+            </div>
+            <div class="section-content">
+                <div class="principle-box">
+                    <strong>核心逻辑</strong>
+                    <p>AI 编程模型的能力边界正在快速外扩。Harness 的每一层架构设计都需要持续审视：哪些模块已被模型能力覆盖而变得冗余，哪些模块反而因模型能力增强而价值凸显。框架的定位应向上游迁移——将模型已经能胜任的工作委托给它，聚焦于只有项目级上下文才能决策的环节。</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">基线（2024-2025）</div>
+                        <div class="timeline-content">AI Coding 模型的能力边界：能编写单个函数，跨文件重构能力有限</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">现状（2026）</div>
+                        <div class="timeline-content">能自主进行多文件重构、执行基本规划、运行代码并自我纠错</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">趋势（2027+）</div>
+                        <div class="timeline-content">能长时间自主工作（16h+），进行复杂方案评估与多维度权衡</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px;">若 Harness 始终维持在相同层级做相同的事，其边际价值将随模型能力提升而递减。每一次模型能力的跃迁，都意味着框架内<strong style="color: #f687b3;">某些模块可以卸除，某些模块反而更加关键</strong>。</p>
+            </div>
+        </div>
+
+        <!-- Section 2: 可卸除的模块 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2 class="section-title">可卸除的模块：模型已经能自行完成的职责</h2>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 25px;">随着 Claude Code / Codex 能力提升，以下职责模型已经能可靠地自行完成，框架层可以卸除或降级：</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">模块</th>
+                            <th style="width: 35%;">原框架职责</th>
+                            <th style="width: 40%;">现状分析</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag tag-remove">降级</span><strong style="color: #f87171;">代码质量检查</strong></td>
+                            <td>集成 linter、代码风格检查、模式匹配校验</td>
+                            <td>AI 原生生成的代码质量已经足够高，语法和风格问题大幅减少。<strong style="color: #4ade80;">建议降级为可选的最后一道防线</strong>，而非流水线的必经阶段。</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-remove">卸除</span><strong style="color: #f87171;">步骤级任务分解</strong></td>
+                            <td>将功能需求拆分为 5-10 个微步骤，逐一调度执行</td>
+                            <td>当前模型具备自主规划能力：给定中等粒度的任务，可自行拆解、执行、纠错。<br><br>
+                            <strong style="color: #a78bfa;">结论：Plan 粒度从「步骤级」提升至「阶段级」</strong>，每个阶段内部细节由模型自行处理。</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag tag-remove">降级</span><strong style="color: #f87171;">错误恢复</strong></td>
+                            <td>检测执行异常、分类错误类型、决策重试策略</td>
+                            <td>模型在遇到编译或运行时错误时，已能自行分析、定位并修复。框架只需关注<strong style="color: #f687b3;">超过阈值仍未恢复的异常情况</strong>，而非每次编译错误都介入。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 3: 不可替代的核心模块 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2 class="section-title">不可替代的核心模块：框架最持久的价值所在</h2>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 25px;">以下能力是当前 AI 编程工具<strong style="color: #f687b3;">的短板</strong>，也是 Harness 框架<strong style="color: #4ade80;">最不可替代</strong>的差异化价值：</p>
+
+                <div class="insight-card">
+                    <h4>价值 1：Spec → Plan 的结构化翻译</h4>
+                    <p><strong style="color: #f687b3;">这是框架最核心的一层。</strong></p>
+                    <p>AI 工具的「边做边想」模式在需求模糊时会产生大量无效探索。<strong style="color: #63b3ed;">Plan 作为需求到代码之间的桥梁，其价值随模型执行能力的增强而递增</strong>——因为其余环节模型都能自行完成，唯独「明确要构建什么」这一决策环节，模型的输出质量完全取决于上游输入的精准度。</p>
+                    <div class="code-block" style="margin-top: 15px;">
+<strong style="color: #63b3ed;">原始需求：</strong>「构建一个支持 CSV 导出的报表页面」
+
+<strong style="color: #f87171;">直接交由 AI 编程工具：</strong>边实现边理解需求，可能在方向选择上消耗大量时间
+
+<strong style="color: #4ade80;">经过 Harness Plan 层：</strong>
+  1. 生成结构化 Plan（数据模型 → API 设计 → 前端组件 → 导出逻辑）
+  2. 开发者审阅并确认方案
+  3. 将 Plan 作为上下文交由 AI 编程工具执行</div>
+                    <p style="margin-top: 15px;">Harness 将这一层固化为<strong style="color: #a78bfa;">显式、可审阅、可版本管理的 Plan 文档</strong>，而非依赖 prompt 的临时描述。</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4>价值 2：项目级知识的持续积累</h4>
+                    <p>AI 编程工具每次对话从零开始，无法感知项目的长期上下文：</p>
+                    <ul class="x-list">
+                        <li>历史架构决策及背后的原因</li>
+                        <li>特定模块的隐含约束（时序要求、并发限制等）</li>
+                        <li>同一功能的多个实现版本并存及其兼容性要求</li>
+                    </ul>
+                    <p><strong style="color: #63b3ed;">Harness 将这些知识编码至 Plan 模板、约束规则和知识库中</strong>，而非依赖对话上下文（会话结束后即丢失）。</p>
+                    <p style="margin-top: 10px;">经过一段时间积累后，任何开发者使用 Harness 启动新任务，框架都能自动注入该项目的所有历史决策和已知陷阱。<strong style="color: #4ade80;">这是直接使用 AI 编程工具无法获得的长期收益。</strong></p>
+                </div>
+
+                <div class="insight-card">
+                    <h4>价值 3：Spec 的自动化验收</h4>
+                    <p>AI 编程工具能编写代码和测试，但它<strong style="color: #f687b3;">不会主动校验 Spec 中的每一条需求是否均被实现和验证</strong>。</p>
+                    <p>Harness 在每个 Plan 执行完毕后，自动执行 Spec 逐条验收：</p>
+                    <div class="code-block" style="margin-top: 15px;">
+<strong style="color: #63b3ed;">需求点 1:</strong> 「导出按钮位于表格右上角」 → 检查对应组件是否存在 → ✅
+<strong style="color: #63b3ed;">需求点 2:</strong> 「CSV 文件编码为 UTF-8 BOM」 → 检查导出函数是否包含 BOM 头 → ❌ 缺失
+<strong style="color: #63b3ed;">需求点 3:</strong> 「超过 10 万行数据时显示进度条」 → 未实现 → ❌ 未通过验收</div>
+                    <p style="margin-top: 15px;">这不是模型做不到的事情，而是模型<strong style="color: #f687b3;">不会主动做的事情</strong>。Harness 将这层保证固化为流水线的强制环节。</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4>价值 4：架构一致性的全局守护</h4>
+                    <p>项目规模增大时，AI 编程工具倾向于做出局部最优决策——它不知道数个模块之外已经存在功能相同的工具函数或组件。</p>
+                    <p><strong style="color: #63b3ed;">Harness 在 Plan 阶段注入架构约束：</strong></p>
+                    <ul class="checklist">
+                        <li>新增工具函数前，先检索 codebase 中是否已有等价实现</li>
+                        <li>API 路径必须符合统一的命名约定</li>
+                        <li>新组件必须遵循既定的目录结构规范</li>
+                    </ul>
+                    <p style="margin-top: 10px;">在执行阶段再进行验证，确保约束落地。<strong style="color: #4ade80;">这是 AI 编程工具不具备的跨模块视野。</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: 新机会 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <h2 class="section-title">模型能力增强带来的全新机会</h2>
+            </div>
+            <div class="section-content">
+                <p style="margin-bottom: 25px;">模型能力的跃迁使一些以往成本过高或技术上不可行的架构模式变得可行。以下模块是 Harness 应该主动纳入的新能力：</p>
+
+                <div class="insight-card">
+                    <h4>新能力 1：Plan 方案的多版本对比与选优</h4>
+                    <p><strong style="color: #f687b3;">以往：</strong>模型生成代码的质量不足以支撑 A/B 方案的公平对比——两个版本都可能存在大量问题。</p>
+                    <p><strong style="color: #4ade80;">现在：</strong>模型代码生成质量已达到可进行双方案并行实现的水平。</p>
+                    <div class="architecture-diagram" style="margin-top: 15px;">
+ 需求输入
+     │
+     ├→ Planner 生成 Plan A（方案：REST API 模式）
+     ├→ Planner 生成 Plan B（方案：GraphQL 模式）
+     │
+     ├→ AI 编程工具同时实现 A 和 B
+     │    （各自完成代码编写、测试、基准数据收集）
+     │
+     ├→ 多维对比：性能 / 可维护性 / 代码体积 / 测试覆盖率
+     │
+     └→ 择优合并至主干分支</div>
+                    <p style="margin-top: 15px;">此前因人力成本过高而难以推行的<strong style="color: #a78bfa;">双方案对比模式</strong>，现在已具备工程可行性。</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4>新能力 2：Plan 的多 Agent 并行审阅</h4>
+                    <p><strong style="color: #f687b3;">以往：</strong>Plan 由人工审阅，或未经审阅直接执行。</p>
+                    <p><strong style="color: #4ade80;">现在：</strong>模型的推理能力已达到可审阅 Plan 的水平。</p>
+                    <div class="architecture-diagram" style="margin-top: 15px;">
+ Planner 产出 Plan
+     │
+     ├→ Reviewer Agent（审阅 Agent）
+     │   审阅 Plan，标注风险点、逻辑漏洞、边界遗漏
+     │
+     ├→ Explorer Agent（探测 Agent）
+     │   检索现有 codebase，检查 Plan 与既有实现的冲突
+     │
+     ├→ Test Agent（测试 Agent）
+     │   根据 Plan 预生成关键验收测试用例
+     │
+     └→ 汇聚反馈，修正 Plan → 确认后进入执行阶段</div>
+                    <p style="margin-top: 15px;">这是<strong style="color: #a78bfa;">Multi-Agent 探索层</strong>的核心思想——多个 Agent 并行从不同维度审阅 Plan，汇聚后产出更高质量的方案，再进入 Planner-Executor 串行执行回路。</p>
+                </div>
+
+                <div class="insight-card">
+                    <h4>新能力 3：执行过程的可观测性</h4>
+                    <p><strong style="color: #f687b3;">以往：</strong>Harness 只能观测到模型输出的最终产物（代码文件）。</p>
+                    <p><strong style="color: #4ade80;">现在：</strong>模型的长时间自主运行能力意味着：需要感知执行过程中的决策路径。</p>
+                    <p>Harness 应提供<strong style="color: #63b3ed;">执行过程的决策可视化</strong>，展示的并非模型编写了什么代码，而是：</p>
+                    <div class="code-block" style="margin-top: 15px;">
+<strong style="color: #a78bfa;">当前阶段：</strong>Phase 2/3 - 支付模块对接
+<strong style="color: #f687b3;">已放弃方案：</strong>直接调用支付 SDK → 放弃原因：QPS 限制不满足业务要求
+<strong style="color: #4ade80;">当前方案：</strong>通过消息队列异步处理，削峰填谷
+<strong style="color: #63b3ed;">预计剩余时间：</strong>基于历史相似任务估算
+<strong style="color: #fbbf24;">风险提示：</strong>支付回调时序可能存在陷阱（知识库记录显示曾在 2026.03 遇到过）</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: 目标架构 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <h2 class="section-title">目标架构：Harness 的最终形态</h2>
+            </div>
+            <div class="section-content">
+                <div class="architecture-diagram">
+┌───────────────────────────────────────────────────┐
+│           Harness 框架（核心价值层）                   │
+│                                                   │
+│  用户需求 → Spec → Plan 生成 → 方案对比              │
+│       │                                           │
+│       ├→ Plan 审阅（Multi-Agent 并行探索层）          │
+│       │                                           │
+│       ├→ 架构约束注入 + 项目知识库注入                 │
+│       │                                           │
+│       ├→ ┌──────────────────────────┐              │
+│       │   │  AI 编程工具执行         │ ← 模型发挥作用  │
+│       │   │（自主规划 + 编写 + 修复）  │              │
+│       │   └──────────────────────────┘              │
+│       │                                           │
+│       ├→ Spec 验收 + 架构一致性检查                  │
+│       │                                           │
+│       └→ 产物归档 + Plan 写入知识库                   │
+└───────────────────────────────────────────────────┘
+
+<strong style="color: #4ade80;">Harness 的定位不是「AI 编程工具的高级封装」，
+而是项目管理、知识积累、质量保证的工程基础设施层。
+AI 编程工具是执行引擎，Harness 是控制面和治理层。</strong></div>
+
+                <div class="principle-box" style="margin-top: 30px;">
+                    <strong>设计哲学</strong>
+                    <p>AI 编程工具大幅降低了<strong style="color: #63b3ed;">编写代码</strong>的边际成本。Harness 框架的目标是降低<strong style="color: #a78bfa;">「写出正确代码」</strong>的保证成本。</p>
+                    <p style="margin-top: 10px;">对齐 Plan → 检查规范 → 验收 Spec → 积累知识。这四项能力是当前 AI 编程工具<strong style="color: #f687b3;">均未充分覆盖</strong>的领域，是 Harness 框架存在的根本理由。</p>
+                </div>
+
+                <table class="comparison-table" style="margin-top: 30px;">
+                    <thead>
+                        <tr>
+                            <th>能力维度</th>
+                            <th>AI 编程工具（原生能力）</th>
+                            <th>Harness 框架（增强能力）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">规划可见性</strong></td>
+                            <td>黑盒，隐式推理</td>
+                            <td><span class="tag tag-keep">白盒，显式 Plan 文档</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">规划复用</strong></td>
+                            <td>每次从零推理</td>
+                            <td><span class="tag tag-keep">历史 Plan 可复用、可进化</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">质量门禁</strong></td>
+                            <td>无结构性检查</td>
+                            <td><span class="tag tag-keep">每个阶段明确准入/准出条件</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">领域知识注入</strong></td>
+                            <td>依赖 prompt 质量</td>
+                            <td><span class="tag tag-keep">框架内置项目规范与架构约束</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">审计追溯</strong></td>
+                            <td>不可追溯</td>
+                            <td><span class="tag tag-keep">Spec → Plan → 实现 → 验收 全链路可回溯</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #e2e8f0;">断点续传</strong></td>
+                            <td>依赖对话历史，会话丢失则不可恢复</td>
+                            <td><span class="tag tag-keep">每个阶段产物持久化，任意阶段可恢复执行</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 6: 实施路线 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <h2 class="section-title">实施路线图：从当前架构到目标架构</h2>
+            </div>
+            <div class="section-content">
+                <h3 style="color: #a78bfa; margin-bottom: 20px;">适用场景判定</h3>
+                <p style="margin-bottom: 15px;">以下场景中，引入 Harness 框架层将产生显著收益：</p>
+                <ul class="checklist">
+                    <li><strong>多人协作项目</strong>，需要通过 Plan 文档对齐开发方向（多个开发者使用 AI 工具独立工作时，产生的方案可能互相冲突）</li>
+                    <li><strong>存在强架构约束的项目</strong>（特定的分层规则、命名规范、依赖注入模式需要强制执行）</li>
+                    <li><strong>需要可追溯的决策记录</strong>（团队变动时，新人需要理解「为什么这个模块这样设计」）</li>
+                    <li><strong>Spec 到代码之间存在大量设计决策</strong>（需要「生成选项 → 对比评估 → 选择最优」的闭环流程）</li>
+                </ul>
+
+                <h3 style="color: #a78bfa; margin: 25px 0 20px;">分阶段实施路径</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">第一阶段 · 建立显式 Plan 文档体系</div>
+                        <div class="timeline-content">
+                            <strong style="color: #63b3ed;">目标：</strong>将隐式的规划过程固化为显式的、可版本管理的文档，存入代码库，随项目演进持续更新。完成这一步后，每次 AI 辅助开发都从确定性的 Plan 出发。
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">第二阶段 · 建立质量门禁</div>
+                        <div class="timeline-content">
+                            <strong style="color: #a78bfa;">目标：</strong>在 Plan → 实现 → 测试的每个阶段之间，加入不可跳过的结构化检查点。加载架构约束规则，自动验证产出物是否满足准出条件。
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">第三阶段 · 建立项目知识库</div>
+                        <div class="timeline-content">
+                            <strong style="color: #f687b3;">目标：</strong>将历史架构决策、已知陷阱、架构演进记录结构化存储。Harness 在生成 Plan 时自动检索相关历史知识，注入约束和建议。
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">第四阶段 · 引入 Multi-Agent 探索层（持续演进）</div>
+                        <div class="timeline-content">
+                            <strong style="color: #4ade80;">目标：</strong>在 Spec 完成后、Plan 开始前，插入并行 Agent 探索环节。多个 Agent 从不同维度审阅 Spec 和 Plan 初稿，汇聚反馈后修正 Plan，再进入 Planner-Executor 串行执行回路。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box" style="margin-top: 30px;">
+                    <strong>设计决策注意事项</strong>
+                    <p>1. <strong>避免过度工程</strong>：单人开发、项目简单、需求明确的场景，直接使用 AI 编程工具进行对话式开发效率更高，无需引入 Harness 框架层。</p>
+                    <p style="margin-top: 10px;">2. <strong>不要与模型竞争代码编写能力</strong>：那是 AI 编程工具的强项。Harness 应聚焦于<strong style="color: #f687b3;">模型不擅长的事情</strong>——治理、约束、验收和知识积累。</p>
+                    <p style="margin-top: 10px;">3. <strong>保持架构敏捷性</strong>：每当模型发布新能力，都需要重新评估 Harness 的每一层——这个模块是否仍然需要？是否有更轻量的替代方案？</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Harness Architecture Design · June 2026</p>
+            <p style="margin-top: 10px;">AI 编程工具快速演进 · 保持架构敏捷性 · 聚焦不可替代的工程价值</p>
+        </div>
+    </div>
+</body>
+</html>
