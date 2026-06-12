@@ -1,8 +1,6 @@
 # 企业 AI Coding Agent 落地问题解决方案
 
-来源材料：`last30days-research/enterprise-ai-coding-agents-adoption-problems-solutions-raw-v3.md`
-
-本文从近 30 天关于企业 AI 编程代理落地的调研材料中抽取核心问题，整理成可执行的工程手册。它不复述原始帖子和链接，而是把讨论集中到企业真正需要落地的控制点：范围、验证、架构、成本、安全、治理和 ROI。
+讨论集中到企业真正需要落地的控制点：范围、验证、架构、成本、安全、治理和 ROI。
 
 ## 一句话结论
 
