@@ -29,6 +29,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Anti-corruption quality gate
+        run: npm run quality:gate
+
       - name: Typecheck
         run: npm run typecheck
 

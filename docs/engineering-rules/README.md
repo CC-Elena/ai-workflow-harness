@@ -10,6 +10,10 @@
 4. 测试规范：`skills/test/SKILL.md`
 5. UI 还原规范：`skills/ui-fidelity/SKILL.md`
 6. 自动规则沉淀：`skills/auto-rules/RULES.md`
+7. 提交前分类检查：`docs/engineering-rules/pre-commit-redlines.md`
+
+## 提交前门禁
+
+CI 不以“能编译”作为交付标准。代码进入交付前必须通过 `pre-commit-redlines.md` 中定义的代码底线、代码规范和业务逻辑检查。
 
 如果后续出现跨 Skill 的统一工程规范，可在本目录补充专题文档。
-

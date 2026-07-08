@@ -18,6 +18,7 @@ const eslintConfig = [
       jsdoc: (await import('eslint-plugin-jsdoc')).default,
     },
     rules: {
+      'no-empty': ['error', { allowEmptyCatch: false }],
       'jsdoc/require-jsdoc': ['error', {
         require: {
           FunctionDeclaration: true,

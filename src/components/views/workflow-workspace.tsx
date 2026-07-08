@@ -84,7 +84,8 @@ export default function WorkflowWorkspace() {
         ...parsed,
         verificationSummary: parsed.verificationSummary ?? initialDraft.verificationSummary
       });
-    } catch {
+    } catch (error) {
+      console.warn('Resetting invalid run draft state.', error);
       window.localStorage.removeItem('ai-workflow-run-draft');
     }
   }, []);

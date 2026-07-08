@@ -21,7 +21,8 @@ function loadPinned(): string[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
-  } catch {
+  } catch (error) {
+    console.warn('Resetting invalid pinned file state.', error);
     window.localStorage.removeItem(STORAGE_KEY);
     return [];
   }

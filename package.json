@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "quality:gate": "node scripts/quality-gate.mjs",
     "typecheck": "tsc --noEmit",
     "harness:check": "node scripts/check-harness-run.mjs",
     "harness:test": "node --test scripts/check-harness-run.test.mjs",

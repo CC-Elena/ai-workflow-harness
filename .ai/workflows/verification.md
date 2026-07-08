@@ -12,15 +12,35 @@
 
 ## 2. 推荐验证顺序
 
-### 2.1 静态检查
+### 2.1 提交前分类检查
 
-优先使用项目现有命令：
+优先使用项目现有命令；提交前红线详见 `docs/engineering-rules/pre-commit-redlines.md`：
+
+#### 代码底线检查
+
+```bash
+npm run quality:gate
+```
+
+覆盖安全扫描、错误处理红线和交付底线；失败时不得继续标记为可交付。
+
+#### 代码规范检查
 
 ```bash
 npm run lint
+npm run quality:gate
 npm run typecheck
+```
+
+覆盖 ESLint、TypeScript、单文件行数、重复实现和引用边界等可维护性问题。
+
+#### 业务逻辑检查
+
+```bash
 npm run build
 ```
+
+涉及工具函数、Hook、复杂状态、API、UI 或关键业务路径时，必须补充测试、页面行为验证、Harness Check 或人工验收记录。
 
 如果某个项目仍保留统一 QA 命令，可优先使用：
 
@@ -69,7 +89,9 @@ npm run harness:check -- --changed --base <baseRef> --head <headRef>
 
 | 验证项 | 命令或方式 | 结果 | 说明 |
 |--------|------------|------|------|
+| Code Baseline | `npm run quality:gate` | Pass / Fail / Skipped | 安全与硬红线 |
 | Lint | `npm run lint` | Pass / Fail / Skipped | |
+| Maintainability Gate | `npm run quality:gate` | Pass / Fail / Skipped | 文件规模、重复实现、引用边界 |
 | Typecheck | `npm run typecheck` | Pass / Fail / Skipped | |
 | Test | | | |
 | Build | `npm run build` | Pass / Fail / Skipped | |

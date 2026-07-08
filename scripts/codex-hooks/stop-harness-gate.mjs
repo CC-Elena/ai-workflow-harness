@@ -23,7 +23,8 @@ const changedFiles = (() => {
       .split('\n')
       .filter(Boolean);
     return Array.from(new Set(tracked)).sort();
-  } catch {
+  } catch (error) {
+    console.warn('Harness Stop Gate could not inspect git diff.', error);
     return [];
   }
 })();

@@ -16,7 +16,8 @@ export async function GET(request: Request) {
   try {
     const fileData = await getFileContent(requestedPath);
     return Response.json(fileData);
-  } catch {
+  } catch (error) {
+    console.warn('Failed to read requested asset file.', error);
     return Response.json({ error: 'File not found or not allowed' }, { status: 404 });
   }
 }
