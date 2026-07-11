@@ -73,6 +73,67 @@
 
 ## 6. 指标定义
 
+### 6.0 AI 代码质量指标
+
+以下指标用于团队试点和 repo-local 指标采集。首版以仓库记录、Run Record、Evaluation Summary、git diff 和周期手工输入为准；GitHub、CI API、Jira、Sentry 等外部数据源仅作为后续接入来源。
+
+#### Adoption
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| seatActivationRate | activeAiUsers / assignedSeats | 持续提升 | 周期指标文件 |
+| activeAiUserRate | activeAiUsers / targetEngineers | 持续提升 | 周期指标文件 |
+| workflowAdoptionRate | aiAssistedPrs / totalPrs | 持续提升 | 周期指标文件 |
+
+#### AI Code Share
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| aiAssistedDiffShare | aiChangedLines / totalChangedLines | 观察趋势，不作为质量结论 | 周期指标文件 |
+| aiCodeRetention30d | retainedAiLines30d / aiChangedLines | 持续提升 | 周期指标文件或后续代码平台 |
+| rawChangedLines | additions + deletions | 观察趋势 | PR 导出文件 |
+| effectiveChangedLines | effectiveAdditions + effectiveDeletions | 用作质量对比主口径 | PR 导出文件 |
+
+`effectiveChangedLines` 应排除 lock、generated、vendor、纯格式化等噪音。若 PR 导出缺少 `effectiveAdditions` 或 `effectiveDeletions`，采集脚本回退到 raw changed lines，并将相关指标标记为 `Partial`。
+
+#### Delivery Quality
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| firstPassCiRate | firstPassCiPassRuns / aiAssistedRuns | 持续提升 | Run Record 指标快照或验证记录近似 |
+| evidenceCompletenessRate | completeEvidenceRuns / aiAssistedRuns | 100% | Run Record 验证记录 |
+| scopeDriftRate | scopeDriftRuns / aiAssistedRuns | 0% | Run Record Diff 覆盖表 |
+| largeManualReworkRate | mediumOrLargeManualReworkRuns / aiAssistedRuns | 持续下降 | Run Record 人工介入与指标快照 |
+| postMergeDefectRate | runsWithPostMergeDefect / aiAssistedRuns | 持续下降 | Run Record 指标快照 |
+
+#### Review Load
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| reviewCommentsPer100EffectiveLines | reviewComments / effectiveChangedLines * 100 | 持续下降 | PR 导出文件 |
+| reviewRoundsPerPr | reviewRounds / totalPrs | 持续下降 | PR 导出文件 |
+| requestedChangesRate | requestedChangesPrs / totalPrs | 持续下降 | PR 导出文件 |
+
+#### Defect Windows
+
+| 指标 | 计算方式 | 目标 | 数据源 |
+|------|----------|------|--------|
+| defectRate7d | defects7dPrs / totalPrs | 持续下降 | PR 导出文件 |
+| defectRate14d | defects14dPrs / totalPrs | 持续下降 | PR 导出文件 |
+| defectRate30d | defects30dPrs / totalPrs | 持续下降 | PR 导出文件 |
+| rollbackRate | rollbackPrs / totalPrs | 0% | PR 导出文件 |
+| hotfixRate | hotfixPrs / totalPrs | 持续下降 | PR 导出文件 |
+
+#### Segmentation
+
+业务试点必须至少按 `taskType` 和 `riskLevel` 分组查看。推荐任务类型：`docs`、`test`、`bugfix`、`frontend-ui`、`frontend-state`、`refactor`、`infra-config`、`risky-core`。风险等级沿用 `Small`、`Medium`、`Large`、`Risky`。不要把文档和高风险核心链路混在一个平均值里做质量判断。
+
+#### PR Label 规范
+
+`ai-assisted` 是 AI 参与 PR 的唯一首选标记。没有该 label，或 PR 导出文件中 `aiAssisted` 未标记为 `yes`，默认视为非 AI-assisted PR。指标系统不得根据标题、作者或代码风格猜测 AI 是否参与。
+
+缺少分母或字段时必须输出 `N/A` 和原因，不得用 0% 代替未知值。AI 生成代码占比只能说明参与程度，不能单独代表质量；质量判断必须结合 CI、Review、返工、缺陷、证据完整度和范围漂移。
+
 ### 6.1 完成度指标
 
 | 指标 | 计算方式 | 目标 |

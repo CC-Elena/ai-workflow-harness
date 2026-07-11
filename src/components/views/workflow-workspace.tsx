@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { assets, pilots, planTasks, stages, type AssetCategory, type StageStatus } from '../../lib/data/workflow-data';
+import qualitySnapshot from '../../lib/data/quality-metrics.generated.json';
 
 type RunDraft = {
   featureName: string;
@@ -50,6 +51,51 @@ const mvpMetrics: MvpMetric[] = [
     label: 'Latest pilot',
     value: latestTask?.id ?? 'N/A',
     detail: latestTask?.title ?? '暂无最近任务'
+  }
+];
+
+const statusClass = (status: string) => (status === 'N/A' ? 'na' : status.toLowerCase());
+
+const metricText = (metric: {
+  reason?: string;
+  numerator?: number | null;
+  denominator?: number | null;
+  source?: string;
+}) => metric.reason || `${metric.numerator ?? 0}/${metric.denominator ?? 0} from ${metric.source}`;
+
+const qualityGroups = [
+  {
+    title: 'Adoption',
+    metrics: [
+      qualitySnapshot.summary.workflowAdoptionRate,
+      qualitySnapshot.summary.seatActivationRate,
+      qualitySnapshot.summary.activeAiUserRate
+    ]
+  },
+  {
+    title: 'Code Share',
+    metrics: [
+      qualitySnapshot.summary.aiAssistedDiffShare,
+      qualitySnapshot.summary.aiCodeRetention30d
+    ]
+  },
+  {
+    title: 'Delivery Quality',
+    metrics: [
+      qualitySnapshot.summary.firstPassCiRate,
+      qualitySnapshot.summary.evidenceCompletenessRate,
+      qualitySnapshot.summary.scopeDriftRate,
+      qualitySnapshot.summary.largeManualReworkRate
+    ]
+  },
+  {
+    title: 'Review & Defects',
+    metrics: [
+      qualitySnapshot.reviewQuality.reviewCommentsPer100EffectiveLines,
+      qualitySnapshot.reviewQuality.reviewRoundsPerPr,
+      qualitySnapshot.defectWindows.defectRate30d,
+      qualitySnapshot.defectWindows.rollbackRate
+    ]
   }
 ];
 
@@ -178,6 +224,39 @@ export default function WorkflowWorkspace() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="section-block" aria-labelledby="quality-title">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">AI Quality Metrics</p>
+            <h2 id="quality-title">质量指标看板</h2>
+          </div>
+          <span className="section-count">{qualitySnapshot.runs.length} runs</span>
+        </div>
+        <div className="quality-group-grid">
+          {qualityGroups.map((group) => (
+            <article className="quality-group" key={group.title}>
+              <h3>{group.title}</h3>
+              <div className="quality-stack">
+                {group.metrics.map((metric) => (
+                  <div className="quality-card" key={`${group.title}-${metric.label}`}>
+                    <div className="quality-card-top">
+                      <span>{metric.label}</span>
+                      <b className={`quality-state ${statusClass(metric.status)}`}>{metric.status}</b>
+                    </div>
+                    <strong>{metric.display}</strong>
+                    <p>{metricText(metric)}</p>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="quality-note">
+          Snapshot {qualitySnapshot.generatedAt.slice(0, 10)} · {qualitySnapshot.prSummary.totalPrs} PRs · warnings{' '}
+          {qualitySnapshot.warnings.length}
+        </p>
       </section>
 
       <section className="workspace-grid">

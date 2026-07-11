@@ -85,6 +85,19 @@
 - 是否需要 RCA：
 - 下次优化建议：
 
+### 指标快照
+
+AI 质量指标只记录可确认数据；未知值填写 `N/A` 并说明原因。
+
+| 指标 | 数值 | 说明 |
+|------|------|------|
+| AI assisted | yes / no | |
+| CI first pass | yes / no / N/A | |
+| Manual rework rate | 0% / N/A | |
+| Production issue linked | yes / no / N/A | |
+| AI changed lines | N/A | 周期统计优先记录到 team pilot metrics |
+| Retained AI lines 30d | N/A | 首版可为空，后续接代码留存数据 |
+
 ## 10. 实际 Diff 覆盖表
 
 所有 `git diff --name-only` 和未跟踪文件必须出现在本表。未列入原 Spec 影响范围的文件必须说明确认原因。

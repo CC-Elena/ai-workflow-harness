@@ -1,8 +1,53 @@
 {
   "name": "ai-workflow-harness",
   "version": "0.1.0",
-  "private": true,
-  "description": "A lightweight Next.js workspace for AI Workflow Harness.",
+  "private": false,
+  "description": "A repository-native AI development workflow framework — keep your Coding Agent on-spec, on-process, and producing verifiable, reviewable, retrospectable deliveries.",
+  "keywords": [
+    "ai",
+    "ai-workflow",
+    "ai-agent",
+    "coding-agent",
+    "codex",
+    "claude-code",
+    "cursor",
+    "spec-driven-development",
+    "sdd",
+    "agentic-engineering",
+    "harness",
+    "nextjs"
+  ],
+  "homepage": "https://github.com/CC-Elena/ai-workflow-harness#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CC-Elena/ai-workflow-harness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CC-Elena/ai-workflow-harness/issues"
+  },
+  "author": "CC-Elena",
+  "license": "MIT",
+  "bin": {
+    "ai-workflow-harness": "./bin/ai-workflow-harness.mjs"
+  },
+  "files": [
+    "bin/",
+    ".ai/workflows/",
+    ".ai/templates/",
+    ".ai/prompts/",
+    ".ai/policies/",
+    ".ai/context/skill-routing-minimal.md",
+    ".ai/evals/README.md",
+    "skills/",
+    "scripts/check-harness-run.mjs",
+    "AGENTS.md",
+    "LICENSE",
+    "README.md",
+    "README.en.md"
+  ],
+  "engines": {
+    "node": ">=18.17"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +57,10 @@
     "typecheck": "tsc --noEmit",
     "harness:check": "node scripts/check-harness-run.mjs",
     "harness:test": "node --test scripts/check-harness-run.test.mjs",
+    "metrics:collect": "node scripts/collect-ai-metrics.mjs",
+    "metrics:update": "node scripts/collect-ai-metrics.mjs --write",
     "skills:check-links": "node scripts/check-agent-skill-links.mjs",
+    "cli": "node ./bin/ai-workflow-harness.mjs",
     "sync": "node scripts/sync-catalogs.mjs",
     "prepare": "husky"
   },
