@@ -22,15 +22,14 @@ Date: 2026-07-13
 | Unity/Cocos editor builds | external editors | Environment unavailable | commands/log contracts generated; no editor installed or claimed |
 | Remote CI | GitHub Actions | Remote execution unverified | local reference structure test passes |
 | Model grader / real agent study | external model run | Pending | no fabricated subjective score, token count, latency, or cost |
-| Aggregate quality gate | `npm run quality:gate` | Fail (pre-existing/out of Goal scope) | user-owned uncommitted Audit UI: empty catch handling and two files over 500 lines; no Beta Core finding |
+| Aggregate quality gate | `npm run quality:gate` | Pass | 30 code files; baseline and standards checks pass |
 
-## Aggregate quality-gate details
+## Aggregate quality-gate follow-up
 
-The failing paths existed as user changes at Goal start and were deliberately preserved:
+The original Audit findings were resolved in a follow-up on 2026-07-13:
 
-- `src/app/api/audit/review/route.ts`: catch without an error binding.
-- `src/lib/services/audit-service.ts`: three catch blocks without visible handling; file is 512 lines.
-- `src/components/views/audit-workspace.tsx`: 530 lines.
+- Audit catch paths now bind and visibly report errors before their fallback behavior.
+- Evidence file access moved to `audit-evidence-service.ts`; `audit-service.ts` is 453 lines.
+- Evidence Viewer moved to `audit-evidence-viewer.tsx`; `audit-workspace.tsx` is 486 lines.
 
-Risk: the repository-wide quality command remains red until that separate Audit feature is corrected. This does not invalidate the passing runtime tests, lint, typecheck, or production build, but it blocks an unconditional whole-worktree green claim.
-
+The repository-wide gate is now green alongside lint, typecheck, build, and both Harness test suites.

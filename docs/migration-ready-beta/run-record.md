@@ -5,7 +5,7 @@
 - Goal: AI Workflow Harness Migration-ready Beta
 - Date: 2026-07-13
 - Mode: Lightweight Harness maintenance (the user did not invoke `/spec`)
-- Status: Goal scope complete; aggregate quality gate has a documented pre-existing exception
+- Status: Complete; aggregate quality gate passes after Audit follow-up
 - Main Skill: `feature-dev`
 - Auxiliary Skill: `workflow-assets`
 - Failure/RCA dependency: `auto-rules`
@@ -28,8 +28,8 @@
 ## Scope controls
 
 - Added/changed: `harness/`, `bin/`, `benchmarks/`, `test/`, `docs/migration-ready-beta/`, `README.md`, package metadata, CI reference, PreToolUse matcher, and one harvested auto-rule.
-- Explicitly preserved: pre-existing Audit UI/API/service modifications under `src/`.
-- Not performed: dependency install/upgrade, external clone, network/private access, commit, push, PR, publication, deployment, editor installation, or destructive schema migration.
+- Follow-up: Audit UI/API/service changes were later included by user request and repaired to satisfy the aggregate gate.
+- Goal execution did not install dependencies, clone externally, access private systems, publish, deploy, install editors, or perform destructive schema migration. A later user-authorized follow-up committed and pushed the work to Draft PR #2.
 
 ## Truthful state
 
@@ -38,7 +38,7 @@
 - Agent experiment metrics: Pending unless the fixture process is explicitly labeled; token/cost remain null.
 - Unity/Cocos static adapters: Pass; real builds: Environment unavailable.
 - CI template: locally checked; remote execution unverified.
-- Whole-worktree quality gate: Fail due to user-owned pre-existing Audit findings documented in `verification-record.md`.
+- Whole-worktree quality gate: Pass after explicit catch handling and responsibility-based file splits.
 
 ## RCA / learning loop
 
@@ -47,4 +47,3 @@ The PreToolUse false positive was diagnosed, fixed, regression-tested, documente
 ## Review focus
 
 Review contract compatibility, Tool Policy authorization, Trace redaction/integrity, worker-verifier handoff trust, deterministic graders, init ownership semantics, and whether the two fixtures represent sufficient migration friction. See `security-release-and-roadmap.md` for Production-proven prerequisites.
-

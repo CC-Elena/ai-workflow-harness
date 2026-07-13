@@ -16,7 +16,8 @@ export async function POST(request: Request) {
   let body: { feature?: string; decision?: string; reviewer?: string; note?: string };
   try {
     body = await request.json();
-  } catch {
+  } catch (error) {
+    console.warn('Failed to parse audit review request.', error);
     return Response.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 

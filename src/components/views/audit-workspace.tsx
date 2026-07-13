@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import AuditEvidenceViewer, { type EvidenceViewerState } from './audit-evidence-viewer';
+
 import type {
   AuditRun,
   ChangedFile,
@@ -50,14 +52,6 @@ function extractEvidencePaths(text: string): string[] {
   }
   return paths;
 }
-
-type EvidenceViewerState =
-  | { status: 'idle' }
-  | { status: 'loading'; path: string }
-  | { status: 'text'; path: string; content: string; size: number }
-  | { status: 'image'; path: string }
-  | { status: 'unsupported'; path: string }
-  | { status: 'error'; path: string; message: string };
 
 function RiskDot({ level }: { level: RiskLevel }) {
   return <span className={`risk-dot risk-${level}`} aria-label={riskLabel[level]} title={riskLabel[level]} />;
@@ -181,43 +175,6 @@ function ImpactMap({
         );
       })}
     </ul>
-  );
-}
-
-function EvidenceViewer({ state, onClose }: { state: EvidenceViewerState; onClose: () => void }) {
-  if (state.status === 'idle') return null;
-
-  return (
-    <div className="packet-panel evidence-viewer">
-      <div className="evidence-viewer-head">
-        <h3>证据查看器</h3>
-        <code className="evidence-viewer-path">{state.path}</code>
-        <button type="button" className="evidence-viewer-close" onClick={onClose} aria-label="关闭证据查看器">
-          ✕
-        </button>
-      </div>
-      {state.status === 'loading' && <p className="packet-empty">正在读取证据…</p>}
-      {state.status === 'error' && <p className="evidence-viewer-error">{state.message}</p>}
-      {state.status === 'unsupported' && (
-        <p className="packet-empty">该文件类型暂不支持预览，请在编辑器中打开。</p>
-      )}
-      {state.status === 'image' && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          className="evidence-image"
-          src={`/api/audit/evidence?path=${encodeURIComponent(state.path)}&raw=1`}
-          alt={state.path}
-        />
-      )}
-      {state.status === 'text' && (
-        <>
-          <div className="file-preview-meta">{state.size.toLocaleString()} bytes</div>
-          <pre className="file-content evidence-content">
-            <code>{state.content}</code>
-          </pre>
-        </>
-      )}
-    </div>
   );
 }
 
@@ -350,7 +307,7 @@ function ReviewPacket({ run }: { run: AuditRun }) {
         <EvidenceMatrix claims={run.claims} onOpenEvidence={openEvidence} />
       </div>
 
-      <EvidenceViewer state={viewer} onClose={() => setViewer({ status: 'idle' })} />
+      <AuditEvidenceViewer state={viewer} onClose={() => setViewer({ status: 'idle' })} />
 
       {run.interventions.length > 0 && (
         <div className="packet-panel">
