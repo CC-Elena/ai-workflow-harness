@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { href: '/', label: '首页' },
+  { href: '/audit', label: '审计台' },
   { href: '/files', label: '文件列表' }
 ];
 

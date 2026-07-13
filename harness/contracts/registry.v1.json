@@ -1,0 +1,45 @@
+{
+  "registryVersion": "1.0.0",
+  "compatibility": {
+    "policy": "exact-version",
+    "unknownVersion": "reject",
+    "extensions": "preserve",
+    "deprecation": "announce for one minor release before removal"
+  },
+  "base": {
+    "required": ["schemaVersion", "id", "status", "extensions"],
+    "properties": {
+      "schemaVersion": { "type": "string", "const": "1.0.0" },
+      "id": { "type": "string", "minLength": 3 },
+      "status": { "type": "string", "enum": ["draft", "ready", "running", "pass", "fail", "skipped", "pending", "cancelled", "environment_unavailable"] },
+      "extensions": { "type": "object" }
+    }
+  },
+  "contracts": {
+    "projectManifest": { "required": ["name", "root", "ownership", "presets"], "properties": { "name": { "type": "string" }, "root": { "type": "string" }, "ownership": { "type": "object" }, "presets": { "type": "array" } } },
+    "spec": { "required": ["goal", "scope", "nonGoals", "inputs", "outputs", "stateTransitions", "acceptanceCriteria", "invariants", "failureBehavior", "parameters", "unresolvedQuestions", "assumptions", "conflicts", "changeLog"], "properties": { "goal": { "type": "string" }, "scope": { "type": "array" }, "nonGoals": { "type": "array" }, "inputs": { "type": "array" }, "outputs": { "type": "array" }, "stateTransitions": { "type": "array" }, "acceptanceCriteria": { "type": "array" }, "invariants": { "type": "array" }, "failureBehavior": { "type": "array" }, "parameters": { "type": "object" }, "unresolvedQuestions": { "type": "array" }, "assumptions": { "type": "array" }, "conflicts": { "type": "array" }, "changeLog": { "type": "array" } } },
+    "task": { "required": ["specId", "acceptanceIds", "inputs", "outputs"], "properties": { "specId": { "type": "string" }, "acceptanceIds": { "type": "array" }, "inputs": { "type": "array" }, "outputs": { "type": "array" } } },
+    "role": { "required": ["name", "responsibilities", "nonResponsibilities", "allowedArtifacts"], "properties": { "name": { "type": "string" }, "responsibilities": { "type": "array" }, "nonResponsibilities": { "type": "array" }, "allowedArtifacts": { "type": "array" } } },
+    "roleBinding": { "required": ["roleId", "agentId", "mode"], "properties": { "roleId": { "type": "string" }, "agentId": { "type": "string" }, "mode": { "type": "string", "enum": ["single", "process", "external"] } } },
+    "agentDescriptor": { "required": ["agentId", "adapter", "capabilities"], "properties": { "agentId": { "type": "string" }, "adapter": { "type": "string" }, "capabilities": { "type": "array" } } },
+    "handoff": { "required": ["fromAgentId", "toAgentId", "taskId", "artifactIds", "contractHash"], "properties": { "fromAgentId": { "type": "string" }, "toAgentId": { "type": "string" }, "taskId": { "type": "string" }, "artifactIds": { "type": "array" }, "contractHash": { "type": "string" } } },
+    "artifact": { "required": ["kind", "path", "sha256", "owner"], "properties": { "kind": { "type": "string" }, "path": { "type": "string" }, "sha256": { "type": "string" }, "owner": { "type": "string" } } },
+    "contextItem": { "required": ["provider", "source", "authority", "contentHash", "trusted"], "properties": { "provider": { "type": "string" }, "source": { "type": "string" }, "authority": { "type": "integer" }, "contentHash": { "type": "string" }, "trusted": { "type": "boolean" } } },
+    "contextConflict": { "required": ["itemIds", "winnerId", "reason"], "properties": { "itemIds": { "type": "array" }, "winnerId": { "type": "string" }, "reason": { "type": "string" } } },
+    "validationManifest": { "required": ["validators", "changeRules", "protectedPaths"], "properties": { "validators": { "type": "array" }, "changeRules": { "type": "array" }, "protectedPaths": { "type": "array" } } },
+    "validationResult": { "required": ["validatorId", "startedAt", "endedAt", "evidenceIds"], "properties": { "validatorId": { "type": "string" }, "startedAt": { "type": "string" }, "endedAt": { "type": "string" }, "evidenceIds": { "type": "array" } } },
+    "evidence": { "required": ["acceptanceIds", "artifactId", "sha256", "recordedAt"], "properties": { "acceptanceIds": { "type": "array" }, "artifactId": { "type": "string" }, "sha256": { "type": "string" }, "recordedAt": { "type": "string" } } },
+    "toolPolicy": { "required": ["allowed", "denied", "protectedPaths", "timeoutMs", "maxOutputBytes"], "properties": { "allowed": { "type": "array" }, "denied": { "type": "array" }, "protectedPaths": { "type": "array" }, "timeoutMs": { "type": "integer" }, "maxOutputBytes": { "type": "integer" } } },
+    "agentRun": { "required": ["runId", "traceId", "agentId", "role", "parentRunId"], "properties": { "runId": { "type": "string" }, "traceId": { "type": "string" }, "agentId": { "type": "string" }, "role": { "type": "string" }, "parentRunId": { "type": ["string", "null"] } } },
+    "runEvent": { "required": ["runId", "traceId", "spanId", "parentSpanId", "eventType", "timestamp", "agentId", "role"], "properties": { "runId": { "type": "string" }, "traceId": { "type": "string" }, "spanId": { "type": "string" }, "parentSpanId": { "type": ["string", "null"] }, "eventType": { "type": "string" }, "timestamp": { "type": "string" }, "agentId": { "type": "string" }, "role": { "type": "string" } } },
+    "evaluationCase": { "required": ["target", "goldBehavior", "goldContext", "allowedScope", "forbiddenScope", "graders"], "properties": { "target": { "type": "string" }, "goldBehavior": { "type": "array" }, "goldContext": { "type": "array" }, "allowedScope": { "type": "array" }, "forbiddenScope": { "type": "array" }, "graders": { "type": "array" } } },
+    "evaluationResult": { "required": ["caseId", "profile", "attempt", "graderResults", "metrics"], "properties": { "caseId": { "type": "string" }, "profile": { "type": "string" }, "attempt": { "type": "integer" }, "graderResults": { "type": "array" }, "metrics": { "type": "object" } } },
+    "graderResult": { "required": ["graderId", "score", "reason", "evidenceIds"], "properties": { "graderId": { "type": "string" }, "score": { "type": "number" }, "reason": { "type": "string" }, "evidenceIds": { "type": "array" } } },
+    "failureCategory": { "required": ["category", "retryable", "owner"], "properties": { "category": { "type": "string", "enum": ["implementation", "test", "environment", "pre_existing", "authorization", "policy", "timeout", "cancelled"] }, "retryable": { "type": "boolean" }, "owner": { "type": "string" } } },
+    "rca": { "required": ["runId", "failureCategoryId", "symptoms", "rootCauses", "actions"], "properties": { "runId": { "type": "string" }, "failureCategoryId": { "type": "string" }, "symptoms": { "type": "array" }, "rootCauses": { "type": "array" }, "actions": { "type": "array" } } }
+  },
+  "examples": {
+    "valid": { "schemaVersion": "1.0.0", "id": "example-001", "status": "ready", "extensions": {} },
+    "invalid": { "schemaVersion": "9.0.0", "id": "x", "status": "done" }
+  }
+}

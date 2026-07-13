@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "1.0.0", "id": "validation-puzzle", "status": "ready", "extensions": {},
+  "protectedPaths": ["tests/hidden", ".git", ".env"],
+  "validators": [{ "id": "puzzle-invariants", "kind": "behavior", "command": ["node", "verify.mjs"], "timeoutMs": 30000 }],
+  "changeRules": [{ "changeClasses": ["code", "test", "docs"], "validators": ["puzzle-invariants"] }]
+}

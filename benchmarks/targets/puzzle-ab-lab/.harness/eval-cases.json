@@ -1,0 +1,8 @@
+[
+  {
+    "schemaVersion": "1.0.0", "id": "eval-puzzle-invariants", "status": "ready", "extensions": {},
+    "target": ".", "goldBehavior": ["PUZZLE_OK"], "goldContext": ["product/requirements.md", "tests/invariants.mjs"],
+    "allowedScope": [], "forbiddenScope": ["tests/hidden"], "graders": ["behavior", "validation", "evidence", "trace"],
+    "command": ["node", "verify.mjs"]
+  }
+]

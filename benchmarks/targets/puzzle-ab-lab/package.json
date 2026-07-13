@@ -1,0 +1,6 @@
+{
+  "name": "puzzle-ab-lab",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node verify.mjs" }
+}

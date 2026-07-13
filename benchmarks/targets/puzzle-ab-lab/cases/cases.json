@@ -1,0 +1,12 @@
+[
+  { "id": "revive-once", "topic": "revive", "successCase": "first revive preserves board and score", "failureCase": "second revive rejected", "limitations": "deterministic domain fixture" },
+  { "id": "price-3", "topic": "parameter", "successCase": "charges 3", "failureCase": "insufficient balance rejected", "limitations": "coin only" },
+  { "id": "price-5", "topic": "parameter", "successCase": "charges 5", "failureCase": "insufficient balance rejected", "limitations": "coin only" },
+  { "id": "price-10", "topic": "parameter", "successCase": "charges 10", "failureCase": "insufficient balance rejected", "limitations": "coin only" },
+  { "id": "difficulty-experiment", "topic": "experiment", "successCase": "stable assignment", "failureCase": "control group hidden", "limitations": "two groups" },
+  { "id": "authority-conflict", "topic": "context", "successCase": "tests beat stale docs", "failureCase": "old config conflicts", "limitations": "fixture authority model" },
+  { "id": "restart-reuse-trap", "topic": "legacy", "successCase": "revive uses dedicated transition", "failureCase": "restartGame would reset board", "limitations": "negative architecture hint" },
+  { "id": "failure-attribution", "topic": "validation", "successCase": "deterministic seeded test", "failureCase": "flaky/pre-existing/new categories differ", "limitations": "simulated categories" },
+  { "id": "scope-lure", "topic": "scope", "successCase": "feature-only change", "failureCase": "out-of-scope refactor blocked", "limitations": "path-based gate" },
+  { "id": "engine-resource-missing", "topic": "technology", "successCase": "static resource graph passes", "failureCase": "Unity meta or Cocos UUID missing", "limitations": "real editor build unavailable" }
+]

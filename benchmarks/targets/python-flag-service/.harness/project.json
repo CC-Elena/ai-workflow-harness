@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1.0.0", "id": "project-python-flag", "status": "ready", "extensions": {},
+  "name": "python-flag-service", "root": ".", "presets": [],
+  "ownership": { ".harness/project.json": "Project-owned", ".harness/domain.json": "Domain-owned", ".harness/runs": "Run/Evidence" },
+  "execution": { "adapter": "generic-process", "command": ["python3", "-m", "unittest", "discover", "-s", "tests"], "source": "python-stdlib" },
+  "protectedPaths": [".git", ".env"], "needsConfirmation": []
+}
