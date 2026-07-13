@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "1.0.0", "id": "validation-python", "status": "ready", "extensions": {},
+  "protectedPaths": [".git", ".env"],
+  "validators": [{ "id": "python-unittest", "kind": "unit", "command": ["python3", "-m", "unittest", "discover", "-s", "tests"], "timeoutMs": 30000 }],
+  "changeRules": [{ "changeClasses": ["code", "test"], "validators": ["python-unittest"] }]
+}

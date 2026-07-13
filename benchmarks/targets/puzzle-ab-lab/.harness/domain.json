@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "1.0.0", "status": "ready",
+  "invariants": ["one revive", "treatment only", "sufficient coins", "atomic charge and state", "preserve board and score", "stable assignment", "complete telemetry"],
+  "authoritativeSources": ["tests/invariants.mjs", "product/requirements.md", "config/prices.json"]
+}

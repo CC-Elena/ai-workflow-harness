@@ -1,0 +1,8 @@
+[
+  {
+    "schemaVersion": "1.0.0", "id": "eval-python-flags", "status": "ready", "extensions": {},
+    "target": ".", "goldBehavior": ["OK"], "goldContext": ["tests/test_service.py"], "allowedScope": [], "forbiddenScope": [".env"],
+    "graders": ["behavior", "validation", "evidence", "trace"],
+    "command": ["python3", "-m", "unittest", "discover", "-s", "tests"]
+  }
+]

@@ -1,5 +1,7 @@
 # AI Workflow Harness
 
+> Migration-ready Beta runtime is available. See [the Beta architecture and capability guide](docs/migration-ready-beta/README.md), [CLI migration guide](docs/migration-ready-beta/cli-and-migration.md), and [limitations/production roadmap](docs/migration-ready-beta/security-release-and-roadmap.md).
+
 AI Workflow Harness 是一套面向 Codex、Claude Code、Cursor、Trae 等常见 Coding Agent 的 SDD（Spec-driven Development）研发流程 Harness。它把 PRD 输入、需求澄清、Spec 生成、任务拆解、代码实现、验证记录、质量门禁、复盘沉淀等环节组织成一套仓库原生的工作流资产。
 
 目标是让 AI 从辅助写代码，扩展为辅助完成需求从产出到上线前交付的完整研发闭环。

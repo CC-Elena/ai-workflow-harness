@@ -1,0 +1,4 @@
+{
+  "worker": { "agentId": "puzzle-worker-1", "role": "executor", "command": ["node", "worker.mjs"] },
+  "verifier": { "agentId": "puzzle-verifier-1", "role": "verifier", "command": ["node", "verifier.mjs"] }
+}

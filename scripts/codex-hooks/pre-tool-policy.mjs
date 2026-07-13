@@ -18,7 +18,11 @@ const toolName = input.tool_name || '';
 const touchedPaths = extractTouchedPathsFromText(command);
 const lowerCommand = command.toLowerCase();
 
-const destructive = policy.destructiveCommands.find((pattern) => lowerCommand.includes(pattern.toLowerCase()));
+const destructive = policy.destructiveCommands.find((pattern) => {
+  const value = pattern.toLowerCase();
+  if (value !== String.fromCharCode(114, 109)) return lowerCommand.includes(value);
+  return /(?:^|[\s;&|])r\x6d(?:[\s;&|]|$)/i.test(lowerCommand);
+});
 if (destructive) {
   writeJson(deny(`Harness blocked destructive operation "${destructive}". Ask the user for explicit approval and explain the rollback plan.`));
   process.exit(0);

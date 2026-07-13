@@ -1,5 +1,9 @@
 name: Harness CI
 
+concurrency:
+  group: harness-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
   push:
@@ -10,6 +14,7 @@ jobs:
   verify:
     name: Verify harness
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -35,6 +40,12 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Runtime contracts, eval, trace, migration, and fixture tests
+        run: npm run harness:beta:test
+
+      - name: Legacy harness regression
+        run: npm run harness:test
+
       - name: Build
         run: npm run build
 
@@ -45,3 +56,12 @@ jobs:
       - name: Harness sample regression
         if: github.event_name != 'pull_request'
         run: npm run harness:check -- specs/failure-rca-sample
+
+      - name: Upload Harness run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-run-evidence
+          path: .harness/runs
+          if-no-files-found: warn
+          retention-days: 14

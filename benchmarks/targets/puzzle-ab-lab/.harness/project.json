@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "1.0.0", "id": "project-puzzle-ab-lab", "status": "ready", "extensions": {},
+  "name": "puzzle-ab-lab", "root": ".", "presets": [],
+  "ownership": { ".harness/project.json": "Project-owned", ".harness/domain.json": "Domain-owned", ".harness/runs": "Run/Evidence" },
+  "execution": { "adapter": "generic-process", "command": ["node", "verify.mjs"], "source": "package.json#scripts.test" },
+  "protectedPaths": ["tests/hidden", ".git", ".env"], "needsConfirmation": []
+}

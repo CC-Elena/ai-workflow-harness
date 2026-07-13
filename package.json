@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "A lightweight Next.js workspace for AI Workflow Harness.",
+  "bin": {
+    "ai-workflow-harness": "./bin/harness.mjs"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +15,8 @@
     "typecheck": "tsc --noEmit",
     "harness:check": "node scripts/check-harness-run.mjs",
     "harness:test": "node --test scripts/check-harness-run.test.mjs",
+    "harness:beta:test": "node --test test/harness-beta.test.mjs",
+    "harness:cli": "node bin/harness.mjs",
     "skills:check-links": "node scripts/check-agent-skill-links.mjs",
     "sync": "node scripts/sync-catalogs.mjs",
     "prepare": "husky"
